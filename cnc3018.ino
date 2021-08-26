@@ -2,14 +2,11 @@
 // cnc3018.ino
 //----------------------------------------------------
 
-#include "cnc3018.h"
+
 #include <Grbl.h>           // for grbl_init() and run_once()
 #include <Logging.h>        // for log_debug()
+#include "cnc3018.h"
 
-#ifdef WITH_MY_PROBE
-    #include "myProbe.h"
-    #include <Machine/MachineConfig.h>
-#endif
 
 #define INIT_SD_DURING_SETUP
 #define INIT_SD_AGAIN
@@ -131,11 +128,6 @@
 	}
 #endif	// INIT_SD_AGAIN
 
-#ifdef WITH_MY_PROBE
-    Machine::MachineConfig myMachineConfig;
-    myProbe my_probe;
-#endif
-
 
 //----------------------------------------------------------
 // setup()
@@ -147,11 +139,6 @@ void setup()
 
     #ifdef INIT_SD_DURING_SETUP
         bool sd_ok = SD.begin(G_PIN_SDCARD_CS);
-    #endif
-
-    #ifdef WITH_MY_PROBE
-        config = &myMachineConfig;
-        config->_probe = &my_probe;
     #endif
 
     grbl_init();

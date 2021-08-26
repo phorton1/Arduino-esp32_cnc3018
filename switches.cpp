@@ -76,7 +76,8 @@ uint8_t read_switches()
 	{
 		// display debugging ONLY if not in probe state
 
-		if (sys_probe_state != ProbeState::Active)
+		if (sys_probe_state != ProbeState::Active &&
+			!the_machine._mesh->inLeveling())
 		{
 			for (int i=0; i<8; i++)
 			{

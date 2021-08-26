@@ -1,6 +1,9 @@
 // cnc3018.h
 
-#include <cstdint>
+#pragma once
+
+#include <Machine/MachineConfig.h>
+#include "Mesh.h"
 
 #define G_PIN_LEDS_OUT            GPIO_NUM_12
 // #define G_PIN_TFT_CS             GPIO_NUM_22
@@ -12,13 +15,33 @@
 #define G_PIN_SDCARD_CS          GPIO_NUM_4
 
 
-#define WITH_MY_PROBE
-
+#define PROBE_SWITCH_MASK 0x008
 
 extern void g_debug(const char *format, ...);
 
 
-#define PROBE_SWITCH_MASK 0x008
+
+class cnc3018 : public Machine::MachineConfig
+{
+    public:
+
+        cnc3018();
+
+        Mesh *_mesh;
+
+    protected:
+
+        void afterParse() override;
+        void group(Configuration::HandlerBase& handler) override;
+
+        void  initSettings();
+
+};  // class cnc3018
+
+
+extern cnc3018 the_machine;
+
+
 
 extern void init_switches();
 extern uint8_t read_switches();
