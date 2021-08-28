@@ -1,15 +1,20 @@
 //-------------------------------------------------
 // Mesh bed levelling
 //-------------------------------------------------
-// 1. assumes work coordinates are set to x=0, y=0 on work piece,
-//    and that Z is above the piece ready to probe
-// 2. takes the work piece height and width as params, probably
-//    via coordinate system values
-// 3. user specifies number of mesh points in X and Y directions
-// 4. levelling takes place in a rectangle 5 mm in from edges
+// 1. the mesh starts at whatever MESH_X,MESH_Y (mpos floats)
+//    the machine happens to be at when the $HZ happens
+// 2. uess WIDTH and HEIGHT in mm and STEPS_X and STEPS_Y integers
+// 3. the MESH, and it's 6 parameters are written to a SPIFFS text file
+// 4. readMesh() is from cnc3018.ino() setup after grbl_init() finishes.
 //
-// will end up at _z_pulloff above work position 0,0
-// mesh is relative to m_zero_point
+//   If the WIDTH, HEIGHT, STEPS_X, or STEPS_Y have changed the mesh is
+//   invalidated in readMesh().  The MESH_X and MESH_Y are not user params.
+//
+//   The other user params Z_PULLOFF, Z_MAX_TRAVEL, Z_FEED_RATE, and
+//   LINE_SEG_LENGTH can change without invalidating the mesh.
+//
+//   thus readMesh() is also called from group() when one of the given
+//   items is changing at runtime.
 
 // my test zero is at x=62 y=9
 
@@ -17,6 +22,7 @@
 #include "cnc3018.h"
 #include "mesh.h"
 
+#include <Serial.h>
 #include <Report.h>
 #include <Logging.h>
 #include <System.h>
@@ -24,6 +30,9 @@
 #include <Protocol.h>
 #include <Machine/MachineConfig.h>
 #include <MotionControl.h>
+#include <SPIFFS.h>
+#include <FS.h>
+
 
 #define DEBUG_MESH          1       // upto 3
 #define DEBUG_GET_Z_OFFSET  0
@@ -33,10 +42,10 @@
 
 #define Z_AXIS       2
 #define Z_AXIS_MASK  0x04
+#define Y_AXIS_MASK  0x02
 
 #define DEFAULT_MESH_HEIGHT         100       // mm
 #define DEFAULT_MESH_WIDTH          148       // mm
-#define DEFAULT_MESH_MARGIN         5.0       // mm's from the edges of the work piece
 #define DEFAULT_MESH_X_STEPS        6         // every 20mm
 #define DEFAULT_MESH_Y_STEPS        4         // 90/4 mm
 #define DEFAULT_MESH_Z_PULLOFF      2.0       // pull off after 0th point
@@ -51,7 +60,6 @@ Mesh::Mesh()
 
 	_height			    = DEFAULT_MESH_HEIGHT;
 	_width			    = DEFAULT_MESH_WIDTH;
-	_margin			    = DEFAULT_MESH_MARGIN;
 	_x_steps		    = DEFAULT_MESH_X_STEPS;
 	_y_steps		    = DEFAULT_MESH_Y_STEPS;
 	_z_pulloff		    = DEFAULT_MESH_Z_PULLOFF;
@@ -61,17 +69,37 @@ Mesh::Mesh()
 }
 
 
+#include <Configuration/RuntimeSetting.h>
+
 void Mesh::group(Configuration::HandlerBase& handler) // override
 {
 	handler.item("height", 	    _height);
 	handler.item("width", 		_width);
-	handler.item("margin",		_margin);
 	handler.item("x_steps",	    _x_steps);
 	handler.item("y_steps",     _y_steps);
 	handler.item("pulloff",     _z_pulloff);
 	handler.item("max_travel",  _z_max_travel);
 	handler.item("feed_rate",   _z_feed_rate);
     handler.item("line_seg_len",_line_seg_length);
+
+    if (m_is_valid && handler.handlerType() == Configuration::HandlerType::Runtime)
+    {
+        Configuration::RuntimeSetting &rth = static_cast<Configuration::RuntimeSetting &>(handler);
+        if (rth.is("height") ||
+            rth.is("width") ||
+            rth.is("x_steps") ||
+            rth.is("y_steps"))
+        {
+            #if DEBUG_MESH
+                g_debug("Mesh::group() calling readMesh() for validation");
+            #endif
+            readMesh();
+        }
+
+
+
+    }
+
 }
 
 
@@ -85,18 +113,26 @@ bool Mesh::isValid()
 }
 
 
-float Mesh::getZOffset(float wx, float wy)
+float Mesh::getZOffset(float mx, float my)
     // IN WORK COORDINATES
 {
     if (!m_is_valid)
+    {
         return 0.00;
+    }
 
     #if DEBUG_GET_Z_OFFSET
-        g_debug("GET_Z_OFFSET(%5.3f,%5.3f)",wx,wy);
+        g_debug("GET_Z_OFFSET(%5.3f,%5.3f) meshxy(%5.3f,%5.3f)",mx,my,m_mesh_x,m_mesh_y);
     #endif
 
-    wx -= _margin;
-    wy -= _margin;
+    // make mx and my mesh relative
+
+    mx -= m_mesh_x;
+    my -= m_mesh_y;
+
+    #if DEBUG_GET_Z_OFFSET
+        g_debug("   mesh_relxy((%5.3f,%5.3f)",mx,my);
+    #endif
 
     // develop the integer "box" coordinates
     // into the mesh array along the percentage
@@ -105,7 +141,7 @@ float Mesh::getZOffset(float wx, float wy)
     int x_left;
     int x_right;
     float pct_x;
-    if (wx < 0)
+    if (mx < 0)
     {
         x_left = 0;
         x_right = 0;
@@ -113,20 +149,20 @@ float Mesh::getZOffset(float wx, float wy)
     }
     else
     {
-        x_left = wx / m_dx;
+        x_left = mx / m_dx;
         x_right = x_left + 1;
         if (x_left > _x_steps - 1)
             x_left = _x_steps - 1;
         if (x_right > _x_steps - 1)
             x_right = _x_steps - 1;
-        pct_x = (wx - x_left * m_dx) / m_dx;
+        pct_x = (mx - x_left * m_dx) / m_dx;
         if (pct_x > 1.0) pct_x = 1.0;
     }
 
     int y_top;
     int y_bottom;
     float pct_y;
-    if (wy < 0)
+    if (my < 0)
     {
         y_top = 0;
         y_bottom = 0;
@@ -134,13 +170,13 @@ float Mesh::getZOffset(float wx, float wy)
     }
     else
     {
-        y_bottom = wy / m_dy;
+        y_bottom = my / m_dy;
         y_top = y_bottom + 1;
         if (y_bottom > _y_steps - 1)
             y_bottom = _y_steps - 1;
         if (y_top > _y_steps - 1)
             y_top = _y_steps - 1;
-        pct_y = (wy - y_bottom * m_dy) / m_dy;
+        pct_y = (my - y_bottom * m_dy) / m_dy;
     }
 
     // get the four values
@@ -186,6 +222,7 @@ float Mesh::getZOffset(float wx, float wy)
     #endif
 
     return value;
+
 }
 
 
@@ -219,11 +256,14 @@ void Mesh::init_mesh()
         g_debug("MESH: init_mesh()");
     #endif
 
+    m_mesh_x = 0.0;
+    m_mesh_y = 0.0;
+
     m_zero_point = 0.0;
     m_is_valid = false;
 
-    m_dx = (_width - 2*_margin) / (_x_steps-1);
-    m_dy = (_height - 2*_margin) / (_y_steps-1);
+    m_dx = _width / (_x_steps-1);
+    m_dy = _height / (_y_steps-1);
 
     for (int x=0; x<_x_steps; x++)
     {
@@ -271,7 +311,7 @@ static bool _moveTo(float x, float y)
         g_debug("MESH: _moveTo(%5.3f,%5.3f)",x,y);
     #endif
     char buf[24];
-    sprintf(buf,"g0 x%5.3f y%5.3f",x,y);
+    sprintf(buf,"g0 g53 x%5.3f y%5.3f",x,y);
     return _mesh_execute(buf);
 }
 
@@ -283,7 +323,7 @@ bool Mesh::zPullOff() // move z upwards relative, check that probe goes off too
         g_debug("MESH: zPullOff() m_zero_point=%5.3f to=%5.3f",m_zero_point,to);
     #endif
     char buf[24];
-    sprintf(buf,"g0 z%5.3f",to);
+    sprintf(buf,"g0 g53 z%5.3f",to);
     bool move_ok = _mesh_execute(buf);
     if (move_ok)
     {
@@ -324,6 +364,7 @@ bool Mesh::probeOne(int x, int y, float *zResult)
         return false;
     }
     float value = system_convert_axis_steps_to_mpos(sys_probe_position,Z_AXIS);
+        // machine position
 
     #if DEBUG_MESH > 1
         g_debug("MESH: probe(%d,%d)=%f",x,y,value);
@@ -338,10 +379,6 @@ bool Mesh::doMeshLeveling()
 {
     m_in_leveling = true;
 
-    #if DEBUG_MESH
-        g_debug("MESH: doMeshLeveling()");
-    #endif
-
     init_mesh();
 
     // Finish all queued commands and empty planner buffer before starting probe cycle.
@@ -355,14 +392,12 @@ bool Mesh::doMeshLeveling()
     }
     sys.state = State::Idle;        // turn of "homing" flag!!
 
-    char buf[24];
-    strcpy(buf,"g0 x0 y0 z-18");
-    if (!_mesh_execute(buf))
-    {
-        g_debug("MESH: could not move to initial position");
-        m_in_leveling = false;
-        return false;
-    }
+    m_mesh_x = system_convert_axis_steps_to_mpos(sys_position,X_AXIS);
+    m_mesh_y = system_convert_axis_steps_to_mpos(sys_position,Y_AXIS);
+
+    #if DEBUG_MESH
+        g_debug("MESH: doMeshLeveling(%5.3f,%5.3f)",m_mesh_x,m_mesh_y);
+    #endif
 
     for (int y=0; y<_y_steps; y++)
     {
@@ -372,7 +407,7 @@ bool Mesh::doMeshLeveling()
 
         for (int x=start; x!=end; x+=inc)
         {
-            if (_moveTo(_margin + x*m_dx, _margin + y*m_dy))
+            if (_moveTo(m_mesh_x + x*m_dx, m_mesh_y + y*m_dy))
             {
                 float value = 0.0;
                 if (probeOne(x,y,&value))
@@ -412,16 +447,19 @@ bool Mesh::doMeshLeveling()
         }
     }
 
-    _moveTo(0,0);
+    _moveTo(m_mesh_x,m_mesh_y);
 
     #if DEBUG_MESH
         g_debug("MESH: doMeshLeveling() succeeded!");
     #endif
 
     debug_mesh();
+    if (writeMesh())
+    {
+        m_is_valid = true;
+    }
 
     m_in_leveling = false;
-    m_is_valid = true;
     return true;
 }
 
@@ -429,19 +467,141 @@ bool Mesh::doMeshLeveling()
 //--------------------------------------------
 // Override WEAK_LINK user_defined_homing()
 //--------------------------------------------
+#define MESH_DATA_FILE  "/mesh_data.txt"
+
+void Mesh::invalidateMesh()
+{
+    #if DEBUG_MESH
+        g_debug("--->invalidateMesh()");
+    #endif
+    m_is_valid = false;
+    SPIFFS.remove(MESH_DATA_FILE);
+}
+
+
+void Mesh::readMesh()
+{
+    #if DEBUG_MESH > 1
+        g_debug("readMesh()");
+    #endif
+
+    init_mesh();
+
+    if (SPIFFS.exists(MESH_DATA_FILE))
+    {
+        File f = SPIFFS.open(MESH_DATA_FILE, "r");
+        if (f)
+        {
+            float header[7];
+            if (f.readBytes((char *)header, 7*sizeof(float)) == 7*sizeof(float))
+            {
+                #if DEBUG_MESH > 1
+                    g_debug("got Mesh Header x,y,w,h,sx,sy,zp: %5.3f,%5.3f,%5.3f,%5.3f,%1.0f,%1.0f,%5.3f",
+                        header[0],
+                        header[1],
+                        header[2],
+                        header[3],
+                        header[4],
+                        header[5],
+                        header[6]);
+                #endif
+
+                if (header[2] == _width &&
+                    header[3] == _height &&
+                    header[4] == _x_steps &&
+                    header[5] == _y_steps)
+                {
+                    #if DEBUG_MESH > 1
+                        g_debug("Mesh Header Valid - reading mesh");
+                    #endif
+
+                    m_mesh_x = header[0];
+                    m_mesh_y = header[1];
+                    m_zero_point = header[6];
+
+                    for (int y=0; y<_y_steps; y++)
+                    {
+                        for (int x=0; x<_x_steps; x++)
+                        {
+                            if (f.readBytes((char *)&m_mesh[x][y], sizeof(float)) != sizeof(float))
+                            {
+                                g_debug("COULD NOT READ Mesh Header at xy(%d,%d) !!!");
+                                f.close();
+                                invalidateMesh();
+                                return;
+                            }
+                        }
+                    }
+
+                    #if DEBUG_MESH
+                        g_debug("readMesh() VALID!!");
+                    #endif
+                    debug_mesh();
+                    m_is_valid = true;
+                }
+                else
+                {
+                    g_debug("Mesh Header INVALID!!");
+                    f.close();
+                    invalidateMesh();
+                }
+            }
+            f.close();
+        }
+    }
+}
+
+
+
+bool Mesh::writeMesh()
+{
+    g_debug("writeMesh()");
+    File f = SPIFFS.open(MESH_DATA_FILE, "w");
+    if (f)
+    {
+        f.write((const unsigned char *)&m_mesh_x, sizeof(float));
+        f.write((const unsigned char *)&m_mesh_y, sizeof(float));
+        f.write((const unsigned char *)&_width,   sizeof(float));
+        f.write((const unsigned char *)&_height,  sizeof(float));
+        f.write((const unsigned char *)&_x_steps, sizeof(float));
+        f.write((const unsigned char *)&_y_steps, sizeof(float));
+        f.write((const unsigned char *)&m_zero_point, sizeof(float));
+        for (int y=0; y<_y_steps; y++)
+        {
+            for (int x=0; x<_x_steps; x++)
+            {
+                f.write((const unsigned char *)&m_mesh[x][y], sizeof(float));
+            }
+        }
+        f.close();
+        return true;
+    }
+    g_debug("WARNING: Could not open %s for writing. Using default calibration data",MESH_DATA_FILE);
+    return false;
+}
+
+
 
 bool user_defined_homing(AxisMask axisMask)
 {
-    // anytime we home we invalidate the mesh
+    // $HZ builds the mesh
+    // $HY invalidates the mesh
 
-    the_machine._mesh->invalidateMesh();
+    if (axisMask == Y_AXIS_MASK)
+    {
+        g_debug("user_defined_homing Y calling invalidateMesh()");
+        the_machine._mesh->invalidateMesh();
+        return true;
+    }
 
-    if (axisMask != Z_AXIS_MASK)
-        return false;
-    g_debug("cnc3018 user_defined_homing Z_AXIS!!");
+    if (axisMask == Z_AXIS_MASK)
+    {
+        g_debug("user_defined_homing Z calling doMeshLeveling()");
+        the_machine._mesh->doMeshLeveling();
+        return true;
+    }
 
-    the_machine._mesh->doMeshLeveling();
-    return true;
+    return false;
 }
 
 
@@ -454,14 +614,22 @@ bool cartesian_to_motors(float* target, plan_line_data_t* pl_data, float* positi
     // call mc_line() to move to the new position possibly including
     // the mesh z offset
 {
+    float tpos[3];
     Mesh *mesh = the_machine._mesh;
 
     // if the mesh is not valid, just call a single mc_line()
     // for the entire traversal
 
-    if (!mesh->isValid())
+    if (!mesh->isValid() ||
+        sys.state == State::Homing)
     {
-        if (!mc_line(target, pl_data))
+        memcpy(tpos,target,3 * sizeof(float));
+
+        #ifdef FUNKY_REALTIME_STUFF
+            tpos[Z_AXIS] += realtimeZOffset;
+        #endif
+
+        if (!mc_line(tpos, pl_data))
 			return false;
         return true;
     }
@@ -492,15 +660,6 @@ bool cartesian_to_motors(float* target, plan_line_data_t* pl_data, float* positi
 		if (!num_segs) num_segs = 1;
 	}
 
-    // create a copy of the initial position in work coordinates
-    // we will increment both the actual position, and the x/y
-    // work position in the loop
-
-	float wpos[MAX_N_AXIS];
-    memcpy(wpos,position,3 * sizeof(float));
-    mpos_to_wpos(wpos);
-
-
 	//--------------------
 	// do loop of segments
 	//--------------------
@@ -522,19 +681,20 @@ bool cartesian_to_motors(float* target, plan_line_data_t* pl_data, float* positi
 		position[X_AXIS] += xinc;
 		position[Y_AXIS] += yinc;
 		position[Z_AXIS] += zinc;
-		wpos[X_AXIS] += xinc;
-		wpos[Y_AXIS] += yinc;
 
         // we need a working copy of the position
         // so that we don't accumulate zOffsets
 
-        float tpos[3];
         memcpy(tpos,position,3 * sizeof(float));
+
+        #ifdef FUNKY_REALTIME_STUFF
+            tpos[Z_AXIS] += realtimeZOffset;
+        #endif
 
         // get the zOffset at the work position
         // and add it to the working copy
 
-        float zoff = mesh->getZOffset(wpos[X_AXIS],wpos[Y_AXIS]);
+        float zoff = mesh->getZOffset(position[X_AXIS],position[Y_AXIS]);
         tpos[Z_AXIS] += zoff;
 
 		#if DEBUG_VREVERSE>1
@@ -569,22 +729,20 @@ void motors_to_cartesian(float* cartesian, float* motors, int n_axis)
     // the only thing we might change is the Z
 
     memcpy(cartesian,motors,3 * sizeof(float));
+    #ifdef FUNKY_REALTIME_STUFF
+        cartesian[Z_AXIS] -= realtimeZOffset;
+    #endif
 
     // if the mesh is not valid, just return the input
 
-    if (!mesh->isValid())
+    if (!mesh->isValid() ||
+        sys.state == State::Homing)
         return;
-
-    // convert mpos to wpos
-
-	float wpos[MAX_N_AXIS];
-    memcpy(wpos,motors,3 * sizeof(float));
-    mpos_to_wpos(wpos);
 
     // get the zOffset at the location
     // and subtract it from the z location
 
-    float zoff = mesh->getZOffset(wpos[X_AXIS],wpos[Y_AXIS]);
+    float zoff = mesh->getZOffset(motors[X_AXIS],motors[Y_AXIS]);
 
     #if DEBUG_VFORWARD
         g_debug("M2C(%5.3f,%5.3f,%5.3f) subtracting z_offset(%5.3f)",

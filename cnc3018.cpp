@@ -24,24 +24,13 @@ cnc3018::cnc3018()
 void cnc3018::afterParse() // override
 {
 	#if DEBUG_YAML
-		v_debug("---> cnc3018::afterParse() called");
+		g_debug("---> cnc3018::afterParse() called");
 	#endif
 
 	// At this point the tree is fleshed out with items from the yaml file, but not
 	// with the entire tree as *determined* by MachineConfig::afterParse().
 
-
-	// We add our derived configurables here before calling base afterParse which
-	// would otherwise add a default null probe
-
-
-
-	// call base class
-
 	Machine::MachineConfig::afterParse();
-
-	// After this config->group(AfterParse) will be called at which time
-	// NVS ovrrides will be applied
 }
 
 
@@ -59,7 +48,7 @@ void cnc3018::group(Configuration::HandlerBase& handler) // override
 			case Configuration::HandlerType::Generator	:  htype="Generator";  break;
 			case Configuration::HandlerType::Validator	:  htype="Validator";  break;
 		}
-		v_debug("---> vMachine::group(handler=%s) called",htype);
+		g_debug("---> cnc3018::group(handler=%s) called",htype);
 	#endif
 
 	Machine::MachineConfig::group(handler);
@@ -67,6 +56,3 @@ void cnc3018::group(Configuration::HandlerBase& handler) // override
 	handler.section("mesh", _mesh);
 
 }
-
-
-

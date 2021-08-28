@@ -20,9 +20,9 @@ class Mesh : public Configuration::Configurable
         bool isValid();
             // returns true if doMeshLeveling succeeded
 
-        float getZOffset(float wx, float wy);
+        float getZOffset(float mx, float my);
             // After $HZ works, isValid() will return true and one can
-            // call getZOffset with wx,wy in work coordinates to get the
+            // call getZOffset with mx,my in machine coordinates to get the
             // interpolated mesh z offset at that point.
 
         bool doMeshLeveling();
@@ -32,23 +32,31 @@ class Mesh : public Configuration::Configurable
         bool inLeveling()      { return m_in_leveling; }
             // to suppress various debug messages in other objects
 
-        void invalidateMesh()   { m_is_valid = false; }
-            // public API to erase the mesh
-            // mesh is invalidated by any homing
-
         float getLineSegLength()  { return _line_seg_length; }
             // length of interpolated line segments for
             // cartesian_to_motors()
 
+        void invalidateMesh();
+            // mesh is persistent through reboots,
+            // homing, whatever, until it is invalidated!
+            // should be connected to RST=# and/or $
+        void readMesh();
+            // called somewhere (cnc3018::afterParse) to load the
+            // mesh from the file.  Self invalidates if the mesh
+            // parameters have changed since creation.
+
     private:
+
+        float m_mesh_x;
+        float m_mesh_y;
 
         // config variables
 
         float _height;
         float _width;
-        float _margin;
         float _x_steps;
         float _y_steps;
+
         float _z_pulloff;
         float _z_max_travel;
         float _z_feed_rate;
@@ -73,5 +81,10 @@ class Mesh : public Configuration::Configurable
         bool probeOne(int x, int y, float *zResult);
         bool zPullOff();
         void debug_mesh();
+
+
+        bool writeMesh();
+
+
 
 };  // class Mesh

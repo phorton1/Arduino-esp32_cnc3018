@@ -6,6 +6,7 @@
 #include <Machine/Axes.h>
 #include <System.h>
 #include <MotionControl.h>
+#include <Serial.h>
 
 
 uint32_t test_colors[4] = {
@@ -153,6 +154,18 @@ void switchTask(void* pvParameters)
 		{
 			read_switches();
 		}
+
+		// note any changes to realtimeZOffset;
+
+		#ifdef FUNKY_REALTIME_STUFF
+			float last_realtimeZOffset;
+			if (last_realtimeZOffset != realtimeZOffset)
+			{
+				last_realtimeZOffset = realtimeZOffset;
+				g_debug("realTimeZOffset changed to %5.3f",realtimeZOffset);
+			}
+		#endif
+
 	}
 }
 

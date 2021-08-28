@@ -1,6 +1,9 @@
 //----------------------------------------------------
 // cnc3018.ino
 //----------------------------------------------------
+// interesting gCodes
+//
+// m6 t1 = tool change to tool #1
 
 
 #include <Grbl.h>           // for grbl_init() and run_once()
@@ -151,6 +154,7 @@ void setup()
         debug_start_sdcard();
     #endif
 
+    the_machine._mesh->readMesh();
     init_switches();
 
     g_debug("cnc3018.ino setup(core %d) completed %d/%dK",
