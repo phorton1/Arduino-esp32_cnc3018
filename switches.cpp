@@ -19,22 +19,27 @@ uint32_t test_colors[4] = {
 Adafruit_NeoPixel pixels(NUM_PIXELS,G_PIN_LEDS_OUT);
 
 
+
+
 const char *switchName(int i)
 {
 	switch (i)
 	{
-		case 0 : return "xZERO";
-		case 1 : return "yZERO";
-		case 2 : return "zZERO";
-		case 3 : return "PROBE";
-		case 4 : return "xLIM";
-		case 5 : return "yLIM";
-		case 6 : return "zLIM";
-		case 7 : return "UNUSED2";
+		case PIN7_XZERO   : return "xZERO";
+		case PIN7_YZERO   : return "yZERO";
+		case PIN7_ZZERO   : return "zZERO";
+		case PIN7_PROBE   : return "PROBE";
+		case PIN7_XLIM    : return "xLIM";
+		case PIN7_YLIM    : return "yLIM";
+		case PIN7_ZLIM    : return "zLIM";
+		case PIN7_UNUSED  : return "UNUSED2";
 	}
 	return "UNKNOWN";
-
 }
+
+
+
+
 
 static uint8_t prev_switches = 0x00;		// pulled up, swtich=ground
 
@@ -58,18 +63,23 @@ uint8_t read_switches()
 	uint8_t switches = shiftIn(G_PIN_74HC165_DATA, G_PIN_74HC165_CLK, MSBFIRST);
 	digitalWrite(G_PIN_74HC165_LATCH, LOW);
 
-	// X/Y switches are pulled up with active HIGH signals due to NC switches
-	// Z/PROBE switches are pulled down with normal HIGH signals and NO switches
+	// switches are pulled up with NO switches, so LOW is active
+	// hence we invert the bit pattern here
 
-	// g_debug("switches=0x%02x",switches);
+	switches = ~switches;
 
-	switches &= 0x7f;		// mask out the last unused bit
+	uint8_t zero_val = 0;
+	uint8_t lim_val  = 0;
 
-	// write limit pin bits directly into global masks
-	// which works with homing algorithm
+	if (switches & (1 << PIN7_XZERO)) zero_val |= 1;
+	if (switches & (1 << PIN7_YZERO)) zero_val |= 2;
+	if (switches & (1 << PIN7_ZZERO)) zero_val |= 4;
+	if (switches & (1 << PIN7_XLIM)) lim_val |= 1;
+	if (switches & (1 << PIN7_YLIM)) lim_val |= 2;
+	if (switches & (1 << PIN7_ZLIM)) lim_val |= 4;
 
-	Machine::Axes::negLimitMask = switches & 0x7;
-	Machine::Axes::posLimitMask = (switches >> 4) & 0x7;
+	Machine::Axes::negLimitMask = zero_val;
+	Machine::Axes::posLimitMask = lim_val;
 
 	// change detection
 
@@ -96,7 +106,7 @@ uint8_t read_switches()
 		// if an x/y/z limit switch gets hit.
 		// don't wanna do this during homing!
 
-		if ((switches & 0x77) && sys.state != State::Homing)
+		if ((zero_val || lim_val) && sys.state != State::Homing)
 		{
 			if (sys_probe_state != ProbeState::Active)
 				log_debug("Limit Switch State " << String(switches, HEX));
@@ -110,7 +120,7 @@ uint8_t read_switches()
 }
 
 
-
+// #include <Uart.h>
 
 
 
@@ -131,7 +141,7 @@ void switchTask(void* pvParameters)
 
     while (true)
     {
-        vTaskDelay(20 / portTICK_PERIOD_MS);
+        vTaskDelay(50 / portTICK_PERIOD_MS);
 
         #if 0
 			static uint32_t last_time = 0;
@@ -153,6 +163,9 @@ void switchTask(void* pvParameters)
 		if (sys_probe_state != ProbeState::Active)
 		{
 			read_switches();
+
+			// float z_pos = system_convert_axis_steps_to_mpos(sys_position,Z_AXIS);
+			// Uart0.println(z_pos);
 		}
 
 		// note any changes to realtimeZOffset;

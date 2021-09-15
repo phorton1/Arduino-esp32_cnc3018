@@ -15,7 +15,18 @@
 #define G_PIN_SDCARD_CS          GPIO_NUM_4
 
 
-#define PROBE_SWITCH_MASK 0x008
+// pin ins to the 74HC165
+
+#define PIN7_XZERO       3
+#define PIN7_XLIM        2
+#define PIN7_YZERO       1
+#define PIN7_YLIM        0
+#define PIN7_ZZERO       7
+#define PIN7_ZLIM        6
+#define PIN7_PROBE       5
+#define PIN7_UNUSED      4
+
+#define PROBE_SWITCH_MASK (1<<PIN7_PROBE)
 
 extern void g_debug(const char *format, ...);
 
