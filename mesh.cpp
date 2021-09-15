@@ -44,13 +44,13 @@
 #define Z_AXIS_MASK  0x04
 #define Y_AXIS_MASK  0x02
 
-#define DEFAULT_MESH_HEIGHT         100       // mm
-#define DEFAULT_MESH_WIDTH          148       // mm
-#define DEFAULT_MESH_X_STEPS        6         // every 20mm
-#define DEFAULT_MESH_Y_STEPS        4         // 90/4 mm
+#define DEFAULT_MESH_HEIGHT         80        // mm
+#define DEFAULT_MESH_WIDTH          125       // mm
+#define DEFAULT_MESH_X_STEPS        6         // every 25mm
+#define DEFAULT_MESH_Y_STEPS        4         // every 20mm
 #define DEFAULT_MESH_Z_PULLOFF      2.0       // pull off after 0th point
-#define DEFAULT_MESH_Z_MAX_TRAVEL   -25.0     // mm in negative direction from absolute 0,0
-#define DEFAULT_MESH_Z_FEED_RATE    50.0      // mm per min
+#define DEFAULT_MESH_Z_MAX_TRAVEL   -35.0     // mm in negative direction from absolute 0,0
+#define DEFAULT_MESH_Z_FEED_RATE    20.0      // mm per min
 #define DEFAULT_LINE_SEG_LENGTH     2         // mm
 
 Mesh::Mesh()
@@ -228,7 +228,7 @@ float Mesh::getZOffset(float mx, float my)
 
 
 //--------------------------------------------
-// genration API
+// generation API
 //--------------------------------------------
 
 
@@ -238,7 +238,7 @@ void Mesh::debug_mesh()
         g_debug("MESH: m_zero_point == %6.3f",m_zero_point);
         for (int y=_y_steps-1; y>=0; y--)
         {
-            char buf[100];
+            static char buf[100];
             sprintf(buf,"MESH[%d] ",y);
             for (int x=0; x<_x_steps; x++)
             {
@@ -310,18 +310,22 @@ static bool _moveTo(float x, float y)
     #if DEBUG_MESH > 2
         g_debug("MESH: _moveTo(%5.3f,%5.3f)",x,y);
     #endif
-    char buf[24];
+    char buf[30];
     sprintf(buf,"g0 g53 x%5.3f y%5.3f",x,y);
     return _mesh_execute(buf);
 }
 
 
-bool Mesh::zPullOff() // move z upwards relative, check that probe goes off too
+bool Mesh::zPullOff(float from) // move z upwards relative, check that probe goes off too
 {
-    float to = m_zero_point + _z_pulloff;
+    // float to = m_zero_point + _z_pulloff;
+
+    float to = from + _z_pulloff;
+
     #if DEBUG_MESH > 2
-        g_debug("MESH: zPullOff() m_zero_point=%5.3f to=%5.3f",m_zero_point,to);
+        g_debug("MESH: zPullOff() from=%5.3f to=%5.3f",from,to);
     #endif
+
     char buf[24];
     sprintf(buf,"g0 g53 z%5.3f",to);
     bool move_ok = _mesh_execute(buf);
@@ -356,22 +360,80 @@ bool Mesh::probeOne(int x, int y, float *zResult)
         g_debug("MESH: probeOne() execute(%s)",buf);
     #endif
 
-    Error rslt = gc_execute_line(buf, CLIENT_SERIAL);
-    if (rslt != Error::Ok)
-    {
-        report_status_message(rslt, CLIENT_ALL);
-        g_debug("MESH: probeOne() gc_execute_line failed");
-        return false;
-    }
-    float value = system_convert_axis_steps_to_mpos(sys_probe_position,Z_AXIS);
-        // machine position
+    // do upto N probes with heuristics to throw out bad values
 
-    #if DEBUG_MESH > 1
-        g_debug("MESH: probe(%d,%d)=%f",x,y,value);
-    #endif
+    #define NUM_PROBES   4
+
+    bool ok = true;
+    int probe_num = 0;
+    float probe_values[NUM_PROBES];
+
+    while (ok && probe_num < NUM_PROBES)
+    {
+        float value = 0;
+        Error rslt = gc_execute_line(buf, CLIENT_SERIAL);
+        if (rslt == Error::Ok)
+        {
+            value = system_convert_axis_steps_to_mpos(sys_probe_position,Z_AXIS);
+            #if DEBUG_MESH > 1
+                g_debug("MESH[%d,%d] probe[%d]=%f",x,y,probe_num,value);
+            #endif
+            probe_values[probe_num++] = value;
+    }
+        else
+        {
+            ok = false;
+            report_status_message(rslt, CLIENT_ALL);
+            g_debug("MESH: probeOne() gc_execute_line failed");
+        }
+        zPullOff(value);
+    }
+
+    float value = 0;
+    if (ok)
+    {
+        for (int i=0; i<NUM_PROBES; i++)
+            value += probe_values[i];
+        value /= ((float)NUM_PROBES);
+
+        #if DEBUG_MESH > 1
+            g_debug("MESH[%d,%d] average=%f",x,y,value);
+        #endif
+
+        #if NUM_PROBES >= 3
+            // throw out the extreme value
+            int max_idx = -1;
+            float max_delta = -1;
+            for (int i=0; i<NUM_PROBES; i++)
+            {
+                float delta = abs(value-probe_values[i]);
+                if (delta > max_delta)
+                {
+                    max_idx = i;
+                    max_delta = delta;
+                }
+            }
+
+            #if DEBUG_MESH > 1
+                g_debug("MESH[%d,%d] throwing out %d:%f",x,y,max_idx,probe_values[max_idx]);
+            #endif
+
+            value = 0;
+            for (int i=0; i<NUM_PROBES; i++)
+            {
+                if (i != max_idx)
+                    value += probe_values[i];
+            }
+            value /= ((float)NUM_PROBES-1);
+
+            #if DEBUG_MESH
+                g_debug("MESH[%d,%d] FINAL AVERAGE=%f",x,y,value);
+            #endif
+        #endif
+    }
 
     *zResult = value;
-    return true;
+    return ok;
 }
 
 
@@ -429,23 +491,23 @@ bool Mesh::doMeshLeveling()
                         #endif
                     }
 
-                    zPullOff();
-                }
+                }   // probeOne() succeeded
                 else
                 {
                     g_debug("MESH: probeOne(%d,%d) failed",x,y);
                     m_in_leveling = false;
                     return false;
                 }
-            }
+            }   // move succeeded
             else
             {
                 g_debug("MESH: moveTo(%d,%d) failed",x,y);
                 m_in_leveling = false;
                 return false;
             }
-        }
-    }
+
+        }   // for x_steps
+    }   // for y_steps
 
     _moveTo(m_mesh_x,m_mesh_y);
 
@@ -479,6 +541,32 @@ void Mesh::invalidateMesh()
 }
 
 
+bool readFloat(File f, float *v)
+{
+    #define MAX_FLOAT  12
+    int len = 0;
+    char buf[MAX_FLOAT+1];
+    int c = f.read();
+    while (c >= 0 &&
+           len < MAX_FLOAT &&
+           c != '\n' &&
+           c != ',')
+    {
+        buf[len++] = c;
+        c = f.read();
+    }
+    buf[len] = 0;
+    if (c >= 0)
+    {
+        float val = atof(buf);
+        // g_debug("read float %s=%f",buf,val);
+        *v = val;
+        return true;
+    }
+    return false;
+}
+
+
 void Mesh::readMesh()
 {
     #if DEBUG_MESH > 1
@@ -489,11 +577,18 @@ void Mesh::readMesh()
 
     if (SPIFFS.exists(MESH_DATA_FILE))
     {
+        bool ok = false;
         File f = SPIFFS.open(MESH_DATA_FILE, "r");
         if (f)
         {
             float header[7];
-            if (f.readBytes((char *)header, 7*sizeof(float)) == 7*sizeof(float))
+            if (readFloat(f,&header[0]) &&
+                readFloat(f,&header[1]) &&
+                readFloat(f,&header[2]) &&
+                readFloat(f,&header[3]) &&
+                readFloat(f,&header[4]) &&
+                readFloat(f,&header[5]) &&
+                readFloat(f,&header[6]))
             {
                 #if DEBUG_MESH > 1
                     g_debug("got Mesh Header x,y,w,h,sx,sy,zp: %5.3f,%5.3f,%5.3f,%5.3f,%1.0f,%1.0f,%5.3f",
@@ -504,6 +599,11 @@ void Mesh::readMesh()
                         header[4],
                         header[5],
                         header[6]);
+                    // g_debug("versus w,h,sx,sy %5.3f,%5.3f,%5.3f,%5.3f",
+                    //     _width,
+                    //     _height,
+                    //     _x_steps,
+                    //     _y_steps);
                 #endif
 
                 if (header[2] == _width &&
@@ -515,68 +615,114 @@ void Mesh::readMesh()
                         g_debug("Mesh Header Valid - reading mesh");
                     #endif
 
+                    ok = true;
+
                     m_mesh_x = header[0];
                     m_mesh_y = header[1];
                     m_zero_point = header[6];
 
-                    for (int y=0; y<_y_steps; y++)
+                    for (int y=0; ok && (y<_y_steps); y++)
                     {
-                        for (int x=0; x<_x_steps; x++)
+                        for (int x=0; ok && (x<_x_steps); x++)
                         {
-                            if (f.readBytes((char *)&m_mesh[x][y], sizeof(float)) != sizeof(float))
+                            if (!readFloat(f,&m_mesh[x][y]))
                             {
-                                g_debug("COULD NOT READ Mesh Header at xy(%d,%d) !!!");
-                                f.close();
-                                invalidateMesh();
-                                return;
-                            }
+                                ok = false;
+                                g_debug("Could not read mesh value(%d,%d)",y,x);                            }
                         }
                     }
 
-                    #if DEBUG_MESH
-                        g_debug("readMesh() VALID!!");
-                    #endif
-                    debug_mesh();
-                    m_is_valid = true;
+                    if (ok)
+                    {
+                        #if DEBUG_MESH
+                            g_debug("readMesh() VALID!!");
+                        #endif
+                        debug_mesh();
+                        m_is_valid = true;
+                    }
                 }
                 else
                 {
                     g_debug("Mesh Header INVALID!!");
-                    f.close();
-                    invalidateMesh();
                 }
             }
+            else
+            {
+                g_debug("Could not read mesh header");
+            }
+
             f.close();
+
+        }   // file opened
+
+        else
+        {
+            g_debug("Could not open %s for reading",MESH_DATA_FILE);
+
         }
-    }
+
+        if (!ok)
+            invalidateMesh();
+
+    }   // file exists
 }
 
+
+
+bool writeFloat(File f, float v, bool newline=true, bool prec_comma=false)
+{
+    char buf[12];
+    sprintf(buf,"%-5.3f",v);
+    if (prec_comma)
+        if (f.print(",") != 1)
+            return false;
+    if (f.print(buf) != strlen(buf))
+        return false;
+    if (newline)
+        if (f.print("\n") != 1)
+            return false;
+    return true;
+}
 
 
 bool Mesh::writeMesh()
 {
     g_debug("writeMesh()");
+    bool ok = false;
     File f = SPIFFS.open(MESH_DATA_FILE, "w");
     if (f)
     {
-        f.write((const unsigned char *)&m_mesh_x, sizeof(float));
-        f.write((const unsigned char *)&m_mesh_y, sizeof(float));
-        f.write((const unsigned char *)&_width,   sizeof(float));
-        f.write((const unsigned char *)&_height,  sizeof(float));
-        f.write((const unsigned char *)&_x_steps, sizeof(float));
-        f.write((const unsigned char *)&_y_steps, sizeof(float));
-        f.write((const unsigned char *)&m_zero_point, sizeof(float));
-        for (int y=0; y<_y_steps; y++)
+        if (writeFloat(f,m_mesh_x) &&
+            writeFloat(f,m_mesh_y) &&
+            writeFloat(f,_width) &&
+            writeFloat(f,_height) &&
+            writeFloat(f,_x_steps) &&
+            writeFloat(f,_y_steps) &&
+            writeFloat(f,m_zero_point))
         {
-            for (int x=0; x<_x_steps; x++)
+            ok = true;
+            for (int y=0;ok && (y<_y_steps); y++)
             {
-                f.write((const unsigned char *)&m_mesh[x][y], sizeof(float));
+                for (int x=0;ok && (x<_x_steps); x++)
+                {
+                    if (!writeFloat(f,m_mesh[x][y],false,x>0))
+                        ok = false;
+                }
+                if (f.print("\n") != 1)
+                    ok = false;
             }
         }
+
         f.close();
-        return true;
+        if (!ok)
+        {
+            g_debug("There was a problem writing to %s",MESH_DATA_FILE);
+            invalidateMesh();
+        }
+        return ok;
     }
-    g_debug("WARNING: Could not open %s for writing. Using default calibration data",MESH_DATA_FILE);
+    g_debug("WARNING: Could not open %s for writing",MESH_DATA_FILE);
+    invalidateMesh();
     return false;
 }
 
@@ -609,12 +755,24 @@ bool user_defined_homing(AxisMask axisMask)
 // implement "kinematics" to shoehorn the mesh into Grbl_Esp32
 //======================================================================
 
+// #include <Uart.h>
+
+
 bool cartesian_to_motors(float* target, plan_line_data_t* pl_data, float* position)
+    // THE REALTIME Z IS POSITIVE TO MOVE THE HEAD UP and NEGATIVE to move the head DOWN
+    // my cut depth was 0.2 and I ended up setting the realtimeZOffset to 0.15, making
+    // my effective cut depth 0.05 .. and that was still deep, but you have to account
+    // for the tip breaking off of the bit in the first few minutes and becoming dull
+    // over an entire run..
+    //
     // given a target and initial position in Machine Coordinates
     // call mc_line() to move to the new position possibly including
     // the mesh z offset
 {
-    float tpos[3];
+    float tpos[6];
+    float new_pos[6];
+    memset(tpos,0,6*sizeof(float));
+    memset(new_pos,0,6*sizeof(float));
     Mesh *mesh = the_machine._mesh;
 
     // if the mesh is not valid, just call a single mc_line()
@@ -623,33 +781,36 @@ bool cartesian_to_motors(float* target, plan_line_data_t* pl_data, float* positi
     if (!mesh->isValid() ||
         sys.state == State::Homing)
     {
-        memcpy(tpos,target,3 * sizeof(float));
+        memcpy(new_pos,target,3 * sizeof(float));
 
         #ifdef FUNKY_REALTIME_STUFF
-            tpos[Z_AXIS] += realtimeZOffset;
+            new_pos[Z_AXIS] += realtimeZOffset;
         #endif
 
-        if (!mc_line(tpos, pl_data))
+        if (!mc_line(new_pos, pl_data))
 			return false;
         return true;
     }
 
+    memcpy(new_pos,position,3 * sizeof(float));
+
 	#if DEBUG_VREVERSE
 		g_debug("C2M from(%5.3f,%5.3f,%5.3f) to (%5.3f,%5.3f,%5.3f)",
-			position[X_AXIS],
-            position[Y_AXIS],
-            position[Z_AXIS],
+			new_pos[X_AXIS],
+            new_pos[Y_AXIS],
+            new_pos[Z_AXIS],
             target[X_AXIS],
             target[Y_AXIS],
             target[Z_AXIS]);
 	#endif
 
+
     // break the x/y portion of the line up into multiple segments
 
 	uint32_t num_segs = 1;
-	float xdist = target[X_AXIS] - position[X_AXIS];
-	float ydist = target[Y_AXIS] - position[Y_AXIS];
-	float zdist = target[Z_AXIS] - position[Z_AXIS];
+	float xdist = target[X_AXIS] - new_pos[X_AXIS];
+	float ydist = target[Y_AXIS] - new_pos[Y_AXIS];
+	float zdist = target[Z_AXIS] - new_pos[Z_AXIS];
 
 	if (!pl_data->motion.rapidMotion && (xdist!=0 || ydist!=0))
 	{
@@ -678,14 +839,14 @@ bool cartesian_to_motors(float* target, plan_line_data_t* pl_data, float* positi
 
 	for (uint32_t seg_num=0; seg_num<num_segs; seg_num++)
 	{
-		position[X_AXIS] += xinc;
-		position[Y_AXIS] += yinc;
-		position[Z_AXIS] += zinc;
+		new_pos[X_AXIS] += xinc;
+		new_pos[Y_AXIS] += yinc;
+		new_pos[Z_AXIS] += zinc;
 
         // we need a working copy of the position
         // so that we don't accumulate zOffsets
 
-        memcpy(tpos,position,3 * sizeof(float));
+        memcpy(tpos,new_pos,3 * sizeof(float));
 
         #ifdef FUNKY_REALTIME_STUFF
             tpos[Z_AXIS] += realtimeZOffset;
@@ -694,8 +855,11 @@ bool cartesian_to_motors(float* target, plan_line_data_t* pl_data, float* positi
         // get the zOffset at the work position
         // and add it to the working copy
 
-        float zoff = mesh->getZOffset(position[X_AXIS],position[Y_AXIS]);
+        float zoff = mesh->getZOffset(new_pos[X_AXIS],new_pos[Y_AXIS]);
         tpos[Z_AXIS] += zoff;
+
+        // to see values in Arduino plotter:
+        // Uart0.printf("%5.3f,%5.3f,%5.3f\r\n",realtimeZOffset,position[Z_AXIS]+24.222,zoff);
 
 		#if DEBUG_VREVERSE>1
 			g_debug("C2M seg(%d) to(%5.3f,%5.3f,%5.3f) zoff=%5.3f",

@@ -79,7 +79,7 @@ class Mesh : public Configuration::Configurable
 
         void init_mesh();
         bool probeOne(int x, int y, float *zResult);
-        bool zPullOff();
+        bool zPullOff(float from);
         void debug_mesh();
 
 
