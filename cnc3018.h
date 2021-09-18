@@ -9,8 +9,8 @@
 // #define G_PIN_TFT_CS             GPIO_NUM_22
 // #define G_PIN_TFT_DC             GPIO_NUM_21
 // #define G_PIN_TOUCH_CS           GPIO_NUM_5
-#define G_PIN_74HC165_CLK         GPIO_NUM_17   // TX2
-#define G_PIN_74HC165_LATCH       GPIO_NUM_16   // RX2
+#define G_PIN_74HC165_CLK         GPIO_NUM_16   // RX2
+#define G_PIN_74HC165_LATCH       GPIO_NUM_17   // TX2
 #define G_PIN_74HC165_DATA        GPIO_NUM_36
 #define G_PIN_SDCARD_CS          GPIO_NUM_4
 
@@ -25,6 +25,22 @@
 #define PIN7_ZLIM        6
 #define PIN7_PROBE       5
 #define PIN7_UNUSED      4
+
+// pin ins to display connector
+//
+// 1 - VCC
+// 2 - TOUCH_CS (GPIO_NUM_15)
+// 3 - SPI_CLK  (GPIO_NUM_18)
+// 4 - SPI_MISO (GPIO_NUM_19)
+// 5 - TFT DC   (GPIO_NUM_21)
+// 6 - TFT CS   (GPIO_NUM_22)
+// 7 - SPI_MOSI (GPIO_NUM_23)
+// 8 - GND
+
+// #define SPI_CLK                  GPIO_NUM_18
+// #define SPI_MISO                 GPIO_NUM_19
+// #define SPI_MOSI                 GPIO_NUM_23
+
 
 #define PROBE_SWITCH_MASK (1<<PIN7_PROBE)
 
