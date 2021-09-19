@@ -30,7 +30,7 @@
 //----------------------------------------------------------
 // get g_debug from UI library if present, if not, implement it
 
-#if 0          // 0=no UI, 1=with UI
+#if 1          // 0=no UI, 1=with UI
 
     #include <Grbl_MinUI.h>
 

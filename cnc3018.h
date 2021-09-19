@@ -27,9 +27,8 @@
 #define PIN7_UNUSED      4
 
 // pin ins to display connector
-//
 // 1 - VCC
-// 2 - TOUCH_CS (GPIO_NUM_15)
+// 2 - TOUCH_CS (GPIO_NUM_5)
 // 3 - SPI_CLK  (GPIO_NUM_18)
 // 4 - SPI_MISO (GPIO_NUM_19)
 // 5 - TFT DC   (GPIO_NUM_21)
@@ -37,14 +36,49 @@
 // 7 - SPI_MOSI (GPIO_NUM_23)
 // 8 - GND
 
+// pin ins to sdcard connector
+// 1 - VCC      (3.3v)
+// 2 - CS       (GPIO_NUM_4)
+// 3 - SPI_MOSI (GPIO_NUM_32)
+// 4 - SPI_CLK  (GPIO_NUM_18)
+// 5 - SPI_MISO (GPIO_NUM_19)
+// 6 - GND
+
 // #define SPI_CLK                  GPIO_NUM_18
 // #define SPI_MISO                 GPIO_NUM_19
 // #define SPI_MOSI                 GPIO_NUM_23
 
 
+// HOOK UP TO ILI9486 rPI "generic" TS with XPT2056
+// from BOTTOM of screen with connector in TOP LEFT corner
+// pin "1" would be the top right pin
+
+//         2 - 5V                    1 - 3.3V
+//         4 - 5V                    3 - x
+//         6 - GND                   5 - x
+//         8 - x                     7 - x
+//        10 - x                     9 - GND
+//        12 - x                    11 - TP IRQ (unused)
+//        14 - GND                  13 - x
+//        16 - x                    15 - x
+//        18 - LCD_RS (DC)          17 - 3.3V
+//        20 - GND                  19 - LCD/TP_SI  (MOSI)
+//        22 - RST                  21 - TP_SO      (MISO)
+//        24 - LCD_CS (TFT_CS)      23 - LCD/TP_SCK (CLK)
+//        26 - TP_CS                25 - GND
+//
+//
+//
+//
+
+
+
+
 #define PROBE_SWITCH_MASK (1<<PIN7_PROBE)
 
 extern void g_debug(const char *format, ...);
+
+
 
 
 
