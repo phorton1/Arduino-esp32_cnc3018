@@ -1,14 +1,15 @@
 
 #include "cnc3018.h"
 #include "v2812b.h"
-#include <Grbl.h>
-#include <Config.h>
-#include <GLimits.h>
-#include <MotionControl.h>
-#include <SDCard.h>
-#include <Serial.h>
-#include <System.h>
-#include <Machine/Axes.h>
+
+#include <Config.h>            // FluidNC
+#include <GLimits.h>           // FluidNC
+#include <MotionControl.h>     // FluidNC
+#include <Protocol.h>          // FluidNC
+#include <SDCard.h>            // FluidNC
+#include <Serial.h>            // FluidNC
+#include <System.h>            // FluidNC
+#include <Machine/Axes.h>      // FluidNC
 
 // denormalized (copy) of getJobState() from Grbl_minUI
 
@@ -155,7 +156,7 @@ uint8_t read_switches()
 
 		// text debugging
 
-		if (sys_probe_state != ProbeState::Active &&
+		if (probeState != ProbeState::Active &&
 			!the_machine._mesh->inLeveling())
 		{
 			for (int i=0; i<8; i++)
@@ -176,10 +177,10 @@ uint8_t read_switches()
 
 		if ((zero_val || lim_val) && sys.state != State::Homing)
 		{
-			if (sys_probe_state != ProbeState::Active)
+			if (probeState != ProbeState::Active)
 				log_debug("Limit Switch State " << String(switches, HEX));
 			mc_reset();                                // Initiate system kill.
-			sys_rt_exec_alarm = ExecAlarm::HardLimit;  // Indicate hard limit critical event
+			rtAlarm = ExecAlarm::HardLimit;  // Indicate hard limit critical event
 		}
 
 		prev_switches = switches;
@@ -218,7 +219,7 @@ void switchTask(void* pvParameters)
 
 		// suppress switch reading while in probe mode
 
-		if (sys_probe_state != ProbeState::Active)
+		if (probeState != ProbeState::Active)
 		{
 			read_switches();
 
@@ -235,7 +236,7 @@ void switchTask(void* pvParameters)
 		cJobState job_state = C_JOB_IDLE;
 
 		SDCard *sdCard = config->_sdCard;
-		if (sys_probe_state == ProbeState::Active)
+		if (probeState == ProbeState::Active)
 			job_state = C_JOB_PROBE;
 		else if (sys.state == State::Homing)
 			job_state = C_JOB_HOMING;
@@ -243,7 +244,7 @@ void switchTask(void* pvParameters)
 			job_state = C_JOB_ALARM;
 		else if (sys.state == State::Hold)
 			job_state = C_JOB_HOLD;
-		else if (sdCard && sdCard->get_state(false) == SDCard::State::Busy)
+		else if (sdCard && sdCard->get_state() == SDCard::State::Busy)
 			job_state = C_JOB_BUSY;
 		else
 			job_state = C_JOB_IDLE;

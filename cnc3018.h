@@ -3,7 +3,7 @@
 #pragma once
 
 
-#include <Machine/MachineConfig.h>
+#include <Machine/MachineConfig.h>  // FluidCNC
 #include "Mesh.h"
 
 #define G_PIN_LEDS_OUT            GPIO_NUM_12

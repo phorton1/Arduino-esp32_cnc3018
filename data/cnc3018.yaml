@@ -15,7 +15,6 @@ stepping:
     disable_delay_us: 0
 
 axes:
-    number_axis: 3
     shared_stepper_disable: gpio.25
         # :low
         
@@ -30,7 +29,8 @@ axes:
         # hard_limits: true
         # done manually in switches.cpp
         
-        gang0:
+        motor0:
+            pulloff: 5
             standard_stepper:
                 step: gpio.13
                 direction: gpio.14
@@ -39,7 +39,6 @@ axes:
             cycle: 2
             seek_rate: 2000
             feed_rate: 300
-            pulloff: 5
             positive_direction: false
 
             
@@ -50,7 +49,8 @@ axes:
         max_travel: 174
         # soft_limits: false
         # hard_limits: true
-        gang0:
+        motor0:
+            pulloff: 5
             standard_stepper:
                 step: gpio.27
                 direction: gpio.26:low
@@ -58,7 +58,6 @@ axes:
             cycle: 2
             seek_rate: 2000
             feed_rate: 300
-            pulloff: 5
             positive_direction: false
             
     z:
@@ -67,7 +66,8 @@ axes:
         acceleration: 40
         max_travel: 1000
         # soft_limits: false
-        gang0:
+        motor0:
+            pulloff: 5
             standard_stepper:
                 step: gpio.33
                 direction: gpio.32
@@ -77,7 +77,6 @@ axes:
             cycle: 1
             seek_rate: 200
             feed_rate: 80
-            pulloff: 5
             # positive_direction: false
             
 # Setup for On/Off Spindle
@@ -107,17 +106,13 @@ comms:
         ssid: GRBL_ESP32
 
 spi:
-    # ESP32_GRBL makes the assumption that the SDCard uses the
-    # "default" SPI CS pin.  What I am REALLY doing here is
-    # telling it the CS for the SDCard (and using the standard)
-    # defaults for the other pins) but you need to include
-    # all four (or none) pin definitions in this spi yaml section.
-    
+    # one has to tell FluidNC the default ESP32 SPI pins!
     miso: gpio.19
     mosi: gpio.23
     sck: gpio.18
+    
+sdcard:
+    # and then one can specify the specific cs used for the SDCard
     cs: gpio.4
-    
-
-    
+    card_detect: NO_PIN
   

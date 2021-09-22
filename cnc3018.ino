@@ -6,8 +6,9 @@
 // m6 t1 = tool change to tool #1
 
 
-#include <Grbl.h>           // for grbl_init() and run_once()
-#include <Logging.h>        // for log_debug()
+#include <FluidNC.h>
+#include <Logging.h>        // FluidNC
+
 #include "cnc3018.h"
 #include "v2812b.h"
 
@@ -21,8 +22,8 @@
 #endif
 
 #ifdef INIT_SD_AGAIN
-    #include <Machine/MachineConfig.h>
-    #include <SDCard.h>
+    #include <Machine/MachineConfig.h>  // FluidNC
+    #include <SDCard.h>                 // FluidNC
 #endif
 
 
@@ -95,8 +96,8 @@
 			// SDState::Idle it is considered busy. They then call
 			// SD.end() after each transaction.
 
-			g_debug("starting sdCard on yaml pin(%s)",config->_spi->_cs.name());
-			SDCard::State state = config->_sdCard->get_state(true);
+			g_debug("starting sdCard from yaml configuration");
+			SDCard::State state = config->_sdCard->begin(SDCard::State::Idle);
 			// info_debug("machine_init() get_sd_state() returned %d",state);
 			if (state == SDCard::State::NotPresent)
 			{
@@ -149,7 +150,7 @@ void setup()
         bool sd_ok = SD.begin(G_PIN_SDCARD_CS);
     #endif
 
-    grbl_init();
+    main_init();
 
         pixels.setPixelColor(1,MY_LED_GREEN);
         pixels.show();

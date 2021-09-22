@@ -22,14 +22,17 @@
 #include "cnc3018.h"
 #include "mesh.h"
 
-#include <Serial.h>
-#include <Report.h>
-#include <Logging.h>
-#include <System.h>
-#include <GCode.h>
-#include <Protocol.h>
-#include <Machine/MachineConfig.h>
-#include <MotionControl.h>
+#include <GCode.h>                              // FluidNC
+#include <Logging.h>                            // FluidNC
+#include <MotionControl.h>                      // FluidNC
+#include <Protocol.h>                           // FluidNC
+#include <Report.h>                             // FluidNC
+#include <Serial.h>                             // FluidNC
+#include <System.h>                             // FluidNC
+#include <Uart.h>                               // FluidNC
+#include <Configuration/RuntimeSetting.h>       // FluidNC
+#include <Machine/MachineConfig.h>              // FluidNC
+
 #include <SPIFFS.h>
 #include <FS.h>
 
@@ -69,7 +72,7 @@ Mesh::Mesh()
 }
 
 
-#include <Configuration/RuntimeSetting.h>
+
 
 void Mesh::group(Configuration::HandlerBase& handler) // override
 {
@@ -283,10 +286,10 @@ static bool _mesh_execute(char *buf)
         g_debug("MESH: _mesh_execute(%s)",buf);
     #endif
 
-    Error rslt = gc_execute_line(buf, CLIENT_SERIAL);
+    Error rslt = gc_execute_line(buf, Uart0);
     if (rslt != Error::Ok)
     {
-        report_status_message(rslt, CLIENT_ALL);
+        report_status_message(rslt, allClients);
         g_debug("MESH: gc_execute_line failed");
         return false;
     }
@@ -334,7 +337,7 @@ bool Mesh::zPullOff(float from) // move z upwards relative, check that probe goe
         if (config->_probe->tripped())
         {
             g_debug("MESH: zPullOff() failed!");
-            sys_rt_exec_alarm = ExecAlarm::HomingFailPulloff;
+            rtAlarm = ExecAlarm::HomingFailPulloff;
             return false;
         }
     }
@@ -371,10 +374,10 @@ bool Mesh::probeOne(int x, int y, float *zResult)
     while (ok && probe_num < NUM_PROBES)
     {
         float value = 0;
-        Error rslt = gc_execute_line(buf, CLIENT_SERIAL);
+        Error rslt = gc_execute_line(buf, Uart0);
         if (rslt == Error::Ok)
         {
-            value = system_convert_axis_steps_to_mpos(sys_probe_position,Z_AXIS);
+            value = steps_to_mpos(probe_steps[Z_AXIS],Z_AXIS);
             #if DEBUG_MESH > 1
                 g_debug("MESH[%d,%d] probe[%d]=%f",x,y,probe_num,value);
             #endif
@@ -383,7 +386,7 @@ bool Mesh::probeOne(int x, int y, float *zResult)
         else
         {
             ok = false;
-            report_status_message(rslt, CLIENT_ALL);
+            report_status_message(rslt, allClients);
             g_debug("MESH: probeOne() gc_execute_line failed");
         }
         zPullOff(value);
@@ -454,8 +457,8 @@ bool Mesh::doMeshLeveling()
     }
     sys.state = State::Idle;        // turn of "homing" flag!!
 
-    m_mesh_x = system_convert_axis_steps_to_mpos(sys_position,X_AXIS);
-    m_mesh_y = system_convert_axis_steps_to_mpos(sys_position,Y_AXIS);
+    m_mesh_x = steps_to_mpos(motor_steps[X_AXIS],X_AXIS);
+    m_mesh_y = steps_to_mpos(motor_steps[Y_AXIS],Y_AXIS);
 
     #if DEBUG_MESH
         g_debug("MESH: doMeshLeveling(%5.3f,%5.3f)",m_mesh_x,m_mesh_y);

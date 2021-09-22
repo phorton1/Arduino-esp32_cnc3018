@@ -5,7 +5,7 @@
 #pragma once
 
 #include "cnc3018.h"
-#include <Probe.h>
+#include <Probe.h>              // FluidNC
 
 
 class myProbe : public Probe

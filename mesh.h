@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Configuration/Configurable.h"
+#include <Configuration/Configurable.h> // FluidNC
 
 // maximum mesh is big enough for 20mm grid on 3018 machine
 // and occupies about 1/2K of memory
