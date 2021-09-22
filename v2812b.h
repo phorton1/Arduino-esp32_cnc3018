@@ -5,20 +5,23 @@
 
 #pragma once
 
-#define WITH_V2812B
-
-#ifdef WITH_V2812B
-    // if this is defined, a neopixel strip is expected on
-    // V_LIMIT_LED_PIN.  Otherwise a single RED led is
-    // expected.
-
-#define NUM_PIXELS         4
-#define PIXEL_LEFT_SENSOR  3
-#define PIXEL_RIGHT_SENSOR 2
-#define PIXEL_SYS_LED      0
-
 #include <Adafruit_NeoPixel.h>
 
-extern Adafruit_NeoPixel pixels;
+#define PIXEL_SYS_STATE   0
+#define PIXEL_X_STATE     1
+#define PIXEL_Y_STATE     2
+#define PIXEL_Z_STATE     3
+#define PIXEL_PROBE_STATE 4
 
-#endif  // WITH_V2812B
+#define NUM_PIXELS        5
+
+#define MY_LED_BLACK    0x000000
+#define MY_LED_RED      0x440000
+#define MY_LED_GREEN    0x003300
+#define MY_LED_BLUE     0x000044
+#define MY_LED_CYAN     0x003333
+#define MY_LED_YELLOW   0x333300
+#define MY_LED_MAGENTA  0x330033
+#define MY_LED_WHITE    0x000044
+
+extern Adafruit_NeoPixel pixels;

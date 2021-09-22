@@ -9,6 +9,7 @@
 #include <Grbl.h>           // for grbl_init() and run_once()
 #include <Logging.h>        // for log_debug()
 #include "cnc3018.h"
+#include "v2812b.h"
 
 
 #define INIT_SD_DURING_SETUP
@@ -138,7 +139,11 @@
 
 void setup()
 {
+    pixels.show();
     delay(2000);
+
+        pixels.setPixelColor(0,MY_LED_GREEN);
+        pixels.show();
 
     #ifdef INIT_SD_DURING_SETUP
         bool sd_ok = SD.begin(G_PIN_SDCARD_CS);
@@ -146,15 +151,26 @@ void setup()
 
     grbl_init();
 
+        pixels.setPixelColor(1,MY_LED_GREEN);
+        pixels.show();
+
     #ifdef INIT_SD_DURING_SETUP
         g_debug("cnc3018.ino SD.begin() %s during setup()",sd_ok?"WORKED OK":"FAILED");
     #endif
+
 
     #ifdef INIT_SD_AGAIN
         debug_start_sdcard();
     #endif
 
+        pixels.setPixelColor(2,MY_LED_GREEN);
+        pixels.show();
+
     the_machine._mesh->readMesh();
+
+        pixels.setPixelColor(3,MY_LED_GREEN);
+        pixels.show();
+
     init_switches();
 
     g_debug("cnc3018.ino setup(core %d) completed %d/%dK",

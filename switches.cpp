@@ -1,20 +1,55 @@
 
 #include "cnc3018.h"
-#include <Grbl.h>
 #include "v2812b.h"
+#include <Grbl.h>
+#include <Config.h>
 #include <GLimits.h>
-#include <Machine/Axes.h>
-#include <System.h>
 #include <MotionControl.h>
+#include <SDCard.h>
 #include <Serial.h>
+#include <System.h>
+#include <Machine/Axes.h>
 
+// denormalized (copy) of getJobState() from Grbl_minUI
 
-uint32_t test_colors[4] = {
-    0x440000,
-    0x003300,
-    0x000044,
-    0x330033,
+typedef enum cJobState
+{
+    C_JOB_NONE,
+    C_JOB_IDLE,
+    C_JOB_BUSY,
+    C_JOB_HOLD,
+    C_JOB_HOMING,
+	C_JOB_PROBE,
+    C_JOB_ALARM
 };
+
+const char *cJobStateName(cJobState job_state)
+{
+    switch (job_state)
+    {
+        case C_JOB_NONE   : return "";
+        case C_JOB_IDLE   : return "IDLE";
+        case C_JOB_BUSY   : return "BUSY";
+        case C_JOB_HOLD   : return "HOLD";
+        case C_JOB_HOMING : return "HOMING";
+		case C_JOB_PROBE  : return "PROBE";
+        case C_JOB_ALARM  : return "ALARM";
+    }
+    return "UNKNOWN_JOB_STATE";
+}
+
+void setLedJobState(cJobState job_state)
+{
+	pixels.setPixelColor(PIXEL_SYS_STATE,
+		job_state == C_JOB_ALARM ? MY_LED_RED :
+		job_state == C_JOB_HOLD ? MY_LED_CYAN :
+		job_state == C_JOB_PROBE ? MY_LED_MAGENTA :
+		job_state == C_JOB_HOMING ? MY_LED_YELLOW :
+		job_state == C_JOB_BUSY ? MY_LED_YELLOW :
+		MY_LED_BLUE	);
+}
+
+
 
 Adafruit_NeoPixel pixels(NUM_PIXELS,G_PIN_LEDS_OUT);
 
@@ -67,25 +102,58 @@ uint8_t read_switches()
 	// hence we invert the bit pattern here
 
 	switches = ~switches;
-
-	uint8_t zero_val = 0;
-	uint8_t lim_val  = 0;
-
-	if (switches & (1 << PIN7_XZERO)) zero_val |= 1;
-	if (switches & (1 << PIN7_YZERO)) zero_val |= 2;
-	if (switches & (1 << PIN7_ZZERO)) zero_val |= 4;
-	if (switches & (1 << PIN7_XLIM)) lim_val |= 1;
-	if (switches & (1 << PIN7_YLIM)) lim_val |= 2;
-	if (switches & (1 << PIN7_ZLIM)) lim_val |= 4;
-
-	Machine::Axes::negLimitMask = zero_val;
-	Machine::Axes::posLimitMask = lim_val;
-
-	// change detection
-
 	if (prev_switches != switches)
 	{
-		// display debugging ONLY if not in probe state
+		bool show_leds = 0;
+		uint8_t zero_val = 0;
+		uint8_t lim_val  = 0;
+
+		if (switches & (1 << PIN7_XZERO)) zero_val |= 1;
+		if (switches & (1 << PIN7_YZERO)) zero_val |= 2;
+		if (switches & (1 << PIN7_ZZERO)) zero_val |= 4;
+		if (switches & (1 << PIN7_XLIM)) lim_val |= 1;
+		if (switches & (1 << PIN7_YLIM)) lim_val |= 2;
+		if (switches & (1 << PIN7_ZLIM)) lim_val |= 4;
+
+		if (Machine::Axes::negLimitMask != zero_val ||
+			Machine::Axes::posLimitMask != lim_val)
+		{
+			Machine::Axes::negLimitMask = zero_val;
+			Machine::Axes::posLimitMask = lim_val;
+
+			show_leds = true;
+
+			pixels.setPixelColor(PIXEL_X_STATE,
+				(zero_val & 1) && (lim_val & 1) ? MY_LED_YELLOW :
+				(zero_val & 1) ? MY_LED_MAGENTA :
+				(lim_val & 1)  ? MY_LED_RED :
+				MY_LED_BLACK);
+			pixels.setPixelColor(PIXEL_Y_STATE,
+				(zero_val & 2) && (lim_val & 2) ? MY_LED_YELLOW :
+				(zero_val & 2) ? MY_LED_MAGENTA :
+				(lim_val & 2)  ? MY_LED_RED :
+				MY_LED_BLACK);
+			pixels.setPixelColor(PIXEL_Z_STATE,
+				(zero_val & 4) && (lim_val & 1) ? MY_LED_YELLOW :
+				(zero_val & 4) ? MY_LED_MAGENTA :
+				(lim_val & 4)  ? MY_LED_RED :
+				MY_LED_BLACK);
+		}
+
+		static bool last_probe = false;
+		bool probe = switches & (1<<PIN7_PROBE);
+		if (last_probe != probe)
+		{
+			last_probe = probe;
+			pixels.setPixelColor(PIXEL_PROBE_STATE,
+				probe ? MY_LED_MAGENTA : MY_LED_BLACK);
+			show_leds = true;
+		}
+
+		if (show_leds)
+			pixels.show();
+
+		// text debugging
 
 		if (sys_probe_state != ProbeState::Active &&
 			!the_machine._mesh->inLeveling())
@@ -113,9 +181,11 @@ uint8_t read_switches()
 			mc_reset();                                // Initiate system kill.
 			sys_rt_exec_alarm = ExecAlarm::HardLimit;  // Indicate hard limit critical event
 		}
-	}
 
-	prev_switches = switches;
+		prev_switches = switches;
+
+	}	// a switch changed
+
 	return switches;
 }
 
@@ -130,6 +200,9 @@ void switchTask(void* pvParameters)
 
     g_debug("switchTask running on core %d at priority %d",xPortGetCoreID(),uxTaskPriorityGet(NULL));
 
+	pixels.setPixelColor(0,MY_LED_BLUE);
+	pixels.show();
+
 	// bypass yaml and set axes that have limit switches explicitly
 	// need at least one set for the grbl_esp32 limit check task to run
 	// though, perhaps it would be better to just "do what it does" here,
@@ -143,21 +216,6 @@ void switchTask(void* pvParameters)
     {
         vTaskDelay(50 / portTICK_PERIOD_MS);
 
-        #if 0
-			static uint32_t last_time = 0;
-			if (millis() > last_time + 2000)
-			{
-				last_time = millis();
-				static int pix_num = 0;
-				pixels.setPixelColor(0, test_colors[(pix_num + 0) % 4]);
-				pixels.setPixelColor(1, test_colors[(pix_num + 1) % 4]);
-				pixels.setPixelColor(2, test_colors[(pix_num + 2) % 4]);
-				pixels.setPixelColor(3, test_colors[(pix_num + 3) % 4]);
-				pixels.show();
-				pix_num++;
-			}
-		#endif
-
 		// suppress switch reading while in probe mode
 
 		if (sys_probe_state != ProbeState::Active)
@@ -166,6 +224,62 @@ void switchTask(void* pvParameters)
 
 			// float z_pos = system_convert_axis_steps_to_mpos(sys_position,Z_AXIS);
 			// Uart0.println(z_pos);
+		}
+
+		// set the job_state
+		// denormalized (copy) of getJobState() from Grbl_minUI
+
+		static bool led_on = false;
+		static uint32_t led_flash = 0;
+		static cJobState last_job_state = C_JOB_IDLE;
+		cJobState job_state = C_JOB_IDLE;
+
+		SDCard *sdCard = config->_sdCard;
+		if (sys_probe_state == ProbeState::Active)
+			job_state = C_JOB_PROBE;
+		else if (sys.state == State::Homing)
+			job_state = C_JOB_HOMING;
+		else if (sys.state == State::Alarm)
+			job_state = C_JOB_ALARM;
+		else if (sys.state == State::Hold)
+			job_state = C_JOB_HOLD;
+		else if (sdCard && sdCard->get_state(false) == SDCard::State::Busy)
+			job_state = C_JOB_BUSY;
+		else
+			job_state = C_JOB_IDLE;
+
+		if (last_job_state != job_state)
+		{
+			g_debug("cJobState changed to %s",cJobStateName(job_state));
+			last_job_state = job_state;
+			setLedJobState(job_state);
+			if (job_state == C_JOB_ALARM ||
+				job_state == C_JOB_PROBE ||
+				job_state == C_JOB_HOMING)
+			{
+				led_flash = millis();
+				led_on = true;
+			}
+			else
+			{
+				led_flash = 0;
+			}
+			pixels.show();
+		}
+		else if (led_flash && millis() > led_flash + 300)
+		{
+			led_flash = millis();
+			if (led_on)
+			{
+				led_on = 0;
+				pixels.setPixelColor(PIXEL_SYS_STATE, MY_LED_BLACK);
+			}
+			else
+			{
+				led_on = 1;
+				setLedJobState(job_state);
+			}
+			pixels.show();
 		}
 
 		// note any changes to realtimeZOffset;
@@ -184,7 +298,6 @@ void switchTask(void* pvParameters)
 
 
 
-
 void init_switches()
 {
     pinMode(G_PIN_74HC165_DATA, INPUT);
@@ -193,6 +306,11 @@ void init_switches()
     digitalWrite(G_PIN_74HC165_CLK, LOW);
 
     pixels.setBrightness(20);
+	for (int i=0; i<NUM_PIXELS; i++)
+	{
+		pixels.setPixelColor(i,MY_LED_BLACK);
+	}
+	pixels.show();
 
 	xTaskCreatePinnedToCore(
 		switchTask,		// method

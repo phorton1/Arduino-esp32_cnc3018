@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include <Machine/MachineConfig.h>
 #include "Mesh.h"
 
@@ -67,19 +68,11 @@
 //        24 - LCD_CS (TFT_CS)      23 - LCD/TP_SCK (CLK)
 //        26 - TP_CS                25 - GND
 //
-//
-//
-//
-
-
 
 
 #define PROBE_SWITCH_MASK (1<<PIN7_PROBE)
 
 extern void g_debug(const char *format, ...);
-
-
-
 
 
 class cnc3018 : public Machine::MachineConfig
