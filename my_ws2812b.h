@@ -25,3 +25,4 @@
 #define MY_LED_WHITE    0x000044
 
 extern Adafruit_NeoPixel pixels;
+    // in switches.cpp

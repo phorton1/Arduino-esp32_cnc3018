@@ -1,6 +1,6 @@
 
 #include "cnc3018.h"
-#include "v2812b.h"
+#include "my_ws2812b.h"
 
 #include <Config.h>            // FluidNC
 #include <GLimits.h>           // FluidNC
@@ -10,6 +10,14 @@
 #include <Serial.h>            // FluidNC
 #include <System.h>            // FluidNC
 #include <Machine/Axes.h>      // FluidNC
+
+
+
+Adafruit_NeoPixel pixels(NUM_PIXELS,G_PIN_LEDS_OUT);
+
+static uint8_t prev_switches = 0x00;		// pulled up, swtich=ground
+
+
 
 // denormalized (copy) of getJobState() from Grbl_minUI
 
@@ -52,11 +60,6 @@ void setLedJobState(cJobState job_state)
 
 
 
-Adafruit_NeoPixel pixels(NUM_PIXELS,G_PIN_LEDS_OUT);
-
-
-
-
 const char *switchName(int i)
 {
 	switch (i)
@@ -74,10 +77,11 @@ const char *switchName(int i)
 }
 
 
+//---------------------------
+// switches
+//---------------------------
 
 
-
-static uint8_t prev_switches = 0x00;		// pulled up, swtich=ground
 
 uint8_t get_switches()
 	// returns the last cached switch value so safe
