@@ -3,6 +3,7 @@
 #include "cnc3018.h"
 #include "myProbe.h"
 #include <YamlOverrides.h>
+	// can be commented out to disable extension
 
 #define DEBUG_YAML 	0
 
