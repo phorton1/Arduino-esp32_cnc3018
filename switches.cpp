@@ -209,7 +209,7 @@ void switchTask(void* pvParameters)
 	pixels.show();
 
 	// bypass yaml and set axes that have limit switches explicitly
-	// need at least one set for the grbl_esp32 limit check task to run
+	// need at least one set for the FluidNC limit check task to run
 	// though, perhaps it would be better to just "do what it does" here,
 	// or make limits_get_state() weakly bound and override it here instead
 	// of a task. For now dueling tasks works ok.
@@ -324,5 +324,5 @@ void init_switches()
 		NULL,			// parameters
 		1,  			// priority
 		NULL,			// returned handle
-		0);				// core 1=main Grbl_Esp32 thread/task, 0=my UI and other tasks
+		0);				// core 1=main FluidNC thread/task, 0=my UI and other tasks
 }

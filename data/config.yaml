@@ -1,93 +1,118 @@
-name: "ESP32 Dev Controller V4"
-board: "ESP32 Dev Controller V4"
-yaml_wiki: "https://github.com/bdring/Grbl_Esp32/wiki/YAML-Config-File"
+
+name: "cnc3018"
+board: "cnc3018 Dev Board"
+
+homing_init_lock: false
 
 stepping:
-  engine: RMT
-  idle_ms: 250
-  dir_delay_us: 1
-  pulse_us: 2
-  disable_delay_us: 0
-
-homing_init_lock: true
+    engine: RMT
+    idle_ms: 250
+        # this one is important, I thought there was a bug
+        # but they changed the names and level of these yaml
+        # settings so the idle_ms was 255 which means "don't"
+    pulse_us: 2
+    dir_delay_us: 1
+    disable_delay_us: 0
 
 axes:
-  number_axis: 3
-  shared_stepper_disable: gpio.13:high
-  
-  x:
-    steps_per_mm: 1500
-    max_rate: 50000
-    steps_per_mm: 800
-    max_rate: 5000
-    acceleration: 100
-    max_travel: 10
-    homing:
-      cycle: 1
-      mpos: 10
-      positive_direction: true
-      feed_rate: 100.000
-      seek_rate: 200.000
-      debounce_ms: 500
-      pulloff: 1.000
-      square: true
-    
-    gang0:
-      endstops:
-        limit_pos: gpio.17:low:pu
-        hard_limits: false
-      stepstick:
-        direction: gpio.14
-        step: gpio.12
-    gang1:
-      null_motor:
-
-  y:
-    steps_per_mm: 800
-    max_rate: 2000
-    acceleration: 25
-    max_travel: 10
-    homing:
-      cycle: 2
-      mpos: 10
-      positive_direction: false
-      feed_rate: 50.000
-      seek_rate: 200.000
-      debounce_ms: 500
-      pulloff: 1.00
-
-    gang0:
-      endstops:
-        limit_all: gpio.4:low:pu
-        hard_limits: false
-      stepstick:
-        direction: gpio.15
-        step: gpio.26
-    gang1:
-      endstops:
-        limit_all: gpio.16:low:pu
-        hard_limits: true
-      stepstick:
-        direction: gpio.33
-        step: gpio.27
-
-  
-
-comms:
-    wifi_ap:
-        ip_address: "192.168.0.1"
-        ssid: GRBL_ESP32
+    shared_stepper_disable: gpio.25
+        # :low
         
-probe:
-    pin: gpio.32:low:pu
+    x:
+        steps_per_mm: 400
+        max_rate: 2000
+        acceleration: 40
+        max_travel: 299
+        
+        # soft_limits: false
+        # not needed
+        # hard_limits: true
+        # done manually in switches.cpp
+        
+        motor0:
+            pulloff: 5
+            standard_stepper:
+                step: gpio.13
+                direction: gpio.14
+
+        homing:
+            cycle: 2
+            seek_rate: 2000
+            feed_rate: 300
+            positive_direction: false
+
+            
+    y:
+        steps_per_mm: 400
+        max_rate: 2000
+        acceleration: 40
+        max_travel: 174
+        # soft_limits: false
+        # hard_limits: true
+        motor0:
+            pulloff: 5
+            standard_stepper:
+                step: gpio.27
+                direction: gpio.26:low
+        homing:
+            cycle: 2
+            seek_rate: 2000
+            feed_rate: 300
+            positive_direction: false
+            
+    z:
+        steps_per_mm: 400
+        max_rate: 200
+        acceleration: 40
+        max_travel: 1000
+        # soft_limits: false
+        motor0:
+            pulloff: 5
+            standard_stepper:
+                step: gpio.33
+                direction: gpio.32
+                # :low
+                
+        homing:
+            cycle: 1
+            seek_rate: 200
+            feed_rate: 80
+            # positive_direction: false
+            
+# Setup for On/Off Spindle
+# 
+# OnOff:
+#     enable_pin: gpio.2
+
+
+# Setup for PWM Spindle
 
 PWM:
-  pwm_freq: 5000
-  output_pin: gpio.2:low
-  zero_speed_with_disable: true
-  enable_pin: gpio.21
-  spinup_ms: 1000
-  spindown_ms: 1000
-  speeds: 0=0% 1000=100%
-  tool: 0
+    output_pin: gpio.2
+    # enable_pin: gpio.22
+    pwm_freq: 1000
+    
+    # 976
+    # setup so that 0=0 duty, and 1..100 == 50..100 duty
+    # so that (a) I am using "percent" of spindle speed
+    # and (b) protecting my lame IRF9450 circuit
+    speeds: 0=0% 1=40% 100=100%
+            
+comms:
+    wifi_sta:
+        ssid: THX36
+    wifi_ap:
+        ip_address: "192.168.0.1"
+        ssid: FluidNC
 
+spi:
+    # one has to tell FluidNC the default ESP32 SPI pins!
+    miso: gpio.19
+    mosi: gpio.23
+    sck: gpio.18
+    
+sdcard:
+    # and then one can specify the specific cs used for the SDCard
+    cs: gpio.4
+    card_detect: NO_PIN
+  

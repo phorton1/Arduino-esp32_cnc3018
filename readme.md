@@ -12,7 +12,7 @@ make a variety of machines, including ordering two copies of the cheapest chines
 machines I could find.
 
 I had already long ago decided that I was going to use the ESP32 and (at that
-time) the Grbl_ESP32 codebase for my machines.   The lure of a $5 dual processor
+time) the Grbl_Esp32 codebase for my machines.   The lure of a $5 dual processor
 240Mhz SBC with Wifi and BT is just too much!   No way was I gonna use the Arduino
 based controller that came with the machines.  So I was thinking about that the
 entire time I was developing the vMachine.

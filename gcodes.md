@@ -50,7 +50,7 @@ _-0.100z
 - MG1 **G38.2** - Probe Contact Toward workpiece SignalError=No
 - MG1 **G38.3** - Probe No Contact Away from workpiece [SignalError=Yes]
 - MG1 **G38.4** - Probe No Contact Away from workpiece [SignalError=No] - appears to
-  be implemented smae as G38.3 in Grbl_Esp32
+  be implemented smae as G38.3 in FluidNC
 - MG7 **G40** - Cutter Radius Compensation Off (compensation itself is not supported)
 - MG8 **G43** - Tool Length Offset
 - MG8 **G43.1** - Tool Length Offset
@@ -89,7 +89,7 @@ _-0.100z
 
 - Probe result values are available in global variables or via Serial Report
   but *not* via the documented #5070 etc "parameters" as # parameters are
-  not supported in Grbl_Esp32.
+  not supported in FluidNC.
 
 - Coolant M7 and M8 may be active at same time*
 
@@ -100,10 +100,10 @@ _-0.100z
 - **G10 L2 Pn Xx Yy Zz** - Set coordinate system absolute
   where 'n' is the coordinate system 1..6 corresponding
   to G54..G59
-  - G59.x and [R] not supported in Grbl_Esp32
+  - G59.x and [R] not supported in FluidNC
 - **G10 L20 Pn Xx Yy Zz** - Set coordinate system "such that'
   x,y,z becomes the current position
-  - G59.x and [R] not supported in Grbl_Esp32
+  - G59.x and [R] not supported in FluidNC
 - **G28, G30** - Go to Predefined Position
 - **G28.1, G30.1** - Store Predefined Position
 - **G53** - Move in Absolute Coordinates

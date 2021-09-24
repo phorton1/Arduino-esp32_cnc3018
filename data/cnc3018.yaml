@@ -103,7 +103,7 @@ comms:
         ssid: THX36
     wifi_ap:
         ip_address: "192.168.0.1"
-        ssid: GRBL_ESP32
+        ssid: FluidNC
 
 spi:
     # one has to tell FluidNC the default ESP32 SPI pins!

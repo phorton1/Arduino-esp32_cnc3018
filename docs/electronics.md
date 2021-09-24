@@ -1,13 +1,13 @@
-# ESP32 cnc3018 with WiFi and TFT touch UI - Hardware
+# ESP32 cnc3018 with WiFi and TFT touch UI - Electronics
 
 **[Home](readme.md)** --
 **[Installation](installation.md)** --
 **[Software](software.md)** --
-**electronics** --
+**Electronics** --
 **[Hardware](hardware.md)** --
 **[3D Printing](3dPrinting.md)**
 
-This page contains the circuit schemaatics and photos of the printed
+This page contains the circuit schematics and photos of the printed
 circuit boards and their layouts.
 
 The **kiCad** and **flatCam** files can be found in [/docs/kiCad](kiCad), including
@@ -91,5 +91,3 @@ It works ok, but is a hodgepodge, and needs further work.
 When I get it *right* I will incorporate it directly onto
 the controller board, but for now I prefer it as a separate
 module that I can experiment with.
-
-

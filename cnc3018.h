@@ -3,8 +3,9 @@
 #pragma once
 
 
-#include <Machine/MachineConfig.h>  // FluidCNC
-#include "Mesh.h"
+#include <Machine/MachineConfig.h>  // FluidNC
+#include <Mesh.h>                   // FluidNC_extensions
+
 
 #define G_PIN_LEDS_OUT            GPIO_NUM_12
 // #define G_PIN_TFT_CS             GPIO_NUM_22

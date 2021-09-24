@@ -10,7 +10,7 @@
 #include <Logging.h>        // FluidNC
 
 #include "cnc3018.h"
-#include "v2812b.h"
+#include "my_ws2812b.h"
 
 
 #define INIT_SD_DURING_SETUP
@@ -37,7 +37,7 @@
     #include <FluidNC_UI.h>
 
     void display_init()
-        // override weak definition in Grbl_Esp32
+        // override weak definition in FluidNC
         // called after the Serial port Client has been created
     {
         g_debug("cnc3018.ino display_init() started");
@@ -63,7 +63,7 @@
 #ifdef INIT_SD_AGAIN
 	void debug_start_sdcard()
 	{
-		// The "normal" grbl_esp32 code does not initialize the SD Card
+		// The "normal" FluidNC code does not initialize the SD Card
 		// until it is accessed via a [ESPxxx] command from the WebUI or
 		// via [ESP210] or [ESP420].  I modified the webUI to start up
 		// with the file list initialized.
@@ -122,7 +122,7 @@
 			g_debug("Total space:  %lluMB", (SD.totalBytes()+1024*1024-1) / (1024 * 1024));
 			g_debug("Used space:   %lluMB", (SD.usedBytes()+1024*1024-1) / (1024 * 1024));
 
-			// Grbl_Esp32 closes the SD Card after every use.
+			// FluidNC closes the SD Card after every use.
 			// SDCard::State() and it's usage in Grbl for me to proceed in
 			// a sane manner.
 
@@ -132,6 +132,8 @@
 		}
 	}
 #endif	// INIT_SD_AGAIN
+
+
 
 
 //----------------------------------------------------------
@@ -191,6 +193,6 @@ void loop()
 {
     g_debug("cnc3018.ino loop() started %d/%dK",xPortGetFreeHeapSize()/1024,xPortGetMinimumEverFreeHeapSize()/1024);
     run_once();
-    delay(1000);    // for display of following message to work with Grbl_Esp32 asynch debug output
+    delay(1000);    // for display of following message to work with FluidNC asynch debug output
     g_debug("cnc3018.ino loop() completed %d/%dK",xPortGetFreeHeapSize()/1024,xPortGetMinimumEverFreeHeapSize()/1024);
  }

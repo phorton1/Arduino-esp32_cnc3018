@@ -13,6 +13,31 @@ myProbe my_probe;
 cnc3018 the_machine;
 
 
+//---------------------------
+// implement Mesh extension
+//---------------------------
+// overrides of WEAK_LINKs from FluidNC
+
+bool cartesian_to_motors(float* target, plan_line_data_t* pl_data, float* position)
+{
+	mesh_cartesian_to_motors(&my_mesh, target, pl_data, position);
+}
+
+void motors_to_cartesian(float* cartesian, float* motors, int n_axis)
+{
+	mesh_motors_to_cartesian(&my_mesh, cartesian, motors, n_axis);
+}
+
+bool user_defined_homing(Mesh *mesh, AxisMask axisMask)
+{
+	return mesh_user_defined_homing(&my_mesh, axisMask);
+}
+
+
+//-------------------------------------
+// implement cnc3018 "machine"
+//-------------------------------------
+
 cnc3018::cnc3018()
 {
 	_probe = &my_probe;
