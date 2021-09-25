@@ -32,7 +32,7 @@
 //----------------------------------------------------------
 // get g_debug from UI library if present, if not, implement it
 
-#if 1          // 0=no UI, 1=with UI
+#ifdef WITH_UI          // 0=no UI, 1=with UI
 
     #include <FluidNC_UI.h>
 
@@ -169,9 +169,11 @@ void setup()
         pixels.setPixelColor(2,MY_LED_GREEN);
         pixels.show();
 
-    the_machine._mesh->readMesh();
+	#ifdef WITH_MESH
+	   the_mesh.readMesh();
+	#endif
 
-        pixels.setPixelColor(3,MY_LED_GREEN);
+		pixels.setPixelColor(3,MY_LED_GREEN);
         pixels.show();
 
     init_switches();

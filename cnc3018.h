@@ -2,9 +2,18 @@
 
 #pragma once
 
+#define WITH_UI
+#define WITH_MESH
+    // UI_WITH_MESH should be set in FluidNC_UI/gDefs.h to
+    // match WITH_MESH
 
 #include <Machine/MachineConfig.h>  // FluidNC
-#include <Mesh.h>                   // FluidNC_extensions
+
+#ifdef WITH_MESH
+    #include <Mesh.h>                   // FluidNC_extensions
+#endif
+
+extern void g_debug(const char *format, ...);
 
 
 #define G_PIN_LEDS_OUT            GPIO_NUM_12
@@ -27,6 +36,9 @@
 #define PIN7_ZLIM        6
 #define PIN7_PROBE       5
 #define PIN7_UNUSED      4
+
+#define PROBE_SWITCH_MASK (1<<PIN7_PROBE)
+
 
 // pin ins to display connector
 // 1 - VCC
@@ -51,7 +63,7 @@
 // #define SPI_MOSI                 GPIO_NUM_23
 
 
-// HOOK UP TO ILI9486 rPI "generic" TS with XPT2056
+// HOOK UP TO ILI9486 "generic" TS with XPT2046
 // from BOTTOM of screen with connector in TOP LEFT corner
 // pin "1" would be the top right pin
 
@@ -71,18 +83,11 @@
 //
 
 
-#define PROBE_SWITCH_MASK (1<<PIN7_PROBE)
-
-extern void g_debug(const char *format, ...);
-
-
 class cnc3018 : public Machine::MachineConfig
 {
     public:
 
         cnc3018();
-
-        Mesh *_mesh;
 
     protected:
 
@@ -99,19 +104,6 @@ extern cnc3018 the_machine;
 
 
 extern void init_switches();
-extern uint8_t read_switches();
-    // reads the switches and sets the x/y/z limit bits into the system state
-    // returns the entire read value
-    // called 50 times a second by switch task
-    // when probing called indirectly from stepper pulses via
-    // myProbe::tripped() which checks for PROBE_SWITCH_MASK
-extern uint8_t get_switches();
-    // returns the last cached switch value so safe
-    // to call from myProbe::getState()
+extern uint8_t IRAM_ATTR read_switches();       // read em'
+extern uint8_t get_switches();                  // return cached value
 
-extern bool meshValid();
-    // returns true if bed levelling ($HZ) has succeeded
-extern float getMeshZOffset(float wx, float wy);
-    // IN WORK COORDINATES
-    // Return the interpolated z offset for the given
-    // x and y positions.
