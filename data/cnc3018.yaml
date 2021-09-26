@@ -20,8 +20,8 @@ axes:
         
     x:
         steps_per_mm: 400
-        max_rate: 2000
-        acceleration: 40
+        max_rate: 4000
+        acceleration: 100
         max_travel: 299
         
         # soft_limits: false
@@ -44,8 +44,8 @@ axes:
             
     y:
         steps_per_mm: 400
-        max_rate: 2000
-        acceleration: 40
+        max_rate: 3000
+        acceleration: 100
         max_travel: 174
         # soft_limits: false
         # hard_limits: true
@@ -62,7 +62,7 @@ axes:
             
     z:
         steps_per_mm: 400
-        max_rate: 200
+        max_rate: 1000
         acceleration: 40
         max_travel: 1000
         # soft_limits: false
@@ -75,7 +75,7 @@ axes:
                 
         homing:
             cycle: 1
-            seek_rate: 200
+            seek_rate: 400
             feed_rate: 80
             # positive_direction: false
             
