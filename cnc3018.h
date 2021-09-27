@@ -3,18 +3,20 @@
 #pragma once
 
 #define WITH_UI
-#define WITH_MESH
-    // UI_WITH_MESH should be set in FluidNC_UI/gDefs.h to
-    // match WITH_MESH
+#define WITH_MESH       // FluidNC_UI/gDefs.h::UI_WITH_MESH must be set the same!
 
-#include <Machine/MachineConfig.h>  // FluidNC
+#include <Machine/MachineConfig.h>  // FluidNC - required
+#include <FluidDebug.h>             // FluidNC_extensions
 
 #ifdef WITH_MESH
-    #include <Mesh.h>                   // FluidNC_extensions
+    #include <Mesh.h>               // FluidNC_extensions
 #endif
 
-extern void g_debug(const char *format, ...);
-
+//-----------------------------------
+// ESP32 Pins Used by this Program
+//-----------------------------------
+// except motors defined in YAML
+// TFT pina defined in TFT_eSPI/prhSettings.h
 
 #define G_PIN_LEDS_OUT            GPIO_NUM_12
 // #define G_PIN_TFT_CS             GPIO_NUM_22
@@ -24,7 +26,6 @@ extern void g_debug(const char *format, ...);
 #define G_PIN_74HC165_LATCH       GPIO_NUM_17   // TX2
 #define G_PIN_74HC165_DATA        GPIO_NUM_36
 #define G_PIN_SDCARD_CS          GPIO_NUM_4
-
 
 // pin ins to the 74HC165
 
@@ -38,7 +39,6 @@ extern void g_debug(const char *format, ...);
 #define PIN7_UNUSED      4
 
 #define PROBE_SWITCH_MASK (1<<PIN7_PROBE)
-
 
 // pin ins to display connector
 // 1 - VCC
@@ -58,15 +58,15 @@ extern void g_debug(const char *format, ...);
 // 5 - SPI_MISO (GPIO_NUM_19)
 // 6 - GND
 
+// ESP32 SPI defaults listed here for good measure
 // #define SPI_CLK                  GPIO_NUM_18
 // #define SPI_MISO                 GPIO_NUM_19
 // #define SPI_MOSI                 GPIO_NUM_23
 
-
 // HOOK UP TO ILI9486 "generic" TS with XPT2046
 // from BOTTOM of screen with connector in TOP LEFT corner
 // pin "1" would be the top right pin
-
+//
 //         2 - 5V                    1 - 3.3V
 //         4 - 5V                    3 - x
 //         6 - GND                   5 - x
@@ -82,6 +82,10 @@ extern void g_debug(const char *format, ...);
 //        26 - TP_CS                25 - GND
 //
 
+
+//-----------------------------------
+// the Machine
+//-----------------------------------
 
 class cnc3018 : public Machine::MachineConfig
 {
@@ -101,9 +105,8 @@ class cnc3018 : public Machine::MachineConfig
 
 extern cnc3018 the_machine;
 
-
+// public methods in swtiches.cpp
 
 extern void init_switches();
 extern uint8_t IRAM_ATTR read_switches();       // read em'
 extern uint8_t get_switches();                  // return cached value
-

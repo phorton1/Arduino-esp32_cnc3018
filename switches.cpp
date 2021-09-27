@@ -1,17 +1,8 @@
 
 #include "cnc3018.h"
 #include "my_ws2812b.h"
-
-#include <Config.h>            // FluidNC
-#include <GLimits.h>           // FluidNC
-#include <MotionControl.h>     // FluidNC
-#include <Protocol.h>          // FluidNC
-#include <SDCard.h>            // FluidNC
-#include <Serial.h>            // FluidNC
-#include <System.h>            // FluidNC
-#include <Machine/Axes.h>      // FluidNC
-
-// was for mesh #include <gApp.h>			   // FluidNC_UI
+#include <gStatus.h>	// FluidNC_extensions
+#include <gActions.h>	// FluidNC_extensions
 
 
 Adafruit_NeoPixel pixels(NUM_PIXELS,G_PIN_LEDS_OUT);
@@ -19,44 +10,21 @@ Adafruit_NeoPixel pixels(NUM_PIXELS,G_PIN_LEDS_OUT);
 static uint8_t switches = 0x00;		// pulled up, swtich=ground
 
 
-
-// denormalized (copy) of getJobState() from Grbl_minUI
-
-typedef enum cJobState
+int getJobStateColor(JobState job_state)
 {
-    C_JOB_NONE,
-    C_JOB_IDLE,
-    C_JOB_BUSY,
-    C_JOB_HOLD,
-    C_JOB_HOMING,
-	C_JOB_PROBE,
-    C_JOB_ALARM
-};
-
-const char *cJobStateName(cJobState job_state)
-{
-    switch (job_state)
+	switch (job_state)
     {
-        case C_JOB_NONE   : return "";
-        case C_JOB_IDLE   : return "IDLE";
-        case C_JOB_BUSY   : return "BUSY";
-        case C_JOB_HOLD   : return "HOLD";
-        case C_JOB_HOMING : return "HOMING";
-		case C_JOB_PROBE  : return "PROBE";
-        case C_JOB_ALARM  : return "ALARM";
-    }
-    return "UNKNOWN_JOB_STATE";
-}
-
-void setLedJobState(cJobState job_state)
-{
-	pixels.setPixelColor(PIXEL_SYS_STATE,
-		job_state == C_JOB_ALARM ? MY_LED_RED :
-		job_state == C_JOB_HOLD ? MY_LED_CYAN :
-		job_state == C_JOB_PROBE ? MY_LED_YELLOW :
-		job_state == C_JOB_HOMING ? MY_LED_YELLOW :
-		job_state == C_JOB_BUSY ? MY_LED_YELLOW :
-		MY_LED_BLUE	);
+		case JOB_NONE:		return 0;
+		case JOB_IDLE:		return MY_LED_BLUE;
+		case JOB_HOLD:		return MY_LED_CYAN;
+		case JOB_BUSY:
+		case JOB_HOMING:
+		case JOB_PROBING:
+		case JOB_MESHING:	return MY_LED_YELLOW;
+		case JOB_ALARM:		return MY_LED_RED;
+	}
+	g_error("UNKNOWN JobState(%d)",(int)job_state);
+	return MY_LED_MAGENTA;
 }
 
 
@@ -124,16 +92,16 @@ uint8_t IRAM_ATTR read_switches()
 	if (in & (1 << PIN7_YLIM)) lim_val |= 2;
 	if (in & (1 << PIN7_ZLIM)) lim_val |= 4;
 
-	if (Machine::Axes::negLimitMask != zero_val ||
-		Machine::Axes::posLimitMask != lim_val)
+	if (gActions::getNegLimitMask() != zero_val ||
+		gActions::getPosLimitMask() != lim_val)
 	{
-		Machine::Axes::negLimitMask = zero_val;
-		Machine::Axes::posLimitMask = lim_val;
+		gActions::setNegLimitMask(zero_val);
+		gActions::setPosLimitMask(lim_val);
 
 		if ((zero_val || lim_val) && sys.state != State::Homing)
 		{
-			mc_reset();                                // Initiate system kill.
-			rtAlarm = ExecAlarm::HardLimit;  // Indicate hard limit critical event
+			gActions::g_reset();     // Initiate system kill.
+			gActions::setAlarm(1);	 // 1 == ExecAlarm::HardLimit
 		}
 	}
 
@@ -160,8 +128,8 @@ void switchTask(void* pvParameters)
 	// or make limits_get_state() weakly bound and override it here instead
 	// of a task. For now dueling tasks works ok.
 
-	Machine::Axes::limitMask = 0x03;
-	limits_init();
+	gActions::setLimitMask(0x03);
+	gActions::g_limits_init();
 
     while (true)
     {
@@ -171,7 +139,7 @@ void switchTask(void* pvParameters)
 		// suppress switch reading while in probe mode
 		// as the Stepper ISR will call it
 
-		if (probeState != ProbeState::Active)
+		if (!gStatus::getProbeState())
 		{
 			read_switches();
 		}
@@ -237,49 +205,38 @@ void switchTask(void* pvParameters)
 			show_leds = true;
 		}
 
+		// JOB STATE
+		// if not using FluidNC_UI call gStatus.updateStatus()
+
+		#ifndef WITH_UI
+			g_status.updateStatus(
+				#ifdef WITH_MESH
+					the_mesh.inLeveling()
+				#endif
+			);
+		#endif
+
 		// Set the job_state
 		// denormalized (copy) of getJobState() from FluidNC_UI
 		// because it might not be linked in
 
 		static bool led_on = false;
 		static uint32_t led_flash = 0;
-		static cJobState last_job_state = C_JOB_IDLE;
-		cJobState job_state = C_JOB_IDLE;
-
-		// except we don't diffentiate between probing and meshing
-		// as we flash the LED the same in both cases
-
-		SDCard *sdCard = config->_sdCard;
-		if (probeState == ProbeState::Active
-			#ifdef WITH_MESH
-				|| the_mesh.inLeveling()
-			#endif
-		    )
-		{
-			job_state = C_JOB_PROBE;
-		}
-		else if (sys.state == State::Homing)
-			job_state = C_JOB_HOMING;
-		else if (sys.state == State::Alarm)
-			job_state = C_JOB_ALARM;
-		else if (sys.state == State::Hold)
-			job_state = C_JOB_HOLD;
-		else if (sdCard && sdCard->get_state() == SDCard::State::Busy)
-			job_state = C_JOB_BUSY;
-		else
-			job_state = C_JOB_IDLE;
-
+		static JobState last_job_state = JOB_IDLE;
+		JobState job_state = g_status.getJobState();
 
 		// Set the system pixel
 
 		if (last_job_state != job_state)
 		{
-			g_debug("cJobState changed to %s",cJobStateName(job_state));
+			g_debug("switches.cpp::JobState changed to %s",jobStateName(job_state));
 			last_job_state = job_state;
-			setLedJobState(job_state);
-			if (job_state == C_JOB_ALARM ||
-				job_state == C_JOB_PROBE ||
-				job_state == C_JOB_HOMING)
+			pixels.setPixelColor(PIXEL_SYS_STATE,getJobStateColor(job_state));
+
+			if (job_state == JOB_ALARM ||
+				job_state == JOB_HOMING ||
+				job_state == JOB_PROBING ||
+				job_state == JOB_MESHING)
 			{
 				led_flash = millis();
 				led_on = true;
@@ -301,7 +258,7 @@ void switchTask(void* pvParameters)
 			else
 			{
 				led_on = 1;
-				setLedJobState(job_state);
+				pixels.setPixelColor(PIXEL_SYS_STATE,getJobStateColor(job_state));
 			}
 			show_leds = true;
 		}
@@ -310,18 +267,6 @@ void switchTask(void* pvParameters)
 
 		if (show_leds)
 			pixels.show();
-
-
-		// note any changes to realtimeZOffset;
-
-		#ifdef FUNKY_REALTIME_STUFF
-			float last_realtimeZOffset;
-			if (last_realtimeZOffset != realtimeZOffset)
-			{
-				last_realtimeZOffset = realtimeZOffset;
-				g_debug("realTimeZOffset changed to %5.3f",realtimeZOffset);
-			}
-		#endif
 
 	}	// while (true)
 }	// switchTask()

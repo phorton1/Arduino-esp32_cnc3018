@@ -32,13 +32,6 @@ cnc3018 the_machine;
 		the_mesh.motors_to_cartesian(cartesian, motors, n_axis);
 	}
 
-	#if MESH_USER_DEFINED_HOMING
-		bool user_defined_homing(AxisMask axisMask)
-		{
-			return the_mesh.user_defined_homing(axisMask);
-		}
-	#endif
-
 	void user_realtime_command(uint8_t command, Print &client)
 	{
 		// ctrl keys
