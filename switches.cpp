@@ -11,6 +11,7 @@ static uint8_t switches = 0x00;		// pulled up, swtich=ground
 
 
 int getJobStateColor(JobState job_state)
+	// duplicated in _vMachine/sensor.cpp
 {
 	switch (job_state)
     {
