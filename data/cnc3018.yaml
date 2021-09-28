@@ -20,9 +20,9 @@ axes:
         
     x:
         steps_per_mm: 400
-        max_rate: 4000
+        max_rate: 2500
         acceleration: 100
-        max_travel: 299
+        max_travel: 320
         
         # soft_limits: false
         # not needed
@@ -37,16 +37,16 @@ axes:
 
         homing:
             cycle: 2
-            seek_rate: 2000
+            seek_rate: 1200
             feed_rate: 300
             positive_direction: false
 
             
     y:
         steps_per_mm: 400
-        max_rate: 3000
+        max_rate: 2500
         acceleration: 100
-        max_travel: 174
+        max_travel: 200
         # soft_limits: false
         # hard_limits: true
         motor0:
@@ -56,15 +56,15 @@ axes:
                 direction: gpio.26:low
         homing:
             cycle: 2
-            seek_rate: 2000
+            seek_rate: 1200
             feed_rate: 300
             positive_direction: false
             
     z:
         steps_per_mm: 400
-        max_rate: 1000
+        max_rate: 600
         acceleration: 40
-        max_travel: 1000
+        max_travel: 50
         # soft_limits: false
         motor0:
             pulloff: 5
@@ -75,7 +75,7 @@ axes:
                 
         homing:
             cycle: 1
-            seek_rate: 400
+            seek_rate: 300
             feed_rate: 80
             # positive_direction: false
             

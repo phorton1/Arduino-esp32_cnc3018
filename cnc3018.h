@@ -105,6 +105,9 @@ class cnc3018 : public Machine::MachineConfig
 
 extern cnc3018 the_machine;
 
+extern void bumpPixel();	// for startup sequence
+    // in cnc3018.ino
+
 // public methods in swtiches.cpp
 
 extern void init_switches();

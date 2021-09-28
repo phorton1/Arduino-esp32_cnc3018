@@ -76,23 +76,26 @@
 void bumpPixel()	// for startup sequence
 {
 	static int pixel_num = 0;
-	pixels.setPixelColor(pixel_num++,MY_LED_GREEN);
+	pixels.setPixelColor(pixel_num++,MY_LED_MAGENTA);
 	pixels.show();
 }
 
 
 void setup()
 {
+    pixels.setBrightness(20);
     pixels.show();
-    delay(2000);
-	bumpPixel();
+    delay(1000);
+	bumpPixel();	// 0
+    delay(1000);
+	bumpPixel();	// 1
 
     #ifdef INIT_SD_DURING_SETUP
         bool sd_ok = SD.begin(G_PIN_SDCARD_CS);
     #endif
 
     main_init();
-	bumpPixel();
+	bumpPixel();	// 3
 
     #ifdef INIT_SD_DURING_SETUP
         g_debug("cnc3018.ino SD.begin() %s during setup()",sd_ok?"WORKED OK":"FAILED");
@@ -102,13 +105,9 @@ void setup()
         debug_start_sdcard();
     #endif
 
-	bumpPixel();
-
 	#ifdef WITH_MESH
 	   the_mesh.readMesh();
 	#endif
-
-	bumpPixel();
 
     init_switches();
 

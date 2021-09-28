@@ -282,7 +282,6 @@ void init_switches()
     pinMode(G_PIN_74HC165_CLK, OUTPUT);
     digitalWrite(G_PIN_74HC165_CLK, LOW);
 
-    pixels.setBrightness(20);
 	for (int i=0; i<NUM_PIXELS; i++)
 	{
 		pixels.setPixelColor(i,MY_LED_BLACK);

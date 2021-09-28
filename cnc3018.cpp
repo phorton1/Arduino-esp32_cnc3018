@@ -36,17 +36,17 @@ cnc3018 the_machine;
 	{
 		// ctrl keys
 		//
-		// ctrl-Q		z+0.010
-		// ctrl-W       z+0.005
-		// ctrl-E       z0
-		// ctrl-R       z-0.00
-		// ctrl-T       z-0.010
+		// ctrl-Q			CMD_LIVE_Z_PLUS_COARSE
+		// ctrl-W       	CMD_LIVE_Z_PLUS_FINE
+		// ctrl-E       	CMD_LIVE_Z_RESET
+		// ctrl-R       	CMD_LIVE_Z_MINUS_FINE
+		// ctrl-T       	CMD_LIVE_Z_MINUS_COARSE
 		//
 		// 0x01 - ctrl-A
 		// 0x02 - ctrl-B
 		// 0x03 - ctrl-C	concole exit
 		// 0x04 - ctrl-D	console clear
-		// 0x05 - ctrl-E	z0
+		// 0x05 - ctrl-E	CMD_LIVE_Z_RESET
 		// 0x06 - ctrl-F	console experimental gcode
 		// 0x07 - ctrl-G	console gcode
 		// 0x08 - ctrl-H
@@ -58,13 +58,13 @@ cnc3018 the_machine;
 		// 0x0e - ctrl-N
 		// 0x0f - ctrl-O
 		// 0x10 - ctrl-P
-		// 0x11 - ctrl-Q	z+0.010
-		// 0x12 - ctrl-R    z-0.00
-		// 0x13 - ctrl-S    z-0.010
-		// 0x14 - ctrl-T
+		// 0x11 - ctrl-Q	CMD_LIVE_Z_PLUS_COARSE
+		// 0x12 - ctrl-R    CMD_LIVE_Z_MINUS_COARSE
+		// 0x13 - ctrl-S
+		// 0x14 - ctrl-T	CMD_LIVE_Z_MINUS_COARSE
 		// 0x15 - ctrl-U
 		// 0x16 - ctrl-V
-		// 0x17 - ctrl-W	z+0.005
+		// 0x17 - ctrl-W	CMD_LIVE_Z_PLUS_FINE
 		// 0x18 - ctrl-X	FluidNC reset (console upload if enabled)
 		// 0x19 - ctrl-Y
 		// 0x1a - ctrl-Z
@@ -75,6 +75,16 @@ cnc3018 the_machine;
 		// 0x1f -
 
 		g_debug("user_realtime_command(0x%02x)",command);
+
+		switch (command)
+		{
+			case CMD_LIVE_Z_PLUS_COARSE :
+			case CMD_LIVE_Z_PLUS_FINE :
+			case CMD_LIVE_Z_RESET :
+			case CMD_LIVE_Z_MINUS_FINE :
+			case CMD_LIVE_Z_MINUS_COARSE :
+				the_mesh.setLiveZ(command);
+		}
 	}
 
 #endif
@@ -89,6 +99,8 @@ cnc3018::cnc3018()
 	_probe = &my_probe;
 	config = this;
 }
+
+
 
 
 void cnc3018::afterParse() // override
@@ -126,4 +138,11 @@ void cnc3018::group(Configuration::HandlerBase& handler) // override
 	Mesh *_mesh = &the_mesh;
 	handler.section("mesh",_mesh);
 #endif
+
+	static bool first_time = true;
+	if (first_time)
+	{
+		first_time = false;
+		bumpPixel();	// 2
+	}
 }
