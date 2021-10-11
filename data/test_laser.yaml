@@ -1,6 +1,6 @@
 
 name: "cnc3018"
-board: "cnc3018 Dev Board"
+board: "cnc3018 laser test"
 
 homing_init_lock: false
 
@@ -90,13 +90,13 @@ axes:
 PWM:
     output_pin: gpio.2
     # enable_pin: gpio.22
-    pwm_freq: 1000
+    pwm_freq: 500
     
     # 976
     # setup so that 0=0 duty, and 1..100 == 50..100 duty
     # so that (a) I am using "percent" of spindle speed
     # and (b) protecting my lame IRF9450 circuit
-    speeds: 0=0% 1=5% 100=100%
+    speeds: 0=0% 1000=100%
             
 comms:
     wifi_sta:

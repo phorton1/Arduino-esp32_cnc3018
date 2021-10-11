@@ -72,14 +72,21 @@ uint8_t IRAM_ATTR read_switches()
 	// The issue is that the probe switch *may not* get detected
 	// by my UI task if the probe is too quick.  We will see.
 {
-	digitalWrite(G_PIN_74HC165_LATCH, HIGH);
-	uint8_t in = shiftIn(G_PIN_74HC165_DATA, G_PIN_74HC165_CLK, MSBFIRST);
-	digitalWrite(G_PIN_74HC165_LATCH, LOW);
+	#ifdef TEST_WITHOUT_SWITCHES
+		uint8_t in = 0;
+	#else
+		// real code
 
-	// switches are pulled up with NO switches, so LOW is active
-	// hence we invert the bit pattern here
+		digitalWrite(G_PIN_74HC165_LATCH, HIGH);
+		uint8_t in = shiftIn(G_PIN_74HC165_DATA, G_PIN_74HC165_CLK, MSBFIRST);
+		digitalWrite(G_PIN_74HC165_LATCH, LOW);
 
-	in = ~in;
+		// switches are pulled up with NO switches, so LOW is active
+		// hence we invert the bit pattern here
+
+		in = ~in;
+	#endif
+
 
 	// map the switches to XYZ bits in the FluidNC masks
 

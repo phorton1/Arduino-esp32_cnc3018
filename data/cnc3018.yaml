@@ -90,7 +90,7 @@ axes:
 PWM:
     output_pin: gpio.2
     # enable_pin: gpio.22
-    pwm_freq: 1000
+    pwm_freq: 600
     
     # 976
     # setup so that 0=0 duty, and 1..100 == 50..100 duty
