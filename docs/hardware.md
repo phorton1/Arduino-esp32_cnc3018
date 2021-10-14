@@ -4,6 +4,7 @@
 **[Installation](installation.md)** --
 **[Software](software.md)** --
 **[Electronics](electronics.md)** --
+**[User Interface](ui.md)** --
 **Hardware** --
 **[3D Printing](3dPrinting.md)**
 
