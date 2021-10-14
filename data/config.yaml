@@ -1,6 +1,6 @@
 
-name: "cnc3018"
-board: "cnc3018 Dev Board"
+name: "CNC3018"
+board: "CNC3018_ESP Dev Board"
 
 homing_init_lock: false
 
@@ -90,7 +90,7 @@ axes:
 PWM:
     output_pin: gpio.2
     # enable_pin: gpio.22
-    pwm_freq: 1000
+    pwm_freq: 600
     
     # 976
     # setup so that 0=0 duty, and 1..100 == 50..100 duty
@@ -102,9 +102,13 @@ comms:
     wifi_sta:
         ssid: THX36
     wifi_ap:
-        ip_address: "192.168.0.1"
-        ssid: FluidNC
+        ssid: CNC3018_ESP
 
+    # set a machine specific AP SSID and
+    # as a concession to convenience, I leave the checked-in config.yaml
+    # with my wifi SSID.  For users, it will fail to connect and fall back
+    # to the CNC3018_ESP Access Point with password 12345678
+    
 spi:
     # one has to tell FluidNC the default ESP32 SPI pins!
     miso: gpio.19

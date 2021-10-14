@@ -1,4 +1,4 @@
-# cnc3018_esp32 - Installation
+# CNC3018_ESP - Installation
 
 **[Home](readne.md)** --
 **[History](history.md)** --
@@ -21,7 +21,7 @@ to your Arduino Sketch "tools" folder
 
 ## 2. Get the Source Code
 
-Start by copying or cloning **this repository** into a folder called **cnc3018_esp32**
+Start by copying or cloning **this repository** into a folder called **CNC3018_ESP**
 within your Arduino Sketch folder.
 
 You then need to add a number of libraries to your **Arduino/libraries** folder.
@@ -39,7 +39,7 @@ Please follow the instructions on the linked pages to install each library and i
 
 ## 3. Build/Flash the Firmware and upload the SPIFFS
 
-- open the **cnc3018_esp32.ino** sketch in the Arduino IDE
+- open the **CNC3018_ESP.ino** sketch in the Arduino IDE
 - select the **ESP32 Dev Module** board from the Arduino *Tools-Boards* menu
 - select the **Minimal SPIFFS** (1.9MB App with OTA/190KB SPIFFS) from the *Tools-Partition Scheme* menu
 - select the correct **COM Port** for the ESP32
@@ -48,9 +48,9 @@ Please follow the instructions on the linked pages to install each library and i
 
 <br>
 
-## 4. Access the cnc3018_esp32 machine via the Arduino Serial Monitor
+## 4. Access the CNC3018_ESP machine via the Arduino Serial Monitor
 
-You should now be able to open the Arduino Serial Monitor (set it to **115200 baud**) and access the cnc3018_esp32 machine
+You should now be able to open the Arduino Serial Monitor (set it to **115200 baud**) and access the CNC3018_ESP machine
 via the USB serial port.  You should see something like this:
 
 ![arduino_serial_monitor.jpg](images/arduino_serial_monitor.jpg)
@@ -64,9 +64,7 @@ Send button, the machine should reply with **ok** in the Serial Monitor.
 ## 5. Format and prepare a FAT32 SD Card
 
 Assuming that you are using the SDCard, please prepare one
-by formatting it as necessary and copying the contents of
-the **sdCard** folder onto it, and inserting it in the
-SDCard module of the machine.
+by formatting it as necessary.
 
 - The size of the SD Card is not very important.
 - The machine can handle upto 32GB cards.
@@ -86,13 +84,13 @@ or via **Touch Screen UI** *Files* window.
 
 ## 6. Connect to the machine with the Web UI
 
-By default the machine will present itself as a Wifi Access Point called **FluiidNC**
+By default the machine will present itself as a Wifi Access Point called **CNC3018_ESP**
 
-- connect your compputer or phone to the **FluidNC** Wifi Access Point
+- connect your compputer or phone to the **CNC3018_ESP** Wifi Access Point
 - the default password is **12345678**
 
-As soon as you connect to the FluidNC access point, a browser should pop up
-and you should see the FluidNC Web UI for the machine:
+As soon as you connect to the CNC3018_ESP access point, a browser should pop up
+and you should see the Web UI for the machine:
 
 ![FluidNC_WebUI.jpg](images/FluidNC_WebUI.jpg)
 
@@ -102,8 +100,8 @@ via the default IP address of **10.0.0.1**.
 
 ### Configuring the Wifi
 
-There are a number of commands that you can use to configure the
-cnc3018_esp32/FluidNC/ESP32 Wifi.
+There are a number of commands that you can use to configure
+WiFi access to the CNC3018_ESP/FluidNC/ESP32 machine.
 
 You can make it connect to your
 existing Wifi network by issuing the following commands:
@@ -114,8 +112,8 @@ $sta/password=YOUR_NET_PASSWORD
 ```
 
 You can then connect to it using the IP address given by your router,
-which you can see either in the Serial Terminal Window or at the
-top, in the Title Bar, of the Touch Screen UI.
+which you can see either in the Serial Terminal Window at startup,
+or at the top, in the Title Bar, of the Touch Screen UI.
 
 You can also modify the **config.yaml** file to set the
 comms/wifi_sta/SSID to YOUR_NET_SSID and use the
@@ -126,15 +124,15 @@ is not stored in the YAML file.
 
 
 It is beyond the scope of this page to describe all of the commands
-and techniques that you can use to configure and modify the
-cnc3018_esp32 machine.   But if you have gotten this far, you can see there
+and techniques that you can use to configure and modify the machine.
+But if you have gotten this far, you can see there
 are a number of different approaches available.
 
 <br>
 
 ## 7. Finished!!
 
-**Congratulations!  You now have a working cnc3018_esp32 machine!**
+**Congratulations!  You now have a working CNC3018_ESP machine!**
 
 
 <br>
