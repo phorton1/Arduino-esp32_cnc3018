@@ -1,11 +1,12 @@
-# ESP32 cnc3018 with WiFi and TFT touch UI - 3D Printing
+# CNC3018_ESP - 3D Printing
 
 **[Home](readme.md)** --
-**[Installation](installation.md)** --
-**[Software](software.md)** --
-**[Electronics](electronics.md)** --
+**[History](history.md)** --
 **[Hardware](hardware.md)** --
-**3D Printing**
+**3D Printing** --
+**[Electronics](electronics.md)** --
+**[Software](software.md)** --
+**[Installation](installation.md)**
 
 This page describes the plastic parts I added to the cheap chinese 3018 cnc
 machine in the process of this project.
@@ -229,3 +230,10 @@ The entire LCD mount assembly is then attached to the top of the frame
 with two **3mm** hex bolts and t-nuts.
 
 ![lcd_mount_final.jpg](images/lcd_mount_final.jpg)
+
+
+<br>
+<hr>
+<div style="text-align: right">
+<a href='electronics.md'>NEXT</a><i> - the Electronics</i>
+</div>

@@ -1,10 +1,10 @@
 # CNC3018_ESP - Installation
 
-**[Home](readne.md)** --
+**[Home](readme.md)** --
 **[History](history.md)** --
 **[Hardware](hardware.md)** --
+**[3D Printing](3dPrinting.md)** --
 **[Electronics](electronics.md)** --
-**[User Interface](ui.md)** --
 **[Software](software.md)** --
 **Installation**
 
@@ -94,14 +94,14 @@ and you should see the Web UI for the machine:
 
 ![FluidNC_WebUI.jpg](images/FluidNC_WebUI.jpg)
 
-If that does not happen, you may be able to access it, once connected,
+If that does not happen, you ***may*** be able to access it, once connected,
 via the default IP address of **10.0.0.1**.
 
 
 ### Configuring the Wifi
 
 There are a number of commands that you can use to configure
-WiFi access to the CNC3018_ESP/FluidNC/ESP32 machine.
+WiFi access to the CNC3018_ESP machine.
 
 You can make it connect to your
 existing Wifi network by issuing the following commands:
@@ -132,11 +132,11 @@ are a number of different approaches available.
 
 ## 7. Finished!!
 
-**Congratulations!  You now have a working CNC3018_ESP machine!**
+**Congratulations!  You now have prepared the firmware for a CNC3018_ESP machine!**
 
 
 <br>
 <hr>
 <div style="text-align: right">
-<a href='readne.md'>HOME</a><i> - back to the beginning!</i>
+<a href='readme.md'>HOME</a><i> - back to the beginning!</i>
 </div>

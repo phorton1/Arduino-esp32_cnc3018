@@ -1,28 +1,15 @@
-# ESP32 cnc3018 with WiFi and TFT touch UI - Hardware
+# CNC3018_ESP - Hardware
 
 **[Home](readme.md)** --
-**[Installation](installation.md)** --
-**[Software](software.md)** --
-**[Electronics](electronics.md)** --
-**[User Interface](ui.md)** --
+**[History](history.md)** --
 **Hardware** --
-**[3D Printing](3dPrinting.md)**
+**[3D Printing](3dPrinting.md)** --
+**[Electronics](electronics.md)** --
+**[Software](software.md)** --
+**[Installation](installation.md)**
+
 
 This page contains photos and ancedotes about building this project.
-
-## Prototype Circuit
-
-![ProtoTypeCircuit.jpg](images/ProtoTypeCircuit.jpg)
-
-I use these cool breadboards from [5e Board](https://www.5eboard.com/product-category/5e-circuit-boards/)
-that allow me to create more complex and secure prototypes than with a normal breadboard.
-Even then I decided early on that the spindle motor control and power supply should be on
-a separate board, so I designed and implemented those parts on perf board.  They are visible
-in the above photo.
-
-The "test leads" in the above photo are for the z-axis **probe** which plays into the
-development of the machine itself as the probe is used to develop the **mesh** for leveling
-which is needed to obtain the z accuracy to mill the PC board.
 
 ## Limit Switches
 
@@ -141,3 +128,11 @@ Here is the final machine:
 
 LOL, it still has the copper board from which I milled the LCD connector
 on the work surface :-)
+
+
+
+<br>
+<hr>
+<div style="text-align: right">
+<a href='3dPrinting.md'>NEXT</a><i> - 3D Printing</i>
+</div>

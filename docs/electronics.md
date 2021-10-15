@@ -1,11 +1,13 @@
-# ESP32 cnc3018 with WiFi and TFT touch UI - Electronics
+# CNC3018_ESP - Electronics
 
 **[Home](readme.md)** --
-**[Installation](installation.md)** --
-**[Software](software.md)** --
-**Electronics** --
+**[History](history.md)** --
 **[Hardware](hardware.md)** --
-**[3D Printing](3dPrinting.md)**
+**[3D Printing](3dPrinting.md)** --
+**Electronics** --
+**[Software](software.md)** --
+**[Installation](installation.md)**
+
 
 This page contains the circuit schematics and photos of the printed
 circuit boards and their layouts.
@@ -91,3 +93,10 @@ It works ok, but is a hodgepodge, and needs further work.
 When I get it *right* I will incorporate it directly onto
 the controller board, but for now I prefer it as a separate
 module that I can experiment with.
+
+
+<br>
+<hr>
+<div style="text-align: right">
+<a href='software.md'>NEXT</a><i> - the Software</i>
+</div>
