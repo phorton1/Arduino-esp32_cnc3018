@@ -21,7 +21,7 @@ $5, or about half the price of a genuine Arduino.
 Therefore my *primary design decision* was to base this, and my future CNC projects,
 on an ESP32 processor.
 
-**TODO - VIDEO - introduction to the CNC3018_ESP**
+**TODO: - VIDEO - introduction to the CNC3018_ESP**
 
 The CNC3018_ESP project is the 2nd machine in the line of open source
 CNC machines I have created and published.  It provides a number of
@@ -34,6 +34,8 @@ for usage with commonly available gcode sender programs.
 Finally, it can also store gcode files on the optional **SD Card** and run jobs entirely
 locally, right on the ESP32, via the optional **Touch Screen User Interface**, without
 involving any other devices.
+
+**TODO: picture link to the FLUID_NC UI page
 
 This repository includes all of the files and information needed to modify
 a stock entry level CNC 3018 machine as I have. It includes the files needed to
