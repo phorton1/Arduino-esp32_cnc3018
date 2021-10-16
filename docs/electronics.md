@@ -5,7 +5,6 @@
 **[Hardware](hardware.md)** --
 **[3D Printing](3dPrinting.md)** --
 **Electronics** --
-**[Software](software.md)** --
 **[Installation](installation.md)**
 
 
@@ -98,5 +97,5 @@ module that I can experiment with.
 <br>
 <hr>
 <div style="text-align: right">
-<a href='software.md'>NEXT</a><i> - the Software</i>
+<a href='installation.md'>NEXT</a><i> - Installation and Configuration</i>
 </div>

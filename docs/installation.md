@@ -5,7 +5,6 @@
 **[Hardware](hardware.md)** --
 **[3D Printing](3dPrinting.md)** --
 **[Electronics](electronics.md)** --
-**[Software](software.md)** --
 **Installation**
 
 Some of these instructions are duplicated on and/or reference other pages.

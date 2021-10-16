@@ -5,7 +5,6 @@
 **[Hardware](hardware.md)** --
 **3D Printing** --
 **[Electronics](electronics.md)** --
-**[Software](software.md)** --
 **[Installation](installation.md)**
 
 This page describes the plastic parts I added to the cheap chinese 3018 cnc

@@ -5,7 +5,6 @@
 **[Hardware](hardware.md)** --
 **[3D Printing](3dPrinting.md)** --
 **[Electronics](electronics.md)** --
-**[Software](software.md)** --
 **[Installation](installation.md)**
 
 CNC3018_ESP is my implementation of an inexpensive 3-axis CNC machine that
@@ -69,8 +68,6 @@ modifications to CNC 3018
 the plastic parts
 - **[Electronics](electronics.md)** - the **schematics** and home made circuit
 boards for the machine.
-- **[Software](software.md)** - an overview of the software **architecture**
-of CNC3018_ESP and FluidNC.
 - **[Installation](Installation.md)** - instructions on **building** and installing
 the CNC3018_ESP firmware onto the ESP32 using the Arduino IDE environment.
 
