@@ -122,12 +122,13 @@ core.  Specific contents at this time include:
 
 <br>
 
-## License
 
-I'm gonna have to do something here.  Yech, I hate those headers in source files.
+## Credits and License
 
+This library is licensed undere the
+[GNU General Public License v3.0](https://github.com/phorton1/Arduino-CNC3018_ESP/tree/master/LICENSE.TXT)
 
-## Credits
+**Credits**
 
 - To **bdring** and the [FluidNC Team](https://github.com/bdring/FluidNC) for the core of this project.
 
