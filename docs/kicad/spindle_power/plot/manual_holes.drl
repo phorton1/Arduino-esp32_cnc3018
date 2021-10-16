@@ -1,0 +1,30 @@
+
+; This line is a comment and is ignored
+; The next line starts the "header":
+M48
+
+; Units and number format:
+METRIC,LZ
+
+; The "drill" is defined with diameter of 2.5 mm
+; drill rate of 300 mm/minute and 55000 RPM.
+T1C2.5
+; drill rate of 300 mm/minute and 55000 RPM.
+; T1C5.50F300S90
+
+
+; End of header, M95 or %, and beginning of body:
+M95
+
+; Use tool 1 defined in the header
+T1
+
+; Drill Points
+X2.54    Y2.54
+X2.54    Y50.80
+X39.116  Y48.768
+X39.116  Y35.560
+
+
+; End of program;
+M30

@@ -57,7 +57,7 @@ I had, along with various MOSFETS I had on hand, as most of them
 were not up to the task of dealing with the 65-100W 24V motor, especially
 when coupled with my ignorance :-)
 
-[![power_spindle1.jpg](images/power_spindle1.jpg)](images/power_spindle1_large.jpg)
+[![spindle_power_old.jpg](images/spindle_power_old.jpg)](images/spindle_power_old_large.jpg)
 
 Nonetheless, I proceeded with the basic breadboard controller
 circuit, and a series of my own "power supply and spindle

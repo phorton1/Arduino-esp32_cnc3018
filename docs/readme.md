@@ -21,7 +21,7 @@ $5, or about half the price of a genuine Arduino.
 Therefore my *primary design decision* was to base this, and my future CNC projects,
 on an ESP32 processor.
 
-**VIDEO - introduction to the CNC3018_ESP**
+**TODO - VIDEO - introduction to the CNC3018_ESP**
 
 The CNC3018_ESP project is the 2nd machine in the line of open source
 CNC machines I have created and published.  It provides a number of
