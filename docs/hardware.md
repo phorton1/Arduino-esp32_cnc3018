@@ -1,143 +1,252 @@
-# CNC3018_ESP - Hardware
+# CNC3018_ESP - Hardware snd 3D Printing
 
 **[Home](readme.md)** --
 **[History](history.md)** --
 **Hardware** --
-**[3D Printing](3dPrinting.md)** --
 **[Electronics](electronics.md)** --
+**[Software](software.md)** --
 **[Installation](installation.md)**
 
+This page describes the hardware, mostly in terms of the 3D printed
+parts I added to the inexpensive Chinese 3018 cnc
+machine in the process of this project.
 
-This page contains photos and ancedotes about building this project.
+All of the **STL files** can be found in the [/docs/stl](stl) folder of this project.
+In addition the **Fusion 360** files are available in the [/docs/fusion](fusion) folder.
 
-## Limit Switches
 
-The very first thing that everyone does to stock 3018's is adds limit switches.
-So I 3D printed some mounts and stuck some limit switches on the machine. For
-X and Y I just use the most ubiquitously available (cheapest!) switches, though
-a bit large, that I could find on [ebay](https://www.ebay.com/itm/264871803944):
+## X and Y Limit Switches
 
-[![limit_switches.jpg](images/limit_switches.jpg)](images/limit_switches_large.jpg)
+In the 3D printing files there are designs and STL files for
 
-I went through multiple iterations on the Z axis, starting with
-micro switches, but then relenting to using small (more expensive) lever switches:
+- two pairs of mounts for the X and Y limit switches
+- a generic plastic "t-nut", and
+- a block which is used as a "y-stop".
 
-[![zAxisSwitch2.jpg](images/zAxisSwitch2.jpg)](images/zAzisSwitch2_large.jpg)
-[![zAzisSwitch.jpg](images/zAzisSwitch.jpg)](images/zAzisSwitch_large.jpg)
+![stl_limit_switches.jpg](images/stl_limit_switches.jpg)
 
-My additions are printed in grey plastic. The black
-plastic came with the original machine.
+The switches themselves are inexpensive automotive switches like
+that I purchased on [ebay](https://www.ebay.com/itm/264871803944)
+for about 50 cents each.  They are attached to the mounts with one
+3mm screw directly into the plastic in such a way that it provides the
+pivot for the second screw, which is longer, and goes through
+the slot, with a nut on the underside, so that the switch can swing
+in an arc to adjust the contact point before tightening.
 
-The zAxis has a housing around the switches,
-and an adjustable offset at the bottom (limit).  All the wires are shielded.
+![switches1.jpg](images/switches1.jpg)
 
-For the X and Y axis I originally started by using crimp on connectors that were
-exposed, but didn't like them.  They kept falling off and the connectors were
-too large for the wire I was using, so I 3D printed and constructed my own connectors
-using some thin brass sheet I've had sitting around for 20 years,
+The mounts are attached to the frame with standard 5mm hex cap
+bolts and t-nuts.
+
+![nuts_and_bolts.jpg](images/nuts_and_bolts.jpg)
+
+
+The shorter ones are the X limit switches. They are are hit by the
+Z axis stepper motor body as the carriage traverses left and right.
+
+![x_zero_switch.jpg](images/x_zero_switch.jpg)
+
+
+
+The taller ones are for the Y axis, which I mounted on the
+right side of the machine as you are facing it. One is mounted on the back
+corner of the machine, and one is mounted just forward of
+the right black plastic angle bracket.
+
+![bottom_detail.jpg](images/bottom_detail.jpg)
+
+Above, the tall 3d printed block and plastic 5mm t-nut are used to attached
+the Y-stop piece to the bottom of the platten and the switches are struck as
+the platten moves forwards and backwards.
+
+## Switch Connectors
+
+![stl_switch_connectors.jpg](images/stl_switch_connectors.jpg)
+
+I started by using standard automotive crimp connectors, and
+that's fine if you want, but they were too big for the wire
+I was using and kept falling off of the switches (I didn't
+have the right size).
+
+So, I went ahead and designed and printed my own connectors
+for the switches, which connect firmly, protect the wires,
+and are connected to the motor mounts with a 12x2mm screw
+thru the slot to the mount (so the switch and and connector
+can pivot together after loosening both screws)
 
 [![xyLimitSwitchConnector1.jpg](images/xyLimitSwitchConnector1.jpg)](images/xyLimitSwitchConnector1_large.jpg)
 [![xyLimitSwitchConnector2.jpg](images/xyLimitSwitchConnector2.jpg)](images/xyLimitSwitchConnector2_large.jpg)
 
-The crimp connectors were loose and easily fell off if you bumped them.
-These connectors are secured with screws to ensure they don't fall off!
+I cut the brass into 4mm strips, bent them into shape, and soldered wire to the brass.
+The cover is attached with some tiny (but surprisingly strong) self threading screws
+directly into plastic.
 
-## Initial Sensor Board
-
-I found pretty quickly that even with the nice breadboards, I was having
-problems with the switches becasuse the leads on the resistors are small
-and don't make good contact with breadboards.  So I created a perf board
-version with the 74HC165 IO multiplexer chip and plugged it into the
-breadboard:
-
-[![SensorPerfBoard.jpg](images/SensorPerfBoard.jpg)](images/SensorPerfBoard_large.jpg)
-
-## Milling the Controller Board
-
-So, generally I got it working, but I was really anxious to eliminate the breadboard
-and put a soldered board in place.   I was still getting problems due to the breadboard
-and bad connections.
-
-I had to learn a lot.  Spent time in  KiCad and Flatcam.   Designed it 10 times lol.
-Cut some prototypes.  Learned a bit about applying and using green UV Solder Resist
-Epoxy.
+FWIW I also used shielded cable (from some old RCA stereo cables) for all of the limit
+switches on the machine.
 
 
-Finally got to where the following sequences of images looks practical :-)
+## Z Limit Switches
 
-### 1 - mill the board
+![stl_z_axis_switch.jpg](images/stl_z_axis_switch.jpg)
 
-[![MillingBoard1.jpg](images/MillingBoard1.jpg)](images/MillingBoard1_large.jpg)
-[![MillingBoard2.jpg](images/MillingBoard2.jpg)](images/MillingBoard2_large.jpg)
+The Z limit switches make use of smaller, slightly more expensive micro
+switches like these:
 
-In the end I had a pretty nice circuit board.  I will drill the holes after
-doing the epoxy, so I then painted it with the green epoxy and exposed it
-to the sun to cure the epoxy.
+![switches2.jpg](images/switches2.jpg)
 
-[![MilledBoard.jpg](images/MilledBoard.jpg)](images/MilledBoard_large.jpg)
-
-
-### 2 - mill the epoxy
-
-OK, so I won't do this again!   It worked on this (v04) board, but subsquently
-proved way too touchy to try to mill the UV epoxy off.  The copper layer is only
-35/1000's of a millimeter ... like 2/1000's of an inch ... thick.   Even though
-I added **mesh levelling** to the project, it is still nearly impossible to get
-accurate enough to mill off the epoxy and NOT destroy the copper pads underneath.
-
-[![MillEpoxy2.jpg](images/MillEpoxy2.jpg)](images/MillEpoxy2_large.jpg)
-[![MillEpoxy.jpg](images/MillEpoxy.jpg)](images/MillEpoxy_large.jpg)
-
-The second photo above is actually a failure on an attempt to mill v05.
-Most of the pads were destroyed because I was off by 1/100th of a millimeter!
-Nonetheless it worked for this (V04) board and in the end I decided to use
-V04 and move on.
-
-I have ordered a UV laser.  My next idea is to expose the UV epoxy with the UV
-laser on the cnc machine.  Photo masks are a bit complicated to work with!
+The switches are attached to the printed mount with 2mm screws directly into
+the plastic. The screws through to the original black plastic
+X axis carriage frame in which I drilled very small holes to accept
+them.  Likewise, the cover is attached with the same screws, but
+longer, through to the original frame where possible.
 
 
-### 3 - populate the board
+The center bit, the "z-axis stop" is attached to the Z-axis spindle motor mount
+with two 2 mm screws into tiny holes drilled into the motor mount. They can be
+loosened and the bottom part can slide up and down to adjust the Z axis limit.
 
-Then it was pretty easy to solder on the headers, components, etc, and
-I had a populated board.  It worked pretty much the first time!
+The z-axis zero position is fixed.
 
-[![Populated1.jpg](images/Populated1.jpg)](images/Populated1_large.jpg)
-[![Populated2.jpg](images/Populated2.jpg)](images/Populated2_large.jpg)
 
-I took a moment to take a photo of it with a light behind because it looks neat!
+[![zAxisSwitch2.jpg](images/zAxisSwitch2.jpg)](images/zAzisSwitch2_large.jpg)
+[![zAzisSwitch.jpg](images/zAzisSwitch.jpg)](images/zAzisSwitch_large.jpg)
 
-[![Transparent.jpg](images/Transparent.jpg)](images/Transparent_large.jpg)
+
+## General Wire Routing
+
+I designed and printed a bunch (like 20) of these little "wire screws".
+
+![stl_wire_screw.jpg](images/stl_wire_screw.jpg)
+
+To use them you stuff the given wire into the slot on the frame, insert
+the "wire screw" in line with the wire, and then twist it to the right
+(clockwite) until it locks.  I use them in a number of places to tidy up and secure
+the wires.
+
+![wire_screw.jpg](images/wire_screw.jpg)
 
 
 
-## Adding the touch screen
+## Z Wire Routing
+
+It is important (for me, at least!) as the machine works, and the X axis moves,
+that the wires to the carriage are organized and well protected.   I have some
+nice 1/2" black sheathing that works well to collect the spindle motor, z axis stepper
+motor, and z axis limit switchs wires into a single bundle from the control board
+to the X axis csarriage.
+
+But it was also important that the whole bundle doesn't move around and/or
+stress the connectors to the control board. So I decided to firmly attach the
+bundle of wires to the frame of the machine on one end, and the top of the
+Z axis stepper motor on the other end.
+
+![zWireRouting.jpg](images/zWireRouting.jpg)
 
 
-I put the board in the machine, and then used the machine to cut
-another small circuit board to be used as a connector for the touch
-screen:
+There are two assemblies (consisting of five parts in total) for this.
 
-[![LcdConnector1.jpg](images/LcdConnector1.jpg)](images/LcdConnector1_large.jpg)
-[![LcdConnector2.jpg](images/LcdConnector2.jpg)](images/LcdConnector2_large.jpg)
+The first assembly, the "z wire up", attaches to the back of the frame next
+to the controller board and secures the wire bundle at that point.
+The "z-up" assembly is attached to the frame with a standard 5mm hex cap
+bolts and t-nut.
 
-After 3D printing an enclosure for it, and attaching it to the machine
-(and reprinting it to add 5 ws2812b LEDs) I decided to write this page
+![stl_z_wire_up.jpg](images/stl_z_wire_up.jpg)
 
-[![LcdEnclosure.jpg](images/LcdEnclosure.jpg)](images/LcdEnclosure_large.jpg)
-[![LcdAttached.jpg](images/LcdAttached.jpg)](images/LcdAttached_large.jpg)
+The second asembly attaches to the top of the zAxis stepper motor by removing
+two of the existing 3mm screws and replacing them with 3mm screws that are 10mm
+longer than the originals. It has two caps to secure the wire bundle securely.
 
-Here is the final machine:
+![stl_z_wire_mount.jpg](images/stl_z_wire_mount.jpg)
 
-[![Machine1.jpg](images/Machine1.jpg)](images/Machine1_large.jpg)
+The wires are held in by a capd secured with two 3mm machine screws directly
+into the plastic.
+ gd
+The assembly serves to direct the stepper motor cable downwards, the spindle
+motor cable upwards, and the z-limit switch cable to the side in such a
+way that it wont interfere with the x zero switch which contacts the body
+of the stepper motor and works perfectly to keep them from hitting the
+lcd screen, etc.
 
-LOL, it still has the copper board from which I milled the LCD connector
-on the work surface :-)
+[![z_up1.jpg](images/z_up1.jpg)](images/z_up1_large.jpg)
 
 
+## Probe Switch Mount
+
+The probe (just another "switch") presents itself as a 1/8" stereo jack on
+the side of the machine so that the probe can easily be added or removed
+from the machine.
+
+![stl_probe_jack_holder.jpg](images/stl_probe_jack_holder.jpg)
+
+The connectors are standard 1/8" stereo connectors, but I only
+use the tip and ring:
+
+![probe_connectors.jpg](images/probe_connectors.jpg)
+
+I made the probe itself out of some multimeter test probes with
+bananna plugs that attached to insulated alligator clips.
+
+![probe_mount.jpg](images/probe_mount.jpg)
+
+Once again, wherever possible ground shielded wire was used.
+
+## PCB Mount
+
+![stl_pcb_mount.jpg](images/stl_pcb_mount.jpg)
+
+The PCB mount secures the PCB board to the frame with four 5mm hex bolts
+and t-nuts. Note that the SDCard support is a separate printed piece
+and is super-glued onto the control board after fitting the SDCard into
+the plug.  Then the SDCard board gets one screw to hold it firmly
+in place on the control board.
+
+
+[![board_mount.jpg](images/board_mount.jpg)](images/board_mount_large.jpg)
+
+After that the power supply assembly is plugged in, the wires
+connect, and the board is secured with two small (1.5mm) black screws.
+
+[![board_mount2.jpg](images/board_mount2.jpg)](images/board_mount2_large.jpg)
+
+This piece is wonky and depends entirely on the pin locations for
+the connectors between the control board and the (hand made perfboard)
+power supply/spindle motor control board.
+
+
+## LCD and LED Mount
+
+![stl_lcd_mount2.jpg](images/stl_lcd_mount2.jpg)
+
+The LCD mount also holds a strip of five addressable ws2812 LEDs
+similar to the photo below, but with five and a longer wire :-)
+
+![led_strip.jpg](images/led_strip.jpg)
+
+The LED strip is inserted into the top of the mount and then secured
+in place with a backing plate and two tiny screws as in the photo
+below.
+
+![lcd_mount_detail.jpg](images/lcd_mount_detail.jpg)
+
+The LCD is (gingerly) attached with four 3mm screws and nuts.  It is
+important that there is no pressure on the glass screen (or else
+the thing will think you are pressing a button)!!  The 3d print is
+designed to support the lcd from the edge and corners of the circuit
+board.  Tweak as necessary! But don't crank these four screws down.
+
+The entire LCD mount assembly is then attached to the top of the frame
+with two **3mm** hex bolts and t-nuts.
+
+![lcd_mount_final.jpg](images/lcd_mount_final.jpg)
+
+And the wires for the stepper motors, limit switches, LCD screen,
+and LEDs are plugged in:
+
+
+[![board_mount3.jpg](images/board_mount3.jpg)](images/board_mount3_large.jpg)
 
 <br>
 <hr>
 <div style="text-align: right">
-<a href='3dPrinting.md'>NEXT</a><i> - 3D Printing</i>
+<a href='electronics.md'>NEXT</a><i> - the Electronics</i>
 </div>

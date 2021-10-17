@@ -3,8 +3,8 @@
 **[Home](readme.md)** --
 **[History](history.md)** --
 **[Hardware](hardware.md)** --
-**[3D Printing](3dPrinting.md)** --
 **Electronics** --
+**[Software](software.md)** --
 **[Installation](installation.md)**
 
 
@@ -88,7 +88,7 @@ ESP32, and a **PWM MOSFET control module** to control the spindle motor.
 
 ![spindle_power_pcb.jpg](images/spindle_power_pcb.jpg)
 
-TODO: photo of (now populated) milled circuit board
+[![spindle_power.jpg](images/spindle_power.jpg)](images/spindle_power_large.jpg)
 
 It makes use of a **PWM Mosfet** module I bought on
 [ebay](https://www.ebay.com/itm/292509712137)
@@ -108,5 +108,5 @@ that looks like this:
 <br>
 <hr>
 <div style="text-align: right">
-<a href='installation.md'>NEXT</a><i> - Installation and Configuration</i>
+<a href='software.md'>NEXT</a><i> - Software Architecture</i>
 </div>

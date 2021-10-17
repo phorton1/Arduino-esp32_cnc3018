@@ -3,8 +3,8 @@
 **Home** --
 **[History](history.md)** --
 **[Hardware](hardware.md)** --
-**[3D Printing](3dPrinting.md)** --
 **[Electronics](electronics.md)** --
+**[Software](software.md)** --
 **[Installation](installation.md)**
 
 CNC3018_ESP is my implementation of an inexpensive 3-axis CNC machine that
@@ -23,6 +23,10 @@ on an ESP32 processor.
 
 **TODO: - VIDEO - introduction to the CNC3018_ESP**
 
+[![Machine1.jpg](images/Machine1.jpg)](images/Machine1_large.jpg)
+
+TODO: Better picture of current CNC3018_ESP (rename to Esp32_cnc3018)
+
 The CNC3018_ESP project is the 2nd machine in the line of open source
 CNC machines I have created and published.  It provides a number of
 features not commonly available in the lowest priced machines.
@@ -32,10 +36,11 @@ controlled wirelessly from your phone or computer via **WiFi**.  It can also be 
 via the **serial port** on the ESP32, via **Telnet** on port 23, or via **Bluetooth**
 for usage with commonly available gcode sender programs.
 Finally, it can also store gcode files on the optional **SD Card** and run jobs entirely
-locally, right on the ESP32, via the optional **Touch Screen User Interface**, without
-involving any other devices.
+locally, right on the ESP32, via the optional
+[**Touch Screen User Interface**](https://github.com/phorton1/Arduino-libraries-FluidNC_UI)
+, without involving any other devices.
 
-**TODO: picture link to the FLUID_NC UI page
+[![ui_screen.jpg](images/ui_screen.jpg)](https://github.com/phorton1/Arduino-libraries-FluidNC_UI)
 
 This repository includes all of the files and information needed to modify
 a stock entry level CNC 3018 machine as I have. It includes the files needed to
@@ -70,9 +75,10 @@ modifications to CNC 3018
 the plastic parts
 - **[Electronics](electronics.md)** - the **schematics** and home made circuit
 boards for the machine.
+- **[Software](software.md)** - describes the **software** architecture of
+CNC3018_ESP and FluidNC
 - **[Installation](Installation.md)** - instructions on **building** and installing
 the CNC3018_ESP firmware onto the ESP32 using the Arduino IDE environment.
-
 
 <br>
 

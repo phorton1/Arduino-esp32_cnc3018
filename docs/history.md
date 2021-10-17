@@ -3,8 +3,8 @@
 **[Home](readme.md)** --
 **History** --
 **[Hardware](hardware.md)** --
-**[3D Printing](3dPrinting.md)** --
 **[Electronics](electronics.md)** --
+**[Software](software.md)** --
 **[Installation](installation.md)**
 
 
