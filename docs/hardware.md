@@ -15,19 +15,25 @@ This page contains photos and ancedotes about building this project.
 The very first thing that everyone does to stock 3018's is adds limit switches.
 So I 3D printed some mounts and stuck some limit switches on the machine. For
 X and Y I just use the most ubiquitously available (cheapest!) switches, though
-a bit large.  I went through multiple iterations on the Z axis, starting with
-micro switches, but then relenting to using small (more expensive) lever switches.
+a bit large, that I could find on [ebay](https://www.ebay.com/itm/264871803944):
+
+[![limit_switches.jpg](images/limit_switches.jpg)](images/limit_switches_large.jpg)
+
+I went through multiple iterations on the Z axis, starting with
+micro switches, but then relenting to using small (more expensive) lever switches:
 
 [![zAxisSwitch2.jpg](images/zAxisSwitch2.jpg)](images/zAzisSwitch2_large.jpg)
 [![zAzisSwitch.jpg](images/zAzisSwitch.jpg)](images/zAzisSwitch_large.jpg)
 
-Everything in grey plastic is my 3D printed additions to the machine (the black
-plastic is the original stuff).  The zAxis has a housing around the switches,
+My additions are printed in grey plastic. The black
+plastic came with the original machine.
+
+The zAxis has a housing around the switches,
 and an adjustable offset at the bottom (limit).  All the wires are shielded.
 
 For the X and Y axis I originally started by using crimp on connectors that were
 exposed, but didn't like them.  They kept falling off and the connectors were
-too large for the wire I was using, so I 3D printed and constsructed my own connectors
+too large for the wire I was using, so I 3D printed and constructed my own connectors
 using some thin brass sheet I've had sitting around for 20 years,
 
 [![xyLimitSwitchConnector1.jpg](images/xyLimitSwitchConnector1.jpg)](images/xyLimitSwitchConnector1_large.jpg)

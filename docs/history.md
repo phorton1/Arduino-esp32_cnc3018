@@ -24,18 +24,18 @@ At that time I was using a simple *breadboard* circuit
 using thses nice [5e Board](https://www.5eboard.com/product-category/5e-circuit-boards/)
 breadboards.  They work good enough so that you can semi-persistently use
 the resultant circuits, even going so far as mounting them on things.
-They are definitely more resiliant,  than the usual white breadboards.
-The also allow for more flexible layouts, particularly with a SBC like
+They are definitely more resiliant than the usual white breadboards.
+They also allow for more flexible layouts, particularly with a SBC like
 the ESP32 that doesn't really fit well on a typical breadboard.
 
-So in the middle of the UI development, I decided to put the 3018 together.
+So in the middle of the UI development, I decided to put the stock 3018 together.
 I spent an afternoon constructing it, along with the included **Chronos
 Control Board**.   I spent about 5 minutes verifying that it functioned
-correctly with the Chronos board, then took the board off the machine,
+correctly with the Chronos board, then ***took the board off the machine***,
 and proceeded that very day to start to create a breadboarded version of
 a FluidNC based controller for the machine.
 
-![ProtoTypeCircuit.jpg](images/ProtoTypeCircuit.jpg)
+![PrototypeCircuit.jpg](images/PrototypeCircuit.jpg)
 
 This is essentially the same circuit as the vMachine, except that (a)
 the servo for the pen is replaced with another **A498** stepper
@@ -105,7 +105,7 @@ that *part* of the circuit, as shown above, where the connectors and resistors
 were **soldered**, that *plugs in* to the plastic circuit board.
 That helped quite a bit with the noise and false triggers.
 
-I also started using all shield cables for the spindle, stepper motors,
+I also started using all shielded cables for the spindle, stepper motors,
 and limit switches about this time.
 
 Of course I thought about making a soldered perf board version of the entire
@@ -142,8 +142,9 @@ of time to arrive at this point, but I will try to touch on the main points.
 
 Let's just start by saying I had *CNC fever*.  It started with *robots* but then
 I had some stepper motors sitting around, and I wanted to make *something*, so
-I built the **vMachine**.  While I was doing that I ordered a bunch of stuff to
-make a variety of machines, including ordering the cheapest chinese 3018 CNC
+I built the [**vMachine**](https://github.com/phorton1/Arduino-_vMachine).
+While I was doing that I ordered a bunch of stuff to
+make a variety of machines, including ordering the cheapest Chinese 3018 CNC
 machines I could find.
 
 I had already long ago decided that I was going to use the ESP32 and (at that

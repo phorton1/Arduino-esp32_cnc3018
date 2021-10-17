@@ -48,10 +48,15 @@ I could not figure out how to make kiCad include the "vias" in the
 
 ![_controller_pcb.jpg](images/_controller_pcb.jpg)
 
-You can see the ESP32 dev module I am using in other photographs.
+You can see the specific ESP32 dev module I am using in other photographs.
 It is the slightly smaller kind, with mounting holes.
 
 [![Populated1.jpg](images/Populated1.jpg)](images/Populated1_large.jpg)
+
+I took a moment to take a photo of it with a light behind because it looks neat!
+
+[![Transparent.jpg](images/Transparent.jpg)](images/Transparent_large.jpg)
+
 
 <br>
 

@@ -25,8 +25,9 @@ In the 3D printing files there are designs and STL files for
 ![stl_limit_switches.jpg](images/stl_limit_switches.jpg)
 
 The switches themselves are inexpensive automotive switches like
-the following.  They are attached to the mounts with one 3mm screw
-directly into the plastic in such a way that it provides the
+that I purchased on [ebay](https://www.ebay.com/itm/264871803944)
+for about 50 cents each.  They are attached to the mounts with one
+3mm screw directly into the plastic in such a way that it provides the
 pivot for the second screw, which is longer, and goes through
 the slot, with a nut on the underside, so that the switch can swing
 in an arc to adjust the contact point before tightening.
@@ -51,8 +52,10 @@ right side of the machine as you are facing it. One is mounted on the back
 corner of the machine, and one is mounted just forward of
 the right black plastic angle bracket.
 
-The tall 3d printed block and plastic 5mm t-nut are used to attached
-the Y-stops to the bottom of the platten and they are struck as
+![bottom_detail.jpg](images/bottom_detail.jpg)
+
+Above, the tall 3d printed block and plastic 5mm t-nut are used to attached
+the Y-stop piece to the bottom of the platten and the switches are struck as
 the platten moves forwards and backwards.
 
 ## Switch Connectors
