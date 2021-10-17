@@ -75,17 +75,22 @@
 
 void bumpPixel()	// for startup sequence
 {
-	static int pixel_num = 0;
-	pixels.setPixelColor(pixel_num++,MY_LED_MAGENTA);
-	pixels.show();
+	#ifdef WITH_PIXELS
+		static int pixel_num = 0;
+		pixels.setPixelColor(pixel_num++,MY_LED_MAGENTA);
+		pixels.show();
+	#endif
 }
 
 
 void setup()
 {
-    pixels.setBrightness(20);
-    pixels.show();
-    delay(1000);
+    #ifdef WITH_PIXELS
+		pixels.setBrightness(20);
+		pixels.show();
+		delay(1000);
+	#endif
+
 	bumpPixel();	// 0
     delay(1000);
 	bumpPixel();	// 1

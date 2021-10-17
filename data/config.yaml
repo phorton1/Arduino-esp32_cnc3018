@@ -1,8 +1,9 @@
+# This cnc3018.yaml is copied to config.yaml after changes,
+# so that we keep it separate from, and yet use, config.yaml.
 
 name: "CNC3018"
 board: "CNC3018_ESP Dev Board"
 
-homing_init_lock: false
 
 stepping:
     engine: RMT
@@ -15,108 +16,77 @@ stepping:
     disable_delay_us: 0
 
 axes:
-    shared_stepper_disable: gpio.25
+    shared_stepper_disable_pin: gpio.25
         # :low
         
     x:
         steps_per_mm: 400
-        max_rate: 2500
-        acceleration: 100
-        max_travel: 320
-        
-        # soft_limits: false
-        # not needed
-        # hard_limits: true
-        # done manually in switches.cpp
-        
+        max_rate_mm_per_min: 2500
+        acceleration_mm_per_sec2: 100
+        max_travel_mm: 320
         motor0:
-            pulloff: 5
+            pulloff_mm: 5
             standard_stepper:
-                step: gpio.13
-                direction: gpio.14
-
+                step_pin: gpio.13
+                direction_pin: gpio.14
         homing:
             cycle: 2
-            seek_rate: 1200
-            feed_rate: 300
+            seek_mm_per_min: 1200
+            feed_mm_per_min: 300
             positive_direction: false
 
-            
     y:
         steps_per_mm: 400
-        max_rate: 2500
-        acceleration: 100
-        max_travel: 200
-        # soft_limits: false
-        # hard_limits: true
+        max_rate_mm_per_min: 2500
+        acceleration_mm_per_sec2: 100
+        max_travel_mm: 200
         motor0:
-            pulloff: 5
+            pulloff_mm: 5
             standard_stepper:
-                step: gpio.27
-                direction: gpio.26:low
+                step_pin: gpio.27
+                direction_pin: gpio.26:low
         homing:
             cycle: 2
-            seek_rate: 1200
-            feed_rate: 300
+            seek_mm_per_min: 1200
+            feed_mm_per_min: 300
             positive_direction: false
             
     z:
         steps_per_mm: 400
-        max_rate: 600
-        acceleration: 40
-        max_travel: 50
-        # soft_limits: false
+        max_rate_mm_per_min: 600
+        acceleration_mm_per_sec2: 40
+        max_travel_mm: 50
         motor0:
-            pulloff: 5
+            pulloff_mm: 5
             standard_stepper:
-                step: gpio.33
-                direction: gpio.32
-                # :low
-                
+                step_pin: gpio.33
+                direction_pin: gpio.32
         homing:
             cycle: 1
-            seek_rate: 300
-            feed_rate: 80
-            # positive_direction: false
+            seek_mm_per_min: 300
+            feed_mm_per_min: 80
+ 
             
-# Setup for On/Off Spindle
-# 
-# OnOff:
-#     enable_pin: gpio.2
-
 
 # Setup for PWM Spindle
 
 PWM:
     output_pin: gpio.2
-    # enable_pin: gpio.22
     pwm_freq: 600
-    
-    # 976
-    # setup so that 0=0 duty, and 1..100 == 50..100 duty
-    # so that (a) I am using "percent" of spindle speed
-    # and (b) protecting my lame IRF9450 circuit
     speeds: 0=0% 1=5% 100=100%
             
-comms:
-    wifi_sta:
-        ssid: THX36
-    wifi_ap:
-        ssid: CNC3018_ESP
-
-    # set a machine specific AP SSID and
-    # as a concession to convenience, I leave the checked-in config.yaml
-    # with my wifi SSID.  For users, it will fail to connect and fall back
-    # to the CNC3018_ESP Access Point with password 12345678
+start:
+  must_home: false
     
 spi:
     # one has to tell FluidNC the default ESP32 SPI pins!
-    miso: gpio.19
-    mosi: gpio.23
-    sck: gpio.18
+    miso_pin: gpio.19
+    mosi_pin: gpio.23
+    sck_pin: gpio.18
     
 sdcard:
     # and then one can specify the specific cs used for the SDCard
-    cs: gpio.4
-    card_detect: NO_PIN
+    cs_pin: gpio.4
+    card_detect_pin: NO_PIN
   
+

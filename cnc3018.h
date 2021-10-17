@@ -4,6 +4,7 @@
 
 #define WITH_UI
 #define WITH_MESH       // FluidNC_UI/gDefs.h::UI_WITH_MESH must be set the same!
+#define WITH_PIXELS
 
 #include <Machine/MachineConfig.h>  // FluidNC - required
 #include <FluidDebug.h>             // FluidNC_extensions
