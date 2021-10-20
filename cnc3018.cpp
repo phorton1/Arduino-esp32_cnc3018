@@ -2,8 +2,11 @@
 
 #include "cnc3018.h"
 #include "myProbe.h"
-#include <YamlOverrides.h>
+#include <YamlOverrides.h>	// FluidNC_extensions
 	// can be commented out to disable extension
+#ifdef WITH_UI
+	#include <gApp.h>		// FluidNC_UI
+#endif
 
 #define DEBUG_YAML 	0
 
@@ -32,62 +35,72 @@ cnc3018 the_machine;
 		the_mesh.motors_to_cartesian(cartesian, motors, n_axis);
 	}
 
-	void user_realtime_command(uint8_t command, Print &client)
+#endif
+
+
+
+void user_realtime_command(uint8_t command, Print &client)
+{
+	// ctrl keys
+	//
+	// ctrl-Q			CMD_LIVE_Z_PLUS_COARSE
+	// ctrl-W       	CMD_LIVE_Z_PLUS_FINE
+	// ctrl-E       	CMD_LIVE_Z_RESET
+	// ctrl-R       	CMD_LIVE_Z_MINUS_FINE
+	// ctrl-T       	CMD_LIVE_Z_MINUS_COARSE
+	//
+	// 0x01 - ctrl-A
+	// 0x02 - ctrl-B
+	// 0x03 - ctrl-C	concole exit
+	// 0x04 - ctrl-D	console clear
+	// 0x05 - ctrl-E	CMD_LIVE_Z_RESET
+	// 0x06 - ctrl-F	console experimental gcode
+	// 0x07 - ctrl-G	console gcode
+	// 0x08 - ctrl-H
+	// 0x09 - ctrl-I
+	// 0x0a - ctrl-J
+	// 0x0b - ctrl-K
+	// 0x0c - ctrl-L
+	// 0x0d - ctrl-M
+	// 0x0e - ctrl-N
+	// 0x0f - ctrl-O
+	// 0x10 - ctrl-P    CMD_UI_SCREEN_GRAB
+	// 0x11 - ctrl-Q	CMD_LIVE_Z_PLUS_COARSE
+	// 0x12 - ctrl-R    CMD_LIVE_Z_MINUS_COARSE
+	// 0x13 - ctrl-S
+	// 0x14 - ctrl-T	CMD_LIVE_Z_MINUS_COARSE
+	// 0x15 - ctrl-U
+	// 0x16 - ctrl-V
+	// 0x17 - ctrl-W	CMD_LIVE_Z_PLUS_FINE
+	// 0x18 - ctrl-X	FluidNC reset (console upload if enabled)
+	// 0x19 - ctrl-Y
+	// 0x1a - ctrl-Z
+	// 0x1b - ESC
+	// 0x1c -
+	// 0x1d -
+	// 0x1e -
+	// 0x1f -
+
+	g_debug("user_realtime_command(0x%02x)",command);
+
+	switch (command)
 	{
-		// ctrl keys
-		//
-		// ctrl-Q			CMD_LIVE_Z_PLUS_COARSE
-		// ctrl-W       	CMD_LIVE_Z_PLUS_FINE
-		// ctrl-E       	CMD_LIVE_Z_RESET
-		// ctrl-R       	CMD_LIVE_Z_MINUS_FINE
-		// ctrl-T       	CMD_LIVE_Z_MINUS_COARSE
-		//
-		// 0x01 - ctrl-A
-		// 0x02 - ctrl-B
-		// 0x03 - ctrl-C	concole exit
-		// 0x04 - ctrl-D	console clear
-		// 0x05 - ctrl-E	CMD_LIVE_Z_RESET
-		// 0x06 - ctrl-F	console experimental gcode
-		// 0x07 - ctrl-G	console gcode
-		// 0x08 - ctrl-H
-		// 0x09 - ctrl-I
-		// 0x0a - ctrl-J
-		// 0x0b - ctrl-K
-		// 0x0c - ctrl-L
-		// 0x0d - ctrl-M
-		// 0x0e - ctrl-N
-		// 0x0f - ctrl-O
-		// 0x10 - ctrl-P
-		// 0x11 - ctrl-Q	CMD_LIVE_Z_PLUS_COARSE
-		// 0x12 - ctrl-R    CMD_LIVE_Z_MINUS_COARSE
-		// 0x13 - ctrl-S
-		// 0x14 - ctrl-T	CMD_LIVE_Z_MINUS_COARSE
-		// 0x15 - ctrl-U
-		// 0x16 - ctrl-V
-		// 0x17 - ctrl-W	CMD_LIVE_Z_PLUS_FINE
-		// 0x18 - ctrl-X	FluidNC reset (console upload if enabled)
-		// 0x19 - ctrl-Y
-		// 0x1a - ctrl-Z
-		// 0x1b - ESC
-		// 0x1c -
-		// 0x1d -
-		// 0x1e -
-		// 0x1f -
-
-		g_debug("user_realtime_command(0x%02x)",command);
-
-		switch (command)
-		{
+		#ifdef WITH_MESH
 			case CMD_LIVE_Z_PLUS_COARSE :
 			case CMD_LIVE_Z_PLUS_FINE :
 			case CMD_LIVE_Z_RESET :
 			case CMD_LIVE_Z_MINUS_FINE :
 			case CMD_LIVE_Z_MINUS_COARSE :
 				the_mesh.setLiveZ(command);
-		}
+				break;
+		#endif
+		#ifdef WITH_UI
+			case CMD_UI_SCREEN_GRAB :
+				gApplication::doScreenGrab();
+				break;
+		#endif
 	}
-
-#endif
+}
 
 
 //-------------------------------------
