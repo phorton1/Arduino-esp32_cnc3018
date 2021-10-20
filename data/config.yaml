@@ -72,8 +72,8 @@ axes:
 
 PWM:
     output_pin: gpio.2
-    pwm_freq: 600
-    speeds: 0=0% 1=5% 100=100%
+    pwm_hz: 2000
+    speed_map: 0=0% 1=5% 100=100%
             
 start:
   must_home: false
