@@ -210,7 +210,7 @@ void switchTask(void* pvParameters)
 		// Probe pixel
 
 		static bool last_probe = false;
-		bool probe = switches & (1<<PIN7_PROBE);
+		bool probe = switches & PROBE_SWITCH_MASK;
 		if (last_probe != probe)
 		{
 			last_probe = probe;

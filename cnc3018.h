@@ -41,6 +41,7 @@
 
 #define PROBE_SWITCH_MASK (1<<PIN7_PROBE)
 
+
 // pin ins to display connector
 // 1 - VCC
 // 2 - TOUCH_CS (GPIO_NUM_5)

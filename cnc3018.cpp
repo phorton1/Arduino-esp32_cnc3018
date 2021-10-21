@@ -95,12 +95,14 @@ void user_realtime_command(uint8_t command, Print &client)
 				break;
 		#endif
 		#ifdef WITH_UI
-			case CMD_UI_SCREEN_GRAB :
-				gApplication::doScreenGrab(false);
-				break;
-			case CMD_UI_SCREEN_GRAB_PENDING :
-				gApplication::doScreenGrab(true);
-				break;
+			#ifdef WITH_SCREEN_GRAB
+				case CMD_UI_SCREEN_GRAB :
+					gApplication::doScreenGrab(false);
+					break;
+				case CMD_UI_SCREEN_GRAB_PENDING :
+					gApplication::doScreenGrab(true);
+					break;
+			#endif
 		#endif
 	}
 }

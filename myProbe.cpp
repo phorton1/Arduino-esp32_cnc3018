@@ -2,7 +2,7 @@
 #include "myProbe.h"
 
 
-#define DEBUG_PROBE 0
+#define DEBUG_PROBE 1
 
 
 void myProbe::init()
