@@ -63,7 +63,7 @@ void user_realtime_command(uint8_t command, Print &client)
 	// 0x0c - ctrl-L
 	// 0x0d - ctrl-M
 	// 0x0e - ctrl-N
-	// 0x0f - ctrl-O
+	// 0x0f - ctrl-O    CMD_UI_SCREEN_GRAB_PENDING
 	// 0x10 - ctrl-P    CMD_UI_SCREEN_GRAB
 	// 0x11 - ctrl-Q	CMD_LIVE_Z_PLUS_COARSE
 	// 0x12 - ctrl-R    CMD_LIVE_Z_MINUS_COARSE
@@ -96,7 +96,10 @@ void user_realtime_command(uint8_t command, Print &client)
 		#endif
 		#ifdef WITH_UI
 			case CMD_UI_SCREEN_GRAB :
-				gApplication::doScreenGrab();
+				gApplication::doScreenGrab(false);
+				break;
+			case CMD_UI_SCREEN_GRAB_PENDING :
+				gApplication::doScreenGrab(true);
 				break;
 		#endif
 	}
