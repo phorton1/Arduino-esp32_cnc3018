@@ -106,7 +106,7 @@ provided by this library.
 On top of FluidNC I have built
 [**FluidNC_UI**](https://github.com/phorton1/Arduino-libraries-FluidNC_UI),
 the *touch screen user interface*, as a library that can optionally
-used in ESP32 CNC projects.
+be used in ESP32 CNC projects.
 Please see this library for a **description of the *User Interface***.
 
 I have also added a
