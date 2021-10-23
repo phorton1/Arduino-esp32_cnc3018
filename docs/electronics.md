@@ -37,14 +37,17 @@ with three **a4988** stepper controller boards.  You can determine
 the pins that I am using for various things from the schematic, and/or
 the C++ source code files.
 
-[![_controller.jpg](images/_controller.jpg)](kiCad/_controller.pdf)
+[![_controller.jpg](images/_controller.jpg)](images/_controller.pdf)
 
 You can click on the above image to get a PDF file of the schematic.
 
 The extra jumpers in the diagram (labeled as "V#" for "via") are there
 to provide the pcb design with "pads" that can be uncovered for "vias".
-I could not figure out how to make kiCad include the "vias" in the
-"pad" plot.
+As a newby I could not figure out how to make kiCad include the "vias" in the
+"pad" plot, and so I added them to the schematic, but they are not
+"significant" in that they don't represent actual jumpers or components.
+So, **please ignore the boxes labelled 'V#' in the schematic**!
+
 
 ![_controller_pcb.jpg](images/_controller_pcb.jpg)
 

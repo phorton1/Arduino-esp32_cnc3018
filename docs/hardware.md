@@ -95,11 +95,10 @@ switches like these:
 ![switches2.jpg](images/switches2.jpg)
 
 The switches are attached to the printed mount with 2mm screws directly into
-the plastic. The screws through to the original black plastic
-X axis carriage frame in which I drilled very small holes to accept
-them.  Likewise, the cover is attached with the same screws, but
+the plastic. Some of the screws go all the way through to the original black
+plastic X axis carriage frame in which I drilled a couple of very small holes.
+Likewise, the cover is attached with the same screws, but
 longer, through to the original frame where possible.
-
 
 The center bit, the "z-axis stop" is attached to the Z-axis spindle motor mount
 with two 2 mm screws into tiny holes drilled into the motor mount. They can be
@@ -204,7 +203,7 @@ in place on the control board.
 [![board_mount.jpg](images/board_mount.jpg)](images/board_mount_large.jpg)
 
 After that the power supply assembly is plugged in, the wires
-connect, and the board is secured with two small (1.5mm) black screws.
+connected, and the board is secured with two small (1.5mm) black screws.
 
 [![board_mount2.jpg](images/board_mount2.jpg)](images/board_mount2_large.jpg)
 
@@ -230,9 +229,11 @@ below.
 
 The LCD is (gingerly) attached with four 3mm screws and nuts.  It is
 important that there is no pressure on the glass screen (or else
-the thing will think you are pressing a button)!!  The 3d print is
+the thing will think you are pressing a button!!  The 3d print is
 designed to support the lcd from the edge and corners of the circuit
-board.  Tweak as necessary! But don't crank these four screws down.
+board such that there is no pressure on (a 1/2 mm gap to) the
+touch screen.  Tweak as necessary!
+But **don't crank these four screws down!!**
 
 The entire LCD mount assembly is then attached to the top of the frame
 with two **3mm** hex bolts and t-nuts.
