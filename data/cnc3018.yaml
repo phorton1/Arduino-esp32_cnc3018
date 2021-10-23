@@ -2,7 +2,7 @@
 # so that we keep it separate from, and yet use, config.yaml.
 
 name: "CNC3018"
-board: "CNC3018_ESP Dev Board"
+board: "esp32_cnc3018 Dev Board"
 
 
 stepping:

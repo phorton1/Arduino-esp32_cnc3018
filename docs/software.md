@@ -1,4 +1,4 @@
-# CNC3018_ESP - Software and Configuration
+# esp32_cnc3018 - Software and Configuration
 
 **[Home](readme.md)** --
 **[History](history.md)** --

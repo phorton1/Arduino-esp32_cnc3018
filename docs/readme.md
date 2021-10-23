@@ -1,4 +1,4 @@
-# CNC3018_ESP - Yet another cnc3018 Grbl Controller with WiFi and a TFT touch UI
+# esp32_cnc3018 - Yet another cnc3018 Grbl Controller with WiFi and a TFT touch UI
 
 **Home** --
 **[History](history.md)** --
@@ -7,7 +7,7 @@
 **[Software](software.md)** --
 **[Installation](installation.md)**
 
-CNC3018_ESP is my implementation of an inexpensive 3-axis CNC machine that
+esp32_cnc3018 is my implementation of an inexpensive 3-axis CNC machine that
 makes use of the **ESP32** processor.  Essentially I bought the cheapest
 3-axis CNC machine I could find on [Ebay]( https://www.ebay.com/itm/392298131168), and then designed and implemented
 my own controller board, limit switches, and extensions to that machine.
@@ -21,17 +21,17 @@ $5, or about half the price of a genuine Arduino.
 Therefore my *primary design decision* was to base this, and my future CNC projects,
 on an ESP32 processor.
 
-**TODO: - VIDEO - introduction to the CNC3018_ESP**
+**TODO: - VIDEO - introduction to the esp32_cnc3018**
 
 [![Machine1.jpg](images/Machine1.jpg)](images/Machine1_large.jpg)
 
-TODO: Better picture of current CNC3018_ESP (rename to Esp32_cnc3018)
+TODO: Better picture of current esp32_cnc3018 (rename to Esp32_cnc3018)
 
-The CNC3018_ESP project is the 2nd machine in the line of open source
+The esp32_cnc3018 project is the 2nd machine in the line of open source
 CNC machines I have created and published.  It provides a number of
 features not commonly available in the lowest priced machines.
 
-CNC3018_ESP includes a full **Web Browser User Interface** so that it can be
+esp32_cnc3018 includes a full **Web Browser User Interface** so that it can be
 controlled wirelessly from your phone or computer via **WiFi**.  It can also be controlled
 via the **serial port** on the ESP32, via **Telnet** on port 23, or via **Bluetooth**
 for usage with commonly available gcode sender programs.
@@ -68,7 +68,7 @@ The documentation starts with this page, and includes the following additional
 pages:
 
 - **[History](history.md)** - my personal historical **perspectives** and
-photos of the development process for the CNC3018_ESP machine
+photos of the development process for the esp32_cnc3018 machine
 - **[Hardware](hardware.md)** - shows the physical
 modifications to CNC 3018
 - **[3D Printing](3dPrinting.md)** - details the **3D Printing** of
@@ -76,9 +76,9 @@ the plastic parts
 - **[Electronics](electronics.md)** - the **schematics** and home made circuit
 boards for the machine.
 - **[Software](software.md)** - describes the **software** architecture of
-CNC3018_ESP and FluidNC
+esp32_cnc3018 and FluidNC
 - **[Installation](Installation.md)** - instructions on **building** and installing
-the CNC3018_ESP firmware onto the ESP32 using the Arduino IDE environment.
+the esp32_cnc3018 firmware onto the ESP32 using the Arduino IDE environment.
 
 <br>
 
@@ -120,7 +120,7 @@ core.  Specific contents at this time include:
 - methods to abstract the **state** of the FluidNC machine
 - methods to abstract **control** of the FluidNC machine
 - methods to supplement the FluidNC **configuration** system, and
-- an implementation of **mesh bed levelling** as used in this CNC3018_ESP machine
+- an implementation of **mesh bed levelling** as used in this esp32_cnc3018 machine
 
 
 
@@ -131,7 +131,7 @@ core.  Specific contents at this time include:
 ## Credits and License
 
 This library is licensed under the
-[GNU General Public License v3.0](https://github.com/phorton1/Arduino-CNC3018_ESP/tree/master/LICENSE.TXT)
+[GNU General Public License v3.0](https://github.com/phorton1/Arduino-esp32_cnc3018/tree/master/LICENSE.TXT)
 
 **Credits**
 
@@ -141,5 +141,5 @@ This library is licensed under the
 <br>
 <hr>
 <div style="text-align: right">
-<a href='history.md'>NEXT</a><i> - more about CNC3018_ESP ...</i>
+<a href='history.md'>NEXT</a><i> - more about esp32_cnc3018 ...</i>
 </div>

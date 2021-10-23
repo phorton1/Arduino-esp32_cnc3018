@@ -1,4 +1,4 @@
-# CNC3018_ESP - Electronics
+# esp32_cnc3018 - Electronics
 
 **[Home](readme.md)** --
 **[History](history.md)** --

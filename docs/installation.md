@@ -1,4 +1,4 @@
-# CNC3018_ESP - Installation
+# esp32_cnc3018 - Installation
 
 **[Home](readme.md)** --
 **[History](history.md)** --
@@ -20,7 +20,7 @@ to your Arduino Sketch "tools" folder
 
 ## 2. Get the Source Code
 
-Start by copying or cloning **this repository** into a folder called **CNC3018_ESP**
+Start by copying or cloning **this repository** into a folder called **esp32_cnc3018**
 within your Arduino Sketch folder.
 
 You then need to add a number of libraries to your **Arduino/libraries** folder.
@@ -38,7 +38,7 @@ Please follow the instructions on the linked pages to install each library and i
 
 ## 3. Build/Flash the Firmware and upload the SPIFFS
 
-- open the **CNC3018_ESP.ino** sketch in the Arduino IDE
+- open the **esp32_cnc3018.ino** sketch in the Arduino IDE
 - select the **ESP32 Dev Module** board from the Arduino *Tools-Boards* menu
 - select the **Minimal SPIFFS** (1.9MB App with OTA/190KB SPIFFS) from the *Tools-Partition Scheme* menu
 - select the correct **COM Port** for the ESP32
@@ -47,9 +47,9 @@ Please follow the instructions on the linked pages to install each library and i
 
 <br>
 
-## 4. Access the CNC3018_ESP machine via the Arduino Serial Monitor
+## 4. Access the esp32_cnc3018 machine via the Arduino Serial Monitor
 
-You should now be able to open the Arduino Serial Monitor (set it to **115200 baud**) and access the CNC3018_ESP machine
+You should now be able to open the Arduino Serial Monitor (set it to **115200 baud**) and access the esp32_cnc3018 machine
 via the USB serial port.  You should see something like this:
 
 ![arduino_serial_monitor.jpg](images/arduino_serial_monitor.jpg)
@@ -100,7 +100,7 @@ via the default IP address of **10.0.0.1**.
 ### Configuring the Wifi
 
 There are a number of commands that you can use to configure
-WiFi access to the CNC3018_ESP machine.
+WiFi access to the esp32_cnc3018 machine.
 
 You can make it connect to your
 existing Wifi network by issuing the following commands:
@@ -123,7 +123,7 @@ are a number of different approaches available.
 
 ## 7. Finished!!
 
-**Congratulations!  You now have prepared the firmware for a CNC3018_ESP machine!**
+**Congratulations!  You now have prepared the firmware for a esp32_cnc3018 machine!**
 
 
 <br>

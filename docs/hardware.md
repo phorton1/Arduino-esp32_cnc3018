@@ -1,4 +1,4 @@
-# CNC3018_ESP - Hardware and 3D Printing
+# esp32_cnc3018 - Hardware and 3D Printing
 
 **[Home](readme.md)** --
 **[History](history.md)** --

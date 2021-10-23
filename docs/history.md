@@ -1,4 +1,4 @@
-# CNC3018_ESP - History of this Project
+# esp32_cnc3018 - History of this Project
 
 **[Home](readme.md)** --
 **History** --
