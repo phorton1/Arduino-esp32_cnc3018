@@ -2,9 +2,9 @@
 
 #pragma once
 
-#define WITH_UI
+#define WITH_UI         // requires FluidNC_UI
 #define WITH_MESH       // FluidNC_UI/gDefs.h::UI_WITH_MESH must be set the same!
-#define WITH_PIXELS
+#define WITH_PIXELS     // requires adafruitNeoPixels
 
 #include <Machine/MachineConfig.h>  // FluidNC - required
 #include <FluidDebug.h>             // FluidNC_extensions
@@ -16,8 +16,9 @@
 //-----------------------------------
 // ESP32 Pins Used by this Program
 //-----------------------------------
-// except motors defined in YAML
+// Except motors defined in YAML
 // TFT pina defined in TFT_eSPI/prhSettings.h
+// but noted here for completeness.
 
 #define G_PIN_LEDS_OUT            GPIO_NUM_12
 // #define G_PIN_TFT_CS             GPIO_NUM_22
@@ -105,13 +106,20 @@ class cnc3018 : public Machine::MachineConfig
 };  // class cnc3018
 
 
-extern cnc3018 the_machine;
 
-extern void bumpPixel();	// for startup sequence
+//-----------------------------------
+// externs
+//-----------------------------------
+
+extern cnc3018 the_machine;
+    // in cnc3018.cpp - the main "machine"
+
+extern void bumpPixel();	// for LED startup sequence
     // in cnc3018.ino
 
-// public methods in swtiches.cpp
-
 extern void init_switches();
+    // in swtiches.cpp
 extern uint8_t IRAM_ATTR read_switches();       // read em'
+    // in swtiches.cpp
 extern uint8_t get_switches();                  // return cached value
+    // in swtiches.cpp

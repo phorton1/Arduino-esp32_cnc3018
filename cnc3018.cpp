@@ -4,15 +4,30 @@
 #include "myProbe.h"
 #include <YamlOverrides.h>	// FluidNC_extensions
 	// can be commented out to disable extension
-#ifdef WITH_UI
-	#include <gApp.h>		// FluidNC_UI
-#endif
 
 #define DEBUG_YAML 	0
 
-
 myProbe my_probe;
 cnc3018 the_machine;
+
+
+//---------------------------
+// initialize the UI
+//---------------------------
+
+#ifdef WITH_UI
+    #include <FluidNC_UI.h>
+	#include <gApp.h>		// FluidNC_UI
+
+    void display_init()
+        // override weak definition in FluidNC
+        // called after the Serial port Client has been created
+    {
+        g_debug("cnc3018.ino display_init() started");
+        FluidNC_UI_init();
+        g_debug("cnc3018.ino display_init() finished");
+    }
+#endif
 
 
 //---------------------------
@@ -38,6 +53,10 @@ cnc3018 the_machine;
 #endif
 
 
+
+//--------------------------------
+// add Mesh/UI realtime commands
+//--------------------------------
 
 void user_realtime_command(uint8_t command, Print &client)
 {
@@ -108,8 +127,9 @@ void user_realtime_command(uint8_t command, Print &client)
 }
 
 
+
 //-------------------------------------
-// implement cnc3018 "machine"
+// implement the cnc3018 "machine"
 //-------------------------------------
 
 cnc3018::cnc3018()
@@ -119,9 +139,8 @@ cnc3018::cnc3018()
 }
 
 
-
-
 void cnc3018::afterParse() // override
+	// for debugging only at this time
 {
 	#if DEBUG_YAML
 		g_debug("---> cnc3018::afterParse() called");
@@ -132,8 +151,6 @@ void cnc3018::afterParse() // override
 
 	Machine::MachineConfig::afterParse();
 }
-
-
 
 
 void cnc3018::group(Configuration::HandlerBase& handler) // override
@@ -152,6 +169,7 @@ void cnc3018::group(Configuration::HandlerBase& handler) // override
 	#endif
 
 	Machine::MachineConfig::group(handler);
+
 #ifdef WITH_MESH
 	Mesh *_mesh = &the_mesh;
 	handler.section("mesh",_mesh);
@@ -164,3 +182,4 @@ void cnc3018::group(Configuration::HandlerBase& handler) // override
 		bumpPixel();	// 2
 	}
 }
+

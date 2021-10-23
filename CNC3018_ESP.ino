@@ -1,9 +1,6 @@
 //----------------------------------------------------
 // cnc3018.ino
 //----------------------------------------------------
-// interesting gCodes
-//
-// m6 t1 = tool change to tool #1
 
 #include <FluidNC.h>
 #include "cnc3018.h"
@@ -22,19 +19,6 @@
 	#include <gStatus.h>	// FluidNC extensions
 #endif
 
-
-#ifdef WITH_UI
-    #include <FluidNC_UI.h>
-
-    void display_init()
-        // override weak definition in FluidNC
-        // called after the Serial port Client has been created
-    {
-        g_debug("cnc3018.ino display_init() started");
-        FluidNC_UI_init();
-        g_debug("cnc3018.ino display_init() finished");
-    }
-#endif
 
 
 #ifdef INIT_SD_AGAIN
@@ -99,7 +83,7 @@ void setup()
         bool sd_ok = SD.begin(G_PIN_SDCARD_CS);
     #endif
 
-    main_init();
+    main_init();	// FluidNC setup() method
 	bumpPixel();	// 3
 
     #ifdef INIT_SD_DURING_SETUP
@@ -132,7 +116,7 @@ void setup()
 void loop()
 {
     g_debug("cnc3018.ino loop() started %d/%dK",xPortGetFreeHeapSize()/1024,xPortGetMinimumEverFreeHeapSize()/1024);
-    run_once();
+    run_once();		// FluidNC loop() method
     delay(1000);    // for display of following message to work with FluidNC asynch debug output
     g_debug("cnc3018.ino loop() completed %d/%dK",xPortGetFreeHeapSize()/1024,xPortGetMinimumEverFreeHeapSize()/1024);
  }
