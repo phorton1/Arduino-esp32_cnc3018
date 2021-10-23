@@ -1,4 +1,4 @@
-# CNC3018_ESP - Hardware snd 3D Printing
+# CNC3018_ESP - Hardware and 3D Printing
 
 **[Home](readme.md)** --
 **[History](history.md)** --
@@ -26,7 +26,7 @@ In the 3D printing files there are designs and STL files for
 ![stl_limit_switches.jpg](images/stl_limit_switches.jpg)
 
 The switches themselves are inexpensive automotive switches like
-that I purchased on [ebay](https://www.ebay.com/itm/264871803944)
+that I purchased on [eBay](https://www.ebay.com/itm/264871803944)
 for about 50 cents each.  They are attached to the mounts with one
 3mm screw directly into the plastic in such a way that it provides the
 pivot for the second screw, which is longer, and goes through
@@ -41,7 +41,7 @@ bolts and t-nuts.
 ![nuts_and_bolts.jpg](images/nuts_and_bolts.jpg)
 
 
-The shorter ones are the X limit switches. They are are hit by the
+The shorter ones are the X limit switches. They are hit by the
 Z axis stepper motor body as the carriage traverses left and right.
 
 ![x_zero_switch.jpg](images/x_zero_switch.jpg)
@@ -56,8 +56,8 @@ the right black plastic angle bracket.
 ![bottom_detail.jpg](images/bottom_detail.jpg)
 
 Above, the tall 3d printed block and plastic 5mm t-nut are used to attached
-the Y-stop piece to the bottom of the platten and the switches are struck as
-the platten moves forwards and backwards.
+the Y-stop piece to the bottom of the platen and the switches are struck as
+the platen moves forwards and backwards.
 
 ## Switch Connectors
 
@@ -71,14 +71,14 @@ have the right size).
 So, I went ahead and designed and printed my own connectors
 for the switches, which connect firmly, protect the wires,
 and are connected to the motor mounts with a 12x2mm screw
-thru the slot to the mount (so the switch and and connector
+thru the slot to the mount (so the switch and connector
 can pivot together after loosening both screws)
 
 [![xyLimitSwitchConnector1.jpg](images/xyLimitSwitchConnector1.jpg)](images/xyLimitSwitchConnector1_large.jpg)
 [![xyLimitSwitchConnector2.jpg](images/xyLimitSwitchConnector2.jpg)](images/xyLimitSwitchConnector2_large.jpg)
 
 I cut the brass into 4mm strips, bent them into shape, and soldered wire to the brass.
-The cover is attached with some tiny (but surprisingly strong) self threading screws
+The cover is attached with some tiny (but surprisingly strong) self-threading screws
 directly into plastic.
 
 FWIW I also used shielded cable (from some old RCA stereo cables) for all of the limit
@@ -120,7 +120,7 @@ I designed and printed a bunch (like 20) of these little "wire screws".
 
 To use them you stuff the given wire into the slot on the frame, insert
 the "wire screw" in line with the wire, and then twist it to the right
-(clockwite) until it locks.  I use them in a number of places to tidy up and secure
+(clockwise) until it locks.  I use them in a number of places to tidy up and secure
 the wires.
 
 ![wire_screw.jpg](images/wire_screw.jpg)
@@ -132,8 +132,8 @@ the wires.
 It is important (for me, at least!) as the machine works, and the X axis moves,
 that the wires to the carriage are organized and well protected.   I have some
 nice 1/2" black sheathing that works well to collect the spindle motor, z axis stepper
-motor, and z axis limit switchs wires into a single bundle from the control board
-to the X axis csarriage.
+motor, and z axis limit switches wires into a single bundle from the control board
+to the X axis carriage.
 
 But it was also important that the whole bundle doesn't move around and/or
 stress the connectors to the control board. So I decided to firmly attach the
@@ -152,18 +152,18 @@ bolts and t-nut.
 
 ![stl_z_wire_up.jpg](images/stl_z_wire_up.jpg)
 
-The second asembly attaches to the top of the zAxis stepper motor by removing
+The second assembly attaches to the top of the zAxis stepper motor by removing
 two of the existing 3mm screws and replacing them with 3mm screws that are 10mm
 longer than the originals. It has two caps to secure the wire bundle securely.
 
 ![stl_z_wire_mount.jpg](images/stl_z_wire_mount.jpg)
 
-The wires are held in by a capd secured with two 3mm machine screws directly
+The wires are held in by a cap secured with two 3mm machine screws directly
 into the plastic.
- gd
+
 The assembly serves to direct the stepper motor cable downwards, the spindle
 motor cable upwards, and the z-limit switch cable to the side in such a
-way that it wont interfere with the x zero switch which contacts the body
+way that it won’t interfere with the x zero switch which contacts the body
 of the stepper motor and works perfectly to keep them from hitting the
 lcd screen, etc.
 
@@ -184,7 +184,7 @@ use the tip and ring:
 ![probe_connectors.jpg](images/probe_connectors.jpg)
 
 I made the probe itself out of some multimeter test probes with
-bananna plugs that attached to insulated alligator clips.
+banana plugs that attached to insulated alligator clips.
 
 ![probe_mount.jpg](images/probe_mount.jpg)
 

@@ -27,7 +27,7 @@ You then need to add a number of libraries to your **Arduino/libraries** folder.
 Some of these libraries have additional dependencies on other libraries.
 Please follow the instructions on the linked pages to install each library and it's dependencies.
 
-- install my version of the [**FluidNC**](https://github.com/phorton1/Arduino-libraries-FluidNC) library and it's dependenciea
+- install my version of the [**FluidNC**](https://github.com/phorton1/Arduino-libraries-FluidNC) library and it's dependencies
 - install my [**FluidNC_extensions**](https://github.com/phorton1/Arduino-libraries-FluidNC_extensions) library
 - If you are building the machine with the (optional) TFT Display
  (by default **WITH_UI** is defined in cnc3018.h),
@@ -66,13 +66,13 @@ Assuming that you are using the SDCard, please prepare one
 by formatting it as necessary.
 
 - The size of the SD Card is not very important.
-- The machine can handle upto 32GB cards.
+- The machine can handle up to 32GB cards.
 - Some work better than others.
 - If at first it doesn't work, try turning everything off and
 on, and re-inserting it the SD module.
 - If you can't get it working, try a different SD card.
 
-You can put files on the the SD Card with your computer. You can also
+You can put files on the SD Card with your computer. You can also
 connect to the ESP32 via Wifi and upload/delete files from the SDCard
 using the **Web UI**.   You can *list* and *run* files on it from the
 **Serial Port** via the *$sd/list* and *$sd/run=* commands,
@@ -85,7 +85,7 @@ or via **Touch Screen UI** *Files* window.
 
 By default the machine will present itself as a Wifi Access Point called **FluidNC**
 
-- connect your compputer or phone to the **FluidNC** Wifi Access Point
+- connect your computer or phone to the **FluidNC** Wifi Access Point
 - the default password is **12345678**
 
 As soon as you connect to the FluidNC access point, a browser should pop up

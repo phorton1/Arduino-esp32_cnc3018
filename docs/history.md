@@ -9,8 +9,8 @@
 
 
 At my initial foray into CNC machines, I ordered the least expensive
-CNC machine I could find, about $120, from Ebay.  It started as a generic
-**cnc 3018** machine like this:
+CNC machine I could find, about $120, from [Ebay](https://www.ebay.com/itm/392298131168).  
+It started as a generic **cnc 3018** machine like this:
 
 [![cnc3018.jpg](images/cnc3018.jpg)](images/cnc3018_large.jpg)
 
@@ -21,10 +21,10 @@ Weeks later, when the package with the 3018 arrived, I had just started developi
 on the vMachine.
 
 At that time I was using a simple *breadboard* circuit
-using thses nice [5e Board](https://www.5eboard.com/product-category/5e-circuit-boards/)
+using these nice [5e Board](https://www.5eboard.com/product-category/5e-circuit-boards/)
 breadboards.  They work good enough so that you can semi-persistently use
 the resultant circuits, even going so far as mounting them on things.
-They are definitely more resiliant than the usual white breadboards.
+They are definitely more resilient than the usual white breadboards.
 They also allow for more flexible layouts, particularly with a SBC like
 the ESP32 that doesn't really fit well on a typical breadboard.
 
@@ -41,14 +41,14 @@ This is essentially the same circuit as the vMachine, except that (a)
 the servo for the pen is replaced with another **A498** stepper
 motor driver for the z-axis, (b) it has the additional responsibility
 of providing the high voltage control of the 24V spindle motor, and
-(c) it accommadates more limit switches.
+(c) it accommodates more limit switches.
 
 <br>
 
 ## Spindle Control / Power Supply
 
 The additional A498 would be easy, but I had to learn how to control
-the spindle motor via PWM, opto-isloators, and large power MOSFETS.
+the spindle motor via PWM, opto-isolators, and large power MOSFETS.
 And I didn't really have the correct parts on hand, or knowledge,
 to do that.  The simple solution, to order a pre-existing "module"
 for that took a while to achieve due to shipping times from China.
@@ -67,7 +67,7 @@ put the hot high power MOSFET on the plastic circuit board
 and so I isolated that, and the buck-down 5V power supply
 for the ESP32, on a separate circuit board.
 
-In the end, a decent PWM module from china, which seemed
+In the end, a decent PWM module from China, which seemed
 appropriate for this project, finally arrived, and it seems
 to work pretty well.
 

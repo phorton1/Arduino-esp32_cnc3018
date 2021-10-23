@@ -9,7 +9,7 @@
 
 CNC3018_ESP is my implementation of an inexpensive 3-axis CNC machine that
 makes use of the **ESP32** processor.  Essentially I bought the cheapest
-3-axis CNC machine I could find on Ebay, and then designed and implemented
+3-axis CNC machine I could find on [Ebay]( https://www.ebay.com/itm/392298131168), and then designed and implemented
 my own controller board, limit switches, and extensions to that machine.
 
 The ESP32 can easily be programmed from within the
@@ -130,7 +130,7 @@ core.  Specific contents at this time include:
 
 ## Credits and License
 
-This library is licensed undere the
+This library is licensed under the
 [GNU General Public License v3.0](https://github.com/phorton1/Arduino-CNC3018_ESP/tree/master/LICENSE.TXT)
 
 **Credits**
