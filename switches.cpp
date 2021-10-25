@@ -4,7 +4,13 @@
 #include <gStatus.h>	// FluidNC_extensions
 #include <gActions.h>	// FluidNC_extensions
 
-static uint8_t switches = 0x00;		// pulled up, swtich=ground
+#ifdef WITH_SERIN_PINS
+	#include <Machine/MachineConfig.h>
+	#include <Machine/SerInBus.h>
+#else
+	static uint8_t switches = 0x00;		// pulled up, swtich=ground
+#endif
+
 
 #ifdef WITH_PIXELS
 
@@ -53,70 +59,73 @@ const char *switchName(int i)
 //---------------------------
 
 
+#ifndef WITH_SERIN_PINS
 
-uint8_t get_switches()
-	// returns the last cached switch value so safe
-	// to call from myProbe::getState()
-{
-		return switches;
-}
-
-
-
-uint8_t IRAM_ATTR read_switches()
-	// This method just reads the switches into FluidNC global variables
-	// and handles hard stops.  It is called for probing indirectly from
-	// the Stepper ISR routine, and so it, and all routines it calls
-	// must be IRAM_ATTR and neoPixels are not, so no text, or pixels
-	// are set by this.
-	//
-	// The issue is that the probe switch *may not* get detected
-	// by my UI task if the probe is too quick.  We will see.
-{
-	#ifdef TEST_WITHOUT_SWITCHES
-		uint8_t in = 0;
-	#else
-		// real code
-
-		digitalWrite(G_PIN_74HC165_LATCH, HIGH);
-		uint8_t in = shiftIn(G_PIN_74HC165_DATA, G_PIN_74HC165_CLK, MSBFIRST);
-		digitalWrite(G_PIN_74HC165_LATCH, LOW);
-
-		// switches are pulled up with NO switches, so LOW is active
-		// hence we invert the bit pattern here
-
-		in = ~in;
-	#endif
-
-
-	// map the switches to XYZ bits in the FluidNC masks
-
-	uint8_t zero_val = 0;
-	uint8_t lim_val  = 0;
-
-	if (in & (1 << PIN7_XZERO)) zero_val |= 1;
-	if (in & (1 << PIN7_YZERO)) zero_val |= 2;
-	if (in & (1 << PIN7_ZZERO)) zero_val |= 4;
-	if (in & (1 << PIN7_XLIM)) lim_val |= 1;
-	if (in & (1 << PIN7_YLIM)) lim_val |= 2;
-	if (in & (1 << PIN7_ZLIM)) lim_val |= 4;
-
-	if (gActions::getNegLimitMask() != zero_val ||
-		gActions::getPosLimitMask() != lim_val)
+	uint8_t get_switches()
+		// returns the last cached switch value so safe
+		// to call from myProbe::getState()
 	{
-		gActions::setNegLimitMask(zero_val);
-		gActions::setPosLimitMask(lim_val);
-
-		if ((zero_val || lim_val) && sys.state != State::Homing)
-		{
-			gActions::g_reset();     // Initiate system kill.
-			gActions::setAlarm(1);	 // 1 == ExecAlarm::HardLimit
-		}
+			return switches;
 	}
 
-	switches = in;
-	return in;
-}
+
+
+	uint8_t IRAM_ATTR read_switches()
+		// This method just reads the switches into FluidNC global variables
+		// and handles hard stops.  It is called for probing indirectly from
+		// the Stepper ISR routine, and so it, and all routines it calls
+		// must be IRAM_ATTR and neoPixels are not, so no text, or pixels
+		// are set by this.
+		//
+		// The issue is that the probe switch *may not* get detected
+		// by my UI task if the probe is too quick.  We will see.
+	{
+		#ifdef TEST_WITHOUT_SWITCHES
+			uint8_t in = 0;
+		#else
+			// real code
+
+			digitalWrite(G_PIN_74HC165_LATCH, HIGH);
+			uint8_t in = shiftIn(G_PIN_74HC165_DATA, G_PIN_74HC165_CLK, MSBFIRST);
+			digitalWrite(G_PIN_74HC165_LATCH, LOW);
+
+			// switches are pulled up with NO switches, so LOW is active
+			// hence we invert the bit pattern here
+
+			in = ~in;
+		#endif
+
+
+		// map the switches to XYZ bits in the FluidNC masks
+
+		uint8_t zero_val = 0;
+		uint8_t lim_val  = 0;
+
+		if (in & (1 << PIN7_XZERO)) zero_val |= 1;
+		if (in & (1 << PIN7_YZERO)) zero_val |= 2;
+		if (in & (1 << PIN7_ZZERO)) zero_val |= 4;
+		if (in & (1 << PIN7_XLIM)) lim_val |= 1;
+		if (in & (1 << PIN7_YLIM)) lim_val |= 2;
+		if (in & (1 << PIN7_ZLIM)) lim_val |= 4;
+
+		if (gActions::getNegLimitMask() != zero_val ||
+			gActions::getPosLimitMask() != lim_val)
+		{
+			gActions::setNegLimitMask(zero_val);
+			gActions::setPosLimitMask(lim_val);
+
+			if ((zero_val || lim_val) && sys.state != State::Homing)
+			{
+				gActions::g_reset();     // Initiate system kill.
+				gActions::setAlarm(1);	 // 1 == ExecAlarm::HardLimit
+			}
+		}
+
+		switches = in;
+		return in;
+	}
+
+#endif
 
 
 
@@ -146,32 +155,33 @@ void switchTask(void* pvParameters)
     {
 		vTaskDelay(50 / portTICK_PERIOD_MS);
 
-		// suppress switch reading while in probe mode
-		// as the Stepper ISR will call it
+		#ifndef WITH_SERIN_PINS
+			// suppress switch reading while in probe mode
+			// as the Stepper ISR will call it
 
-		if (!gStatus::getProbeState())
-		{
-			read_switches();
-		}
-
-
-		// text debugging
-
-		static uint8_t last_switches = 0;
-		if (last_switches != switches)
-		{
-			for (int i=0; i<8; i++)
+			if (!gStatus::getProbeState())
 			{
-				uint8_t mask = 1<<i;
-				bool is = switches & mask;
-				bool was = last_switches & mask;
-				if (was != is)
-				{
-					g_debug("(0x%02x) switch %s changed from %d to %d",switches,switchName(i),was,is);
-				}
+				read_switches();
 			}
-			last_switches = switches;
-		}
+
+			// text debugging
+
+			static uint8_t last_switches = 0;
+			if (last_switches != switches)
+			{
+				for (int i=0; i<8; i++)
+				{
+					uint8_t mask = 1<<i;
+					bool is = switches & mask;
+					bool was = last_switches & mask;
+					if (was != is)
+					{
+						g_debug("(0x%02x) switch %s changed from %d to %d",switches,switchName(i),was,is);
+					}
+				}
+				last_switches = switches;
+			}
+		#endif
 
 		// XYZ pixels
 
@@ -209,8 +219,14 @@ void switchTask(void* pvParameters)
 
 		// Probe pixel
 
+		#ifdef WITH_SERIN_PINS
+			bool probe = config->_probe ?
+				config->_probe->get_state() : 0;
+		#else
+			bool probe = switches & PROBE_SWITCH_MASK;
+		#endif
+
 		static bool last_probe = false;
-		bool probe = switches & PROBE_SWITCH_MASK;
 		if (last_probe != probe)
 		{
 			last_probe = probe;
@@ -297,10 +313,12 @@ void switchTask(void* pvParameters)
 
 void init_switches()
 {
-    pinMode(G_PIN_74HC165_DATA, INPUT);
-    pinMode(G_PIN_74HC165_LATCH, OUTPUT);
-    pinMode(G_PIN_74HC165_CLK, OUTPUT);
-    digitalWrite(G_PIN_74HC165_CLK, LOW);
+	// #ifndef WITH_SERIN_PINS
+		pinMode(G_PIN_74HC165_DATA, INPUT);
+		pinMode(G_PIN_74HC165_LATCH, OUTPUT);
+		pinMode(G_PIN_74HC165_CLK, OUTPUT);
+		digitalWrite(G_PIN_74HC165_CLK, LOW);
+	// #endif
 
 	#ifdef WITH_PIXELS
 		for (int i=0; i<NUM_PIXELS; i++)

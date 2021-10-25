@@ -2,6 +2,12 @@
 
 #pragma once
 
+// #define WITH_SERIN_PINS
+    // testing a new feature.  If you turn this on,
+    // you more or less must set $config/filename=test_serin.yaml
+    // see test_serin.yaml and commit for details
+
+
 #define WITH_UI         // requires FluidNC_UI
 #define WITH_MESH       // FluidNC_UI/gDefs.h::UI_WITH_MESH must be set the same!
 #define WITH_PIXELS     // requires adafruitNeoPixels
@@ -119,7 +125,10 @@ extern void bumpPixel();	// for LED startup sequence
 
 extern void init_switches();
     // in swtiches.cpp
-extern uint8_t IRAM_ATTR read_switches();       // read em'
-    // in swtiches.cpp
-extern uint8_t get_switches();                  // return cached value
-    // in swtiches.cpp
+
+#ifndef WITH_SERIN_PINS
+    extern uint8_t IRAM_ATTR read_switches();       // read em'
+        // in swtiches.cpp
+    extern uint8_t get_switches();                  // return cached value
+        // in swtiches.cpp
+#endif

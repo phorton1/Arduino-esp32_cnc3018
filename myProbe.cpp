@@ -2,6 +2,10 @@
 #include "myProbe.h"
 
 
+#ifndef WITH_SERIN_PINS
+    // compiles to nothing if using SERIN_PINS
+
+
 #define DEBUG_PROBE 0
 
 
@@ -35,3 +39,8 @@ bool IRAM_ATTR myProbe::tripped()
     // g_debug("myProbe.tripped() called");
     return read_switches() & PROBE_SWITCH_MASK;
 }
+
+
+
+#endif  // WITH_SERIN_PINS
+

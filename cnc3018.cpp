@@ -7,7 +7,10 @@
 
 #define DEBUG_YAML 	0
 
-myProbe my_probe;
+#ifndef WITH_SERIN_PINS
+	myProbe my_probe;
+#endif
+
 cnc3018 the_machine;
 
 
@@ -134,7 +137,10 @@ void user_realtime_command(uint8_t command, Print &client)
 
 cnc3018::cnc3018()
 {
-	_probe = &my_probe;
+	#ifndef WITH_SERIN_PINS
+		_probe = &my_probe;
+	#endif
+
 	config = this;
 }
 
@@ -182,4 +188,3 @@ void cnc3018::group(Configuration::HandlerBase& handler) // override
 		bumpPixel();	// 2
 	}
 }
-
