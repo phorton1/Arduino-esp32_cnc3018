@@ -8,6 +8,7 @@
 #include "cnc3018.h"
 
 #ifdef WITH_PIXELS
+
     #include <Adafruit_NeoPixel.h>
 
     #define PIXEL_SYS_STATE   0
@@ -28,5 +29,9 @@
     #define MY_LED_WHITE    0x000044
 
     extern Adafruit_NeoPixel pixels;
-        // in switches.cpp
+
+    extern void start_pixels();
+
+
+
 #endif

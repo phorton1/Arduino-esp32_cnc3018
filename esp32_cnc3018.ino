@@ -4,7 +4,7 @@
 
 #include <FluidNC.h>
 #include "cnc3018.h"
-#include "my_ws2812b.h"
+#include "my_pixels.h"
 
 
 #define INIT_SD_DURING_SETUP
@@ -57,15 +57,6 @@
 // setup()
 //----------------------------------------------------------
 
-void bumpPixel()	// for startup sequence
-{
-	#ifdef WITH_PIXELS
-		static int pixel_num = 0;
-		pixels.setPixelColor(pixel_num++,MY_LED_MAGENTA);
-		pixels.show();
-	#endif
-}
-
 
 void setup()
 {
@@ -75,16 +66,25 @@ void setup()
 		delay(1000);
 	#endif
 
-	bumpPixel();	// 0
-    delay(1000);
-	bumpPixel();	// 1
+	#ifdef WITH_PIXELS
+		bumpPixel();	// 0
+    #endif
+
+	delay(1000);
+
+	#ifdef WITH_PIXELS
+		bumpPixel();	// 1
+    #endif
 
     #ifdef INIT_SD_DURING_SETUP
         bool sd_ok = SD.begin(G_PIN_SDCARD_CS);
     #endif
 
     main_init();	// FluidNC setup() method
-	bumpPixel();	// 3
+
+	#ifdef WITH_PIXELS
+		bumpPixel();	// 3
+    #endif
 
     #ifdef INIT_SD_DURING_SETUP
         g_debug("cnc3018.ino SD.begin() %s during setup()",sd_ok?"WORKED OK":"FAILED");
@@ -98,7 +98,9 @@ void setup()
 	   the_mesh.readMesh();
 	#endif
 
-    init_switches();
+    #ifdef WITH_PIXELS
+		start_pixels();
+	#endif
 
     g_debug("cnc3018.ino setup(core %d) completed %d/%dK",
         xPortGetCoreID(),

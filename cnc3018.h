@@ -2,12 +2,6 @@
 
 #pragma once
 
-// #define WITH_SERIN_PINS
-    // testing a new feature.  If you turn this on,
-    // you more or less must set $config/filename=test_serin.yaml
-    // see test_serin.yaml and commit for details
-
-
 #define WITH_UI         // requires FluidNC_UI
 #define WITH_MESH       // FluidNC_UI/gDefs.h::UI_WITH_MESH must be set the same!
 #define WITH_PIXELS     // requires adafruitNeoPixels
@@ -27,27 +21,26 @@
 // but noted here for completeness.
 
 #define G_PIN_LEDS_OUT            GPIO_NUM_12
+#define G_PIN_SDCARD_CS          GPIO_NUM_4
+
 // #define G_PIN_TFT_CS             GPIO_NUM_22
 // #define G_PIN_TFT_DC             GPIO_NUM_21
 // #define G_PIN_TOUCH_CS           GPIO_NUM_5
-#define G_PIN_74HC165_CLK         GPIO_NUM_16   // RX2
-#define G_PIN_74HC165_LATCH       GPIO_NUM_17   // TX2
-#define G_PIN_74HC165_DATA        GPIO_NUM_36
-#define G_PIN_SDCARD_CS          GPIO_NUM_4
+
+// now defined in YAML
+// #define G_PIN_74HC165_CLK         GPIO_NUM_16   // RX2
+// #define G_PIN_74HC165_LATCH       GPIO_NUM_17   // TX2
+// #define G_PIN_74HC165_DATA        GPIO_NUM_36
 
 // pin ins to the 74HC165
-
-#define PIN7_XZERO       3
-#define PIN7_XLIM        2
-#define PIN7_YZERO       1
-#define PIN7_YLIM        0
-#define PIN7_ZZERO       7
-#define PIN7_ZLIM        6
-#define PIN7_PROBE       5
-#define PIN7_UNUSED      4
-
-#define PROBE_SWITCH_MASK (1<<PIN7_PROBE)
-
+// #define PIN7_XZERO       3
+// #define PIN7_XLIM        2
+// #define PIN7_YZERO       1
+// #define PIN7_YLIM        0
+// #define PIN7_ZZERO       7
+// #define PIN7_ZLIM        6
+// #define PIN7_PROBE       5
+// #define PIN7_UNUSED      4
 
 // pin ins to display connector
 // 1 - VCC
@@ -123,12 +116,4 @@ extern cnc3018 the_machine;
 extern void bumpPixel();	// for LED startup sequence
     // in cnc3018.ino
 
-extern void init_switches();
-    // in swtiches.cpp
 
-#ifndef WITH_SERIN_PINS
-    extern uint8_t IRAM_ATTR read_switches();       // read em'
-        // in swtiches.cpp
-    extern uint8_t get_switches();                  // return cached value
-        // in swtiches.cpp
-#endif

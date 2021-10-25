@@ -2,22 +2,19 @@
 # so that we keep it separate from, and yet use, config.yaml.
 
 name: "CNC3018"
-board: "esp32_cnc3018 Dev Board"
+board: "esp32_cnc3018 Board"
 
 
 stepping:
     engine: RMT
     idle_ms: 250
-        # this one is important, I thought there was a bug
-        # but they changed the names and level of these yaml
-        # settings so the idle_ms was 255 which means "don't"
+        # !! 255 disables the "disable/enable" pin(s)
     pulse_us: 2
     dir_delay_us: 1
     disable_delay_us: 0
 
 axes:
     shared_stepper_disable_pin: gpio.25
-        # :low
         
     x:
         steps_per_mm: 400
@@ -25,6 +22,9 @@ axes:
         acceleration_mm_per_sec2: 100
         max_travel_mm: 320
         motor0:
+            hard_limits: true
+            limit_neg_pin: seri.3:low
+            limit_pos_pin: seri.2:low
             pulloff_mm: 5
             standard_stepper:
                 step_pin: gpio.13
@@ -41,6 +41,9 @@ axes:
         acceleration_mm_per_sec2: 100
         max_travel_mm: 200
         motor0:
+            hard_limits: true
+            limit_neg_pin: seri.1:low
+            limit_pos_pin: seri.0:low
             pulloff_mm: 5
             standard_stepper:
                 step_pin: gpio.27
@@ -57,6 +60,9 @@ axes:
         acceleration_mm_per_sec2: 40
         max_travel_mm: 50
         motor0:
+            hard_limits: true
+            limit_neg_pin: seri.7:low
+            limit_pos_pin: seri.6:low
             pulloff_mm: 5
             standard_stepper:
                 step_pin: gpio.33
@@ -68,16 +74,11 @@ axes:
  
             
 
-# Setup for PWM Spindle
-
 PWM:
     output_pin: gpio.2
     pwm_hz: 2000
     speed_map: 0=0% 1=5% 100=100%
             
-start:
-  must_home: false
-    
 spi:
     # one has to tell FluidNC the default ESP32 SPI pins!
     miso_pin: gpio.19
@@ -88,5 +89,17 @@ sdcard:
     # and then one can specify the specific cs used for the SDCard
     cs_pin: gpio.4
     card_detect_pin: NO_PIN
+    
+seri:
+    clk_pin:  gpio.16
+    latch_pin: gpio.17
+    data_pin:  gpio.36
+    
+probe:
+    pin: seri.5:low
+    check_mode_start: true
+    
+start:
+  must_home: false
   
 

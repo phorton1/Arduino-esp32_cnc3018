@@ -1,15 +1,11 @@
 // cnc3018.cpp
 
 #include "cnc3018.h"
-#include "myProbe.h"
+#include "my_pixels.h"
 #include <YamlOverrides.h>	// FluidNC_extensions
 	// can be commented out to disable extension
 
 #define DEBUG_YAML 	0
-
-#ifndef WITH_SERIN_PINS
-	myProbe my_probe;
-#endif
 
 cnc3018 the_machine;
 
@@ -137,10 +133,6 @@ void user_realtime_command(uint8_t command, Print &client)
 
 cnc3018::cnc3018()
 {
-	#ifndef WITH_SERIN_PINS
-		_probe = &my_probe;
-	#endif
-
 	config = this;
 }
 
@@ -185,6 +177,8 @@ void cnc3018::group(Configuration::HandlerBase& handler) // override
 	if (first_time)
 	{
 		first_time = false;
-		bumpPixel();	// 2
+		#ifdef WITH_PIXELS
+			bumpPixel();	// 2
+		#endif
 	}
 }
