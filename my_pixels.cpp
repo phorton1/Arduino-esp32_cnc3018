@@ -8,7 +8,6 @@
 	#include <gStatus.h>				// FluidNC_extensions
 	#include <gActions.h>				// FluidNC_extensions
 	#include <Machine/MachineConfig.h>	// FluidNC
-	#include <Machine/SerInBus.h>		// FluidNC
 
 	Adafruit_NeoPixel pixels(NUM_PIXELS,G_PIN_LEDS_OUT);
 
@@ -67,7 +66,11 @@
 			// update state
 			// if not using FluidNC_UI call gStatus.updateStatus()
 
-			bool probe = config->_probe ? config->_probe->get_state() : 0;
+			bool probe = config->_probe && config->_probe->exists() ?  config->_probe->get_state() : 0;
+
+			// probe->exists() returns true for the Error pin,
+			// and there is no other way for me to know not to call get_state()
+			// that's the way they designed it to work, so I'm leaving it.
 
 			#ifndef WITH_UI
 				g_status.updateStatus(

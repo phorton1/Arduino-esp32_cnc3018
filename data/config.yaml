@@ -23,8 +23,8 @@ axes:
         max_travel_mm: 320
         motor0:
             hard_limits: true
-            limit_neg_pin: seri.3:low
-            limit_pos_pin: seri.2:low
+            limit_neg_pin: I2SI.3:low
+            limit_pos_pin: I2SI.2:low
             pulloff_mm: 5
             standard_stepper:
                 step_pin: gpio.13
@@ -42,8 +42,8 @@ axes:
         max_travel_mm: 200
         motor0:
             hard_limits: true
-            limit_neg_pin: seri.1:low
-            limit_pos_pin: seri.0:low
+            limit_neg_pin: I2SI.1:low
+            limit_pos_pin: I2SI.0:low
             pulloff_mm: 5
             standard_stepper:
                 step_pin: gpio.27
@@ -61,8 +61,8 @@ axes:
         max_travel_mm: 50
         motor0:
             hard_limits: true
-            limit_neg_pin: seri.7:low
-            limit_pos_pin: seri.6:low
+            limit_neg_pin: I2SI.7:low
+            limit_pos_pin: I2SI.6:low
             pulloff_mm: 5
             standard_stepper:
                 step_pin: gpio.33
@@ -72,8 +72,6 @@ axes:
             seek_mm_per_min: 300
             feed_mm_per_min: 80
  
-            
-
 PWM:
     output_pin: gpio.2
     pwm_hz: 2000
@@ -90,13 +88,14 @@ sdcard:
     cs_pin: gpio.4
     card_detect_pin: NO_PIN
     
-seri:
-    clk_pin:  gpio.16
-    latch_pin: gpio.17
+i2si:
+    bck_pin:   gpio.16
+    ws_pin:    gpio.17
     data_pin:  gpio.36
+    # use_shift_in: true
     
 probe:
-    pin: seri.5:low
+    pin: BLAH.5:low
     check_mode_start: true
     
 start:
