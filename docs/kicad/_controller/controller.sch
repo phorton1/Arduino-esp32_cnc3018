@@ -34,7 +34,7 @@ F 1 "10K" V 5900 8450 50  0000 C TNN
 F 2 "cnc3018-PCB:myResistor" V 5780 8450 50  0001 C CNN
 F 3 "~" H 5850 8450 50  0001 C CNN
 	1    5850 8450
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 Wire Wire Line
 	6200 8300 5700 8300
@@ -77,7 +77,7 @@ F 1 "SD_TYP0" H 6450 8150 50  0000 L CNN
 F 2 "cnc3018-PCB:my6Pin" H 6300 8150 50  0001 C CNN
 F 3 "" H 6300 8150 50  0001 C CNN
 	1    6500 8000
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 Wire Wire Line
 	4500 2700 4500 3350
@@ -94,7 +94,7 @@ F 1 "ESP32_DEV_0" H 3728 4950 50  0001 L CNN
 F 2 "cnc3018-PCB:ESP32-DEV_0" H 2450 5000 50  0001 C CNN
 F 3 "" H 2450 5000 50  0001 C CNN
 	1    3000 4900
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	3500 3950 3500 4350
@@ -126,7 +126,7 @@ F 1 "10uF" V 3900 4100 50  0000 C CNN
 F 2 "cnc3018-PCB:my2pin" H 3788 3950 50  0001 C CNN
 F 3 "~" H 3750 4100 50  0001 C CNN
 	1    3750 4100
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 Wire Wire Line
 	4600 2700 4600 3450
@@ -146,7 +146,7 @@ F 1 "A4988" H 4350 2350 50  0000 R CNN
 F 2 "cnc3018-PCB:a498" H 4250 2950 50  0001 C CNN
 F 3 "" H 4250 2950 50  0001 C CNN
 	1    4250 2350
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	4000 2700 4100 2700
@@ -165,7 +165,7 @@ F 1 "A4988" H 5600 2350 50  0000 L CNN
 F 2 "cnc3018-PCB:a498" H 5700 2950 50  0001 C CNN
 F 3 "" H 5700 2950 50  0001 C CNN
 	1    5700 2350
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Text Notes 2250 1650 0    50   ~ 0
 GND
@@ -186,7 +186,7 @@ F 1 "Display" V 6500 7250 50  0000 R CNN
 F 2 "cnc3018-PCB:my8Pin" H 6350 7150 50  0001 C CNN
 F 3 "~" H 6350 7150 50  0001 C CNN
 	1    6350 7150
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	3600 6950 6150 6950
@@ -203,7 +203,7 @@ F 1 "100uf" V 2150 2050 50  0000 R CNN
 F 2 "cnc3018-PCB:my2pin" H 2338 1800 50  0001 C CNN
 F 3 "~" H 2300 1950 50  0001 C CNN
 	1    2300 1950
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:CP C3
@@ -214,7 +214,7 @@ F 1 "100uf" V 3600 2100 50  0000 R CNN
 F 2 "cnc3018-PCB:my2pin" H 3788 1850 50  0001 C CNN
 F 3 "~" H 3750 2000 50  0001 C CNN
 	1    3750 2000
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:CP C5
@@ -225,7 +225,7 @@ F 1 "100uf" V 5050 2100 50  0000 R CNN
 F 2 "cnc3018-PCB:my2pin" H 5238 1850 50  0001 C CNN
 F 3 "~" H 5200 2000 50  0001 C CNN
 	1    5200 2000
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 Wire Wire Line
 	3050 2700 3050 3150
@@ -338,7 +338,7 @@ F 1 "X" V 2950 1100 50  0000 R CNN
 F 2 "cnc3018-PCB:my5Pin" H 2850 1200 50  0001 C CNN
 F 3 "~" H 2850 1200 50  0001 C CNN
 	1    2850 1200
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x05 J11
@@ -349,7 +349,7 @@ F 1 "Y" V 4400 1100 50  0000 R CNN
 F 2 "cnc3018-PCB:my5Pin" H 4300 1200 50  0001 C CNN
 F 3 "~" H 4300 1200 50  0001 C CNN
 	1    4300 1200
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x05 J13
@@ -360,7 +360,7 @@ F 1 "Z" V 5850 1100 50  0000 R CNN
 F 2 "cnc3018-PCB:my5Pin" H 5750 1200 50  0001 C CNN
 F 3 "~" H 5750 1200 50  0001 C CNN
 	1    5750 1200
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 Wire Wire Line
 	3050 1400 3050 1650
@@ -392,7 +392,7 @@ F 1 "WS2812B Strip" H 6430 3846 50  0000 L CNN
 F 2 "cnc3018-PCB:my3pin" H 6350 3850 50  0001 C CNN
 F 3 "~" H 6350 3850 50  0001 C CNN
 	1    6350 3850
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	4500 1800 5950 1800
@@ -430,8 +430,6 @@ Wire Wire Line
 	2200 8300 2200 6800
 Wire Wire Line
 	2200 8300 5700 8300
-Wire Wire Line
-	4000 7550 4000 3750
 Connection ~ 4000 3750
 Wire Wire Line
 	4000 3750 6150 3750
@@ -444,7 +442,7 @@ F 1 "24V" H 2050 1500 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 1700 1500 50  0001 C CNN
 F 3 "~" H 1700 1500 50  0001 C CNN
 	1    1700 1500
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 J2
@@ -455,7 +453,7 @@ F 1 "GND" H 2050 1650 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 1700 1650 50  0001 C CNN
 F 3 "~" H 1700 1650 50  0001 C CNN
 	1    1700 1650
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 J5
@@ -466,7 +464,7 @@ F 1 "SPIN" H 2050 2100 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 1700 2100 50  0001 C CNN
 F 3 "~" H 1700 2100 50  0001 C CNN
 	1    1700 2100
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	1900 1500 2450 1500
@@ -486,7 +484,7 @@ F 1 "33uf" V 2050 3500 50  0000 L CNN
 F 2 "cnc3018-PCB:my2pin" H 2238 3450 50  0001 C CNN
 F 3 "~" H 2200 3600 50  0001 C CNN
 	1    2200 3600
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	2200 3750 2200 4350
@@ -495,7 +493,7 @@ Wire Wire Line
 Wire Wire Line
 	2300 3450 2300 4350
 Wire Wire Line
-	2150 1950 2150 3450
+	2150 1950 2150 3300
 Connection ~ 2200 3450
 Wire Wire Line
 	2200 3450 2300 3450
@@ -503,7 +501,7 @@ Connection ~ 2300 4350
 Wire Wire Line
 	4950 3950 6150 3950
 Wire Wire Line
-	1900 2100 1900 4250
+	1900 2100 1900 3400
 $Comp
 L Connector_Generic:Conn_01x01 J4
 U 1 1 614E4F32
@@ -513,23 +511,12 @@ F 1 "5V" H 2050 1950 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 1700 1950 50  0001 C CNN
 F 3 "~" H 1700 1950 50  0001 C CNN
 	1    1700 1950
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	2050 1950 2050 2700
 Wire Wire Line
 	1900 1650 2150 1650
-$Comp
-L Connector_Generic:Conn_01x01 J3
-U 1 1 61448F44
-P 1700 1800
-F 0 "J3" V 1664 1712 50  0001 R CNN
-F 1 "GND" H 2050 1800 50  0000 R CNN
-F 2 "cnc3018-PCB:my1pin" H 1700 1800 50  0001 C CNN
-F 3 "~" H 1700 1800 50  0001 C CNN
-	1    1700 1800
-	-1   0    0    1
-$EndComp
 Wire Wire Line
 	1900 1650 1900 1800
 Connection ~ 1900 1650
@@ -548,7 +535,7 @@ F 1 "bbb" H 3550 4150 50  0001 R CNN
 F 2 "cnc3018-PCB:my1pin" H 3200 4150 50  0001 C CNN
 F 3 "~" H 3200 4150 50  0001 C CNN
 	1    3200 4150
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 J9
@@ -559,7 +546,7 @@ F 1 "bbb" H 3650 4150 50  0001 R CNN
 F 2 "cnc3018-PCB:my1pin" H 3300 4150 50  0001 C CNN
 F 3 "~" H 3300 4150 50  0001 C CNN
 	1    3300 4150
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 J10
@@ -570,7 +557,7 @@ F 1 "bbb" H 3750 4150 50  0001 R CNN
 F 2 "cnc3018-PCB:my1pin" H 3400 4150 50  0001 C CNN
 F 3 "~" H 3400 4150 50  0001 C CNN
 	1    3400 4150
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 J6
@@ -581,7 +568,7 @@ F 1 "bbb" H 2750 5600 50  0001 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2400 5600 50  0001 C CNN
 F 3 "~" H 2400 5600 50  0001 C CNN
 	1    2400 5600
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 Wire Wire Line
 	2400 5350 2400 5400
@@ -594,7 +581,7 @@ F 1 "v00" H 2650 1300 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2450 1300 50  0001 C CNN
 F 3 "~" H 2450 1300 50  0001 C CNN
 	1    2450 1300
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V20
@@ -605,7 +592,7 @@ F 1 "v01" H 3800 1300 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 3600 1300 50  0001 C CNN
 F 3 "~" H 3600 1300 50  0001 C CNN
 	1    3600 1300
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V23
@@ -616,7 +603,7 @@ F 1 "v02" H 3900 1300 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 3700 1300 50  0001 C CNN
 F 3 "~" H 3700 1300 50  0001 C CNN
 	1    3700 1300
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V30
@@ -627,7 +614,7 @@ F 1 "v03" H 5550 1300 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 5350 1300 50  0001 C CNN
 F 3 "~" H 5350 1300 50  0001 C CNN
 	1    5350 1300
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 Connection ~ 5350 1500
 Connection ~ 3600 1500
@@ -648,7 +635,7 @@ F 1 "v11" H 3650 2550 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 3600 2450 50  0001 C CNN
 F 3 "~" H 3600 2450 50  0001 C CNN
 	1    3600 2450
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 Connection ~ 3400 2450
 Wire Wire Line
@@ -662,7 +649,7 @@ F 1 "v12" H 3650 2750 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 3600 2650 50  0001 C CNN
 F 3 "~" H 3600 2650 50  0001 C CNN
 	1    3600 2650
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 Connection ~ 3400 2650
 Wire Wire Line
@@ -676,7 +663,7 @@ F 1 "v13" H 5150 2750 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 5100 2650 50  0001 C CNN
 F 3 "~" H 5100 2650 50  0001 C CNN
 	1    5100 2650
-	0    -1   -1   0
+	0    -1   -1   0   
 $EndComp
 Wire Wire Line
 	4600 1650 4950 1650
@@ -695,7 +682,7 @@ F 1 "v20" H 2850 2950 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2650 2950 50  0001 C CNN
 F 3 "~" H 2650 2950 50  0001 C CNN
 	1    2650 2950
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 Connection ~ 2450 2950
 Wire Wire Line
@@ -709,7 +696,7 @@ F 1 "v22" H 4300 2950 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 4100 2950 50  0001 C CNN
 F 3 "~" H 4100 2950 50  0001 C CNN
 	1    4100 2950
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V29
@@ -720,7 +707,7 @@ F 1 "v23" H 5350 2950 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 5150 2950 50  0001 C CNN
 F 3 "~" H 5150 2950 50  0001 C CNN
 	1    5150 2950
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V24
@@ -731,7 +718,7 @@ F 1 "v21" H 3900 2950 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 3700 2950 50  0001 C CNN
 F 3 "~" H 3700 2950 50  0001 C CNN
 	1    3700 2950
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	3400 2850 4000 2850
@@ -758,7 +745,7 @@ F 1 "v10" H 2350 2950 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2300 2850 50  0001 C CNN
 F 3 "~" H 2300 2850 50  0001 C CNN
 	1    2300 2850
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L cnc3018_Library:A498_Module M1
@@ -769,7 +756,7 @@ F 1 "A4988" H 2900 2350 50  0000 R CNN
 F 2 "cnc3018-PCB:a498" H 2800 2950 50  0001 C CNN
 F 3 "" H 2800 2950 50  0001 C CNN
 	1    2800 2350
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V1
@@ -780,7 +767,7 @@ F 1 "v30" H 1800 2700 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 1600 2700 50  0001 C CNN
 F 3 "~" H 1600 2700 50  0001 C CNN
 	1    1600 2700
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	1800 2700 2050 2700
@@ -801,7 +788,7 @@ F 1 "v31" H 1800 3000 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 1600 3000 50  0001 C CNN
 F 3 "~" H 1600 3000 50  0001 C CNN
 	1    1600 3000
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V10
@@ -812,7 +799,7 @@ F 1 "v17" H 2200 6600 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2000 6600 50  0001 C CNN
 F 3 "~" H 2000 6600 50  0001 C CNN
 	1    2000 6600
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V11
@@ -823,7 +810,7 @@ F 1 "v18" H 2200 6700 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2000 6700 50  0001 C CNN
 F 3 "~" H 2000 6700 50  0001 C CNN
 	1    2000 6700
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V12
@@ -834,7 +821,7 @@ F 1 "v19" H 2200 6800 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2000 6800 50  0001 C CNN
 F 3 "~" H 2000 6800 50  0001 C CNN
 	1    2000 6800
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Connection ~ 2200 6600
 Connection ~ 2200 6700
@@ -852,7 +839,7 @@ F 1 "v40" H 1900 4250 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 1700 4250 50  0001 C CNN
 F 3 "~" H 1700 4250 50  0001 C CNN
 	1    1700 4250
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V4
@@ -863,7 +850,7 @@ F 1 "v41" H 1900 4350 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 1700 4350 50  0001 C CNN
 F 3 "~" H 1700 4350 50  0001 C CNN
 	1    1700 4350
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Connection ~ 1900 4250
 Wire Wire Line
@@ -887,7 +874,7 @@ F 1 "v16" H 2200 6500 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2000 6500 50  0001 C CNN
 F 3 "~" H 2000 6500 50  0001 C CNN
 	1    2000 6500
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V8
@@ -898,7 +885,7 @@ F 1 "v15" H 2200 6400 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2000 6400 50  0001 C CNN
 F 3 "~" H 2000 6400 50  0001 C CNN
 	1    2000 6400
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V7
@@ -909,7 +896,7 @@ F 1 "v14" H 2200 6300 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2000 6300 50  0001 C CNN
 F 3 "~" H 2000 6300 50  0001 C CNN
 	1    2000 6300
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V16
@@ -920,7 +907,7 @@ F 1 "v60" H 3000 7600 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2800 7600 50  0001 C CNN
 F 3 "~" H 2800 7600 50  0001 C CNN
 	1    2800 7600
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V17
@@ -931,7 +918,7 @@ F 1 "v61" H 3000 7700 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2800 7700 50  0001 C CNN
 F 3 "~" H 2800 7700 50  0001 C CNN
 	1    2800 7700
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 Connection ~ 2600 7600
 Wire Wire Line
@@ -948,7 +935,7 @@ F 1 "v71" H 3000 8000 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2800 8000 50  0001 C CNN
 F 3 "~" H 2800 8000 50  0001 C CNN
 	1    2800 8000
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V18
@@ -959,7 +946,7 @@ F 1 "v70" H 3000 7900 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 2800 7900 50  0001 C CNN
 F 3 "~" H 2800 7900 50  0001 C CNN
 	1    2800 7900
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Connection ~ 3000 7900
 Wire Wire Line
@@ -991,7 +978,7 @@ F 1 "100nf" V 5800 6300 50  0000 C CNN
 F 2 "cnc3018-PCB:my2pin" H 5888 6350 50  0001 C CNN
 F 3 "~" H 5850 6500 50  0001 C CNN
 	1    5850 6500
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:C C12
@@ -1002,7 +989,7 @@ F 1 "100nf" V 5800 6000 50  0000 C CNN
 F 2 "cnc3018-PCB:my2pin" H 5888 6050 50  0001 C CNN
 F 3 "~" H 5850 6200 50  0001 C CNN
 	1    5850 6200
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:C C11
@@ -1013,7 +1000,7 @@ F 1 "100nf" V 5800 5700 50  0000 C CNN
 F 2 "cnc3018-PCB:my2pin" H 5888 5750 50  0001 C CNN
 F 3 "~" H 5850 5900 50  0001 C CNN
 	1    5850 5900
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:C C10
@@ -1024,7 +1011,7 @@ F 1 "100nf" V 5800 5400 50  0000 C CNN
 F 2 "cnc3018-PCB:my2pin" H 5888 5450 50  0001 C CNN
 F 3 "~" H 5850 5600 50  0001 C CNN
 	1    5850 5600
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:C C9
@@ -1035,7 +1022,7 @@ F 1 "100nf" V 5800 5000 50  0000 C CNN
 F 2 "cnc3018-PCB:my2pin" H 5888 5050 50  0001 C CNN
 F 3 "~" H 5850 5200 50  0001 C CNN
 	1    5850 5200
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:C C8
@@ -1046,7 +1033,7 @@ F 1 "100nf" V 5800 4700 50  0000 C CNN
 F 2 "cnc3018-PCB:my2pin" H 5888 4750 50  0001 C CNN
 F 3 "~" H 5850 4900 50  0001 C CNN
 	1    5850 4900
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:C C7
@@ -1057,7 +1044,7 @@ F 1 "100nf" V 5800 4400 50  0000 C CNN
 F 2 "cnc3018-PCB:my2pin" H 5888 4450 50  0001 C CNN
 F 3 "~" H 5850 4600 50  0001 C CNN
 	1    5850 4600
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 Connection ~ 6350 6200
 Wire Wire Line
@@ -1073,7 +1060,7 @@ F 1 "100" V 6150 6600 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip5" V 6080 6600 50  0001 C CNN
 F 3 "~" H 6150 6600 50  0001 C CNN
 	1    6150 6600
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R16
@@ -1084,7 +1071,7 @@ F 1 "10K" V 6150 6500 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip2" V 6080 6500 50  0001 C CNN
 F 3 "~" H 6150 6500 50  0001 C CNN
 	1    6150 6500
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R15
@@ -1095,7 +1082,7 @@ F 1 "100" V 6150 6300 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip4" V 6080 6300 50  0001 C CNN
 F 3 "~" H 6150 6300 50  0001 C CNN
 	1    6150 6300
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R14
@@ -1106,7 +1093,7 @@ F 1 "10K" V 6150 6200 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip3" V 6080 6200 50  0001 C CNN
 F 3 "~" H 6150 6200 50  0001 C CNN
 	1    6150 6200
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R13
@@ -1117,7 +1104,7 @@ F 1 "100" V 6150 6000 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip3" V 6080 6000 50  0001 C CNN
 F 3 "~" H 6150 6000 50  0001 C CNN
 	1    6150 6000
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R12
@@ -1128,7 +1115,7 @@ F 1 "10K" V 6150 5900 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip4" V 6080 5900 50  0001 C CNN
 F 3 "~" H 6150 5900 50  0001 C CNN
 	1    6150 5900
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R11
@@ -1139,7 +1126,7 @@ F 1 "100" V 6150 5700 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip2" V 6080 5700 50  0001 C CNN
 F 3 "~" H 6150 5700 50  0001 C CNN
 	1    6150 5700
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R10
@@ -1150,7 +1137,7 @@ F 1 "10K" V 6150 5600 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip5" V 6080 5600 50  0001 C CNN
 F 3 "~" H 6150 5600 50  0001 C CNN
 	1    6150 5600
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R9
@@ -1161,7 +1148,7 @@ F 1 "100" V 6150 5300 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip2" V 6080 5300 50  0001 C CNN
 F 3 "~" H 6150 5300 50  0001 C CNN
 	1    6150 5300
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R8
@@ -1172,7 +1159,7 @@ F 1 "10K" V 6150 5200 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip5" V 6080 5200 50  0001 C CNN
 F 3 "~" H 6150 5200 50  0001 C CNN
 	1    6150 5200
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R7
@@ -1183,7 +1170,7 @@ F 1 "100" V 6150 5000 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip3" V 6080 5000 50  0001 C CNN
 F 3 "~" H 6150 5000 50  0001 C CNN
 	1    6150 5000
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R6
@@ -1194,7 +1181,7 @@ F 1 "10K" V 6150 4900 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip4" V 6080 4900 50  0001 C CNN
 F 3 "~" H 6150 4900 50  0001 C CNN
 	1    6150 4900
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R5
@@ -1205,7 +1192,7 @@ F 1 "100" V 6150 4700 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip4" V 6080 4700 50  0001 C CNN
 F 3 "~" H 6150 4700 50  0001 C CNN
 	1    6150 4700
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R4
@@ -1216,7 +1203,7 @@ F 1 "10K" V 6150 4600 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip3" V 6080 4600 50  0001 C CNN
 F 3 "~" H 6150 4600 50  0001 C CNN
 	1    6150 4600
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 Connection ~ 6350 4300
 Wire Wire Line
@@ -1365,7 +1352,7 @@ F 1 "74HC165" H 4450 5650 50  0000 L CNN
 F 2 "cnc3018-PCB:myDip16" H 4600 5700 50  0001 C CNN
 F 3 "" H 4600 5700 50  0001 C CNN
 	1    4650 5800
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 $Comp
 L Device:R R3
@@ -1376,7 +1363,7 @@ F 1 "100" V 6150 4400 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip5" V 6080 4400 50  0001 C CNN
 F 3 "~" H 6150 4400 50  0001 C CNN
 	1    6150 4400
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R2
@@ -1387,7 +1374,7 @@ F 1 "10K" V 6150 4300 50  0000 C CNN
 F 2 "cnc3018-PCB:mySkip2" V 6080 4300 50  0001 C CNN
 F 3 "~" H 6150 4300 50  0001 C CNN
 	1    6150 4300
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x02 J16
@@ -1398,7 +1385,7 @@ F 1 "X_LIM" H 6930 4601 50  0000 L CNN
 F 2 "cnc3018-PCB:my2pin" H 6850 4700 50  0001 C CNN
 F 3 "~" H 6850 4700 50  0001 C CNN
 	1    6850 4700
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x02 J19
@@ -1409,7 +1396,7 @@ F 1 "Z_ZERO" H 6930 5601 50  0000 L CNN
 F 2 "cnc3018-PCB:my2pin" H 6850 5700 50  0001 C CNN
 F 3 "~" H 6850 5700 50  0001 C CNN
 	1    6850 5700
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x02 J20
@@ -1420,7 +1407,7 @@ F 1 "Z_LIM" H 6930 5901 50  0000 L CNN
 F 2 "cnc3018-PCB:my2pin" H 6850 6000 50  0001 C CNN
 F 3 "~" H 6850 6000 50  0001 C CNN
 	1    6850 6000
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x02 J21
@@ -1431,7 +1418,7 @@ F 1 "PROBE" H 6930 6201 50  0000 L CNN
 F 2 "cnc3018-PCB:my2pin" H 6850 6300 50  0001 C CNN
 F 3 "~" H 6850 6300 50  0001 C CNN
 	1    6850 6300
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x02 J17
@@ -1442,7 +1429,7 @@ F 1 "Y_ZERO" H 6930 4901 50  0000 L CNN
 F 2 "cnc3018-PCB:my2pin" H 6850 5000 50  0001 C CNN
 F 3 "~" H 6850 5000 50  0001 C CNN
 	1    6850 5000
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x02 J18
@@ -1453,7 +1440,7 @@ F 1 "Y_LIM" H 6930 5201 50  0000 L CNN
 F 2 "cnc3018-PCB:my2pin" H 6850 5300 50  0001 C CNN
 F 3 "~" H 6850 5300 50  0001 C CNN
 	1    6850 5300
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 $Comp
 L Device:C C6
@@ -1464,7 +1451,7 @@ F 1 "100nf" V 5800 4100 50  0000 C CNN
 F 2 "cnc3018-PCB:my2pin" H 5888 4150 50  0001 C CNN
 F 3 "~" H 5850 4300 50  0001 C CNN
 	1    5850 4300
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 Connection ~ 6000 4300
 Wire Wire Line
@@ -1480,7 +1467,7 @@ F 1 "X_ZERO" H 6930 4301 50  0000 L CNN
 F 2 "cnc3018-PCB:my2pin" H 6850 4400 50  0001 C CNN
 F 3 "~" H 6850 4400 50  0001 C CNN
 	1    6850 4400
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	5700 4300 5500 4300
@@ -1552,7 +1539,7 @@ F 1 "UNUSED" H 6930 6501 50  0000 L CNN
 F 2 "cnc3018-PCB:my2pin" H 6850 6600 50  0001 C CNN
 F 3 "~" H 6850 6600 50  0001 C CNN
 	1    6850 6600
-	1    0    0    -1
+	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	6300 6600 6650 6600
@@ -1573,7 +1560,7 @@ F 1 "v51" H 4400 4050 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 4200 4050 50  0001 C CNN
 F 3 "~" H 4200 4050 50  0001 C CNN
 	1    4200 4050
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 V26
@@ -1584,7 +1571,7 @@ F 1 "v50" H 4300 4050 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 4100 4050 50  0001 C CNN
 F 3 "~" H 4100 4050 50  0001 C CNN
 	1    4100 4050
-	0    1    1    0
+	0    1    1    0   
 $EndComp
 Wire Wire Line
 	2500 3850 4100 3850
@@ -1611,8 +1598,6 @@ Wire Wire Line
 Wire Wire Line
 	3900 4100 3900 6300
 Wire Wire Line
-	4350 6100 4350 5950
-Wire Wire Line
 	2300 7800 4100 7800
 Wire Wire Line
 	4100 6850 4100 7800
@@ -1624,7 +1609,7 @@ Wire Wire Line
 Wire Wire Line
 	4100 6700 4100 6850
 Wire Wire Line
-	4100 6700 5500 6700
+	4100 6700 4200 6700
 Connection ~ 5500 6700
 Wire Wire Line
 	5500 6700 6650 6700
@@ -1647,7 +1632,7 @@ Wire Wire Line
 Wire Wire Line
 	2700 5350 2700 6200
 Wire Wire Line
-	4350 6100 2800 6100
+	4350 6100 4200 6100
 Wire Wire Line
 	2800 6100 2800 5350
 Wire Wire Line
@@ -1662,7 +1647,7 @@ F 1 "v43" H 1900 4550 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 1700 4550 50  0001 C CNN
 F 3 "~" H 1700 4550 50  0001 C CNN
 	1    1700 4550
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	1900 4450 1900 4550
@@ -1678,6 +1663,74 @@ F 1 "v42" H 1900 4450 50  0000 R CNN
 F 2 "cnc3018-PCB:my1pin" H 1700 4450 50  0001 C CNN
 F 3 "~" H 1700 4450 50  0001 C CNN
 	1    1700 4450
-	-1   0    0    1
+	-1   0    0    1   
 $EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J24
+U 1 1 617B5332
+P 1500 3400
+F 0 "J24" V 1464 3312 50  0001 R CNN
+F 1 "SPIN" H 1850 3400 50  0000 R CNN
+F 2 "cnc3018-PCB:my1pin" H 1500 3400 50  0001 C CNN
+F 3 "~" H 1500 3400 50  0001 C CNN
+	1    1500 3400
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J3
+U 1 1 61448F44
+P 1700 1800
+F 0 "J3" V 1664 1712 50  0001 R CNN
+F 1 "GND" H 2050 1800 50  0000 R CNN
+F 2 "cnc3018-PCB:my1pin" H 1700 1800 50  0001 C CNN
+F 3 "~" H 1700 1800 50  0001 C CNN
+	1    1700 1800
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J23
+U 1 1 617E92B9
+P 1500 3300
+F 0 "J23" V 1464 3212 50  0001 R CNN
+F 1 "GND" H 1850 3300 50  0000 R CNN
+F 2 "cnc3018-PCB:my1pin" H 1500 3300 50  0001 C CNN
+F 3 "~" H 1500 3300 50  0001 C CNN
+	1    1500 3300
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1700 3300 2150 3300
+Connection ~ 2150 3300
+Wire Wire Line
+	2150 3300 2150 3450
+Wire Wire Line
+	1700 3400 1900 3400
+Connection ~ 1900 3400
+Wire Wire Line
+	1900 3400 1900 4250
+$Comp
+L Device:C C14
+U 1 1 61833AEA
+P 4200 6450
+F 0 "C14" H 4000 6350 50  0000 C CNN
+F 1 "472nf" H 4000 6450 50  0000 C CNN
+F 2 "cnc3018-PCB:my2pin" H 4238 6300 50  0001 C CNN
+F 3 "~" H 4200 6450 50  0001 C CNN
+	1    4200 6450
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4000 3750 4000 7550
+Wire Wire Line
+	4350 5950 4350 6100
+Wire Wire Line
+	4200 6700 4200 6600
+Connection ~ 4200 6700
+Wire Wire Line
+	4200 6700 5500 6700
+Wire Wire Line
+	4200 6300 4200 6100
+Connection ~ 4200 6100
+Wire Wire Line
+	4200 6100 2800 6100
 $EndSCHEMATC

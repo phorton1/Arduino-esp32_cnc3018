@@ -95,7 +95,7 @@ i2si:
     # use_shift_in: true
     
 probe:
-    pin: BLAH.5:low
+    pin: I2SI.5:low
     check_mode_start: true
     
 start:
