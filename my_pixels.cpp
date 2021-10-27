@@ -11,6 +11,8 @@
 
 	Adafruit_NeoPixel pixels(NUM_PIXELS,G_PIN_LEDS_OUT);
 
+	#define DEBUG_PIXELS  1
+
 
 	void bumpPixel()	// for startup sequence
 	{
@@ -39,11 +41,13 @@
 	}
 
 
-	void switchTask(void* pvParameters)
+	void pixelTask(void* pvParameters)
 	{
 		vTaskDelay(200/portTICK_PERIOD_MS);
 
-		g_debug("switchTask running on core %d at priority %d",xPortGetCoreID(),uxTaskPriorityGet(NULL));
+		#if DEBUG_PIXELS
+			g_debug("pixelTask running on core %d at priority %d",xPortGetCoreID(),uxTaskPriorityGet(NULL));
+		#endif
 
 		#ifdef WITH_PIXELS
 			pixels.setPixelColor(0,MY_LED_BLUE);
@@ -130,7 +134,10 @@
 
 			if (last_job_state != job_state)
 			{
-				g_debug("switches.cpp::JobState changed to %s",jobStateName(job_state));
+				#if DEBUG_PIXELS
+					g_debug("pixels JobState changed to %s",jobStateName(job_state));
+				#endif
+
 				last_job_state = job_state;
 				pixels.setPixelColor(PIXEL_SYS_STATE,getJobStateColor(job_state));
 
@@ -182,8 +189,8 @@
 		pixels.show();
 
 		xTaskCreatePinnedToCore(
-			switchTask,		// method
-			"switchTask",	// name
+			pixelTask,		// method
+			"pixelTask",	// name
 			4096,			// stack_size
 			NULL,			// parameters
 			1,  			// priority
