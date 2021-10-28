@@ -9,7 +9,7 @@
 
 
 At my initial foray into CNC machines, I ordered the least expensive
-CNC machine I could find, about $120, from [Ebay](https://www.ebay.com/itm/392298131168).  
+CNC machine I could find, about $120, from [Ebay](https://www.ebay.com/itm/392298131168).
 It started as a generic **cnc 3018** machine like this:
 
 [![cnc3018.jpg](images/cnc3018.jpg)](images/cnc3018_large.jpg)
@@ -119,7 +119,7 @@ At that point I just wanted to get the machine working well enough so that
 I could use it to MILL it's own PCB :-)  And with the plastic breadboarded
 circuit, along with the perf-board modules for the spindle-power supply and
 sensors, I was able to do that, though it was a process and I had to learn
-a lot in order to do so (this is my first "real" CNC machine lol)
+a lot in order to do so (this is my first "real" CNC machine).
 
 [![MillingBoard1.jpg](images/MillingBoard1.jpg)](images/MillingBoard1_large.jpg)
 [![MillingBoard2.jpg](images/MillingBoard2.jpg)](images/MillingBoard2_large.jpg)
