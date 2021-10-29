@@ -92,7 +92,7 @@ i2si:
     bck_pin:   gpio.16
     ws_pin:    gpio.17
     data_pin:  gpio.36
-    # use_shift_in: true
+    use_shift_in: true
     
 probe:
     pin: I2SI.5:low
