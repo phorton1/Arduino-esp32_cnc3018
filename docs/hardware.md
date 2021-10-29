@@ -25,7 +25,7 @@ In the 3D printing files there are designs and STL files for
 
 ![stl_limit_switches.jpg](images/stl_limit_switches.jpg)
 
-The switches themselves are inexpensive automotive switches like
+The switches themselves are inexpensive automotive switches
 that I purchased on [eBay](https://www.ebay.com/itm/264871803944)
 for about 50 cents each.  They are attached to the mounts with one
 3mm screw directly into the plastic in such a way that it provides the

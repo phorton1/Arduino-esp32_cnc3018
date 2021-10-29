@@ -70,6 +70,8 @@ the MISO/MOSI/CLK signals to the "touch" portion of the larger
 TFT connector, winnowing the needed connections down to 8 pins
 for the cable to the control board.
 
+![lcd_connector_schematic.jpg](images/lcd_connector_schematic.jpg)
+
 I soldered the 8 wires directly to the board and the other
 end is a JST connector to the control board.
 
