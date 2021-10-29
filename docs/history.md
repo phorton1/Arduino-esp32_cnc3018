@@ -125,7 +125,7 @@ a lot in order to do so (this is my first "real" CNC machine).
 [![MillingBoard2.jpg](images/MillingBoard2.jpg)](images/MillingBoard2_large.jpg)
 
 In fact, a whole separate page *could* be dedicated just to describing
-the process or learning how to mill PCB and my ongoing experiments
+the process or learning how to mill PCBs and my ongoing experiments
 with **UV Cured Epoxy Solder-Resist** and **405nm lasers**, but a few
 pictures will have to suffice for the time being.
 
