@@ -22,19 +22,19 @@
 
 
 #ifdef INIT_SD_AGAIN
-	void debug_start_sdcard()
+	static void start_sdcard()
 	{
 		g_debug("starting sdCard using FluidNC");
 		SDState state = g_status.getSDState(true);
 		// info_debug("machine_init() get_sd_state() returned %d",state);
 		if (state == SDState::NotPresent)
 		{
-			g_debug("SD Card Not Present");
+			g_info("SD Card Not Present");
 		}
 		else
 		{
 			if (state != SDState::Idle)
-				g_debug("SD Card BUSY");
+				g_info("SD Card BUSY");
 			uint8_t cardType = SD.cardType();
 			g_debug("SD Card Type: %s",
 				cardType == CARD_NONE ? "NONE" :
@@ -43,9 +43,9 @@
 				cardType == CARD_SDHC ? "SDHC" :
 				"UNKNOWN");
 			uint64_t cardSize = SD.cardSize() / (1024 * 1024);
-			g_debug("SD Card Size: %lluMB", cardSize);
-			g_debug("Total space:  %lluMB", (SD.totalBytes()+1024*1024-1) / (1024 * 1024));
-			g_debug("Used space:   %lluMB", (SD.usedBytes()+1024*1024-1) / (1024 * 1024));
+			g_info("SD Card Size: %lluMB", cardSize);
+			g_info("Total space:  %lluMB", (SD.totalBytes()+1024*1024-1) / (1024 * 1024));
+			g_info("Used space:   %lluMB", (SD.usedBytes()+1024*1024-1) / (1024 * 1024));
 			SD.end();	// as per the GRBL way
 		}
 	}
@@ -91,7 +91,7 @@ void setup()
     #endif
 
     #ifdef INIT_SD_AGAIN
-        debug_start_sdcard();
+        start_sdcard();
     #endif
 
 	#ifdef WITH_MESH
