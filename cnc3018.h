@@ -20,8 +20,17 @@
 // TFT pina defined in TFT_eSPI/prhSettings.h
 // but noted here for completeness.
 
-#define G_PIN_LEDS_OUT            GPIO_NUM_12
-#define G_PIN_SDCARD_CS          GPIO_NUM_4
+#define CNC_MACHINE_NUMBER   2
+
+#if CNC_MACHINE_NUMBER == 2
+    // LED PIN moved from 12 to 15 for CNC machine #2
+    #define G_PIN_LEDS_OUT            GPIO_NUM_15
+#else
+    #define G_PIN_LEDS_OUT            GPIO_NUM_12
+#endif
+
+
+#define G_PIN_SDCARD_CS           GPIO_NUM_4
 
 // #define G_PIN_TFT_CS             GPIO_NUM_22
 // #define G_PIN_TFT_DC             GPIO_NUM_21
@@ -115,5 +124,3 @@ extern cnc3018 the_machine;
 
 extern void bumpPixel();	// for LED startup sequence
     // in cnc3018.ino
-
-
