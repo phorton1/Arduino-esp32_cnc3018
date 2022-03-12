@@ -20,7 +20,7 @@
 // TFT pina defined in TFT_eSPI/prhSettings.h
 // but noted here for completeness.
 
-#define CNC_MACHINE_NUMBER   1
+#define CNC_MACHINE_NUMBER   2
 
 #if CNC_MACHINE_NUMBER == 2
     // LED PIN moved from 12 to 15 for CNC machine #2
