@@ -2,9 +2,15 @@
 
 #pragma once
 
-#define WITH_UI         // requires FluidNC_UI
-#define WITH_MESH       // FluidNC_UI/gDefs.h::UI_WITH_MESH must be set the same!
-#define WITH_PIXELS     // requires adafruitNeoPixels
+#define CNC_MACHINE_NUMBER   3
+    // We also want/need to change the MESH pulloff to (at least)
+    // 5 mm on these newer machines
+
+//#if CNC_MACHINE_NUMBER < 3
+    #define WITH_UI         // requires FluidNC_UI
+//    #define WITH_MESH       // FluidNC_UI/gDefs.h::UI_WITH_MESH must be set the same!
+    #define WITH_PIXELS     // requires adafruitNeoPixels
+//#endif
 
 #include <Machine/MachineConfig.h>  // FluidNC - required
 #include <FluidDebug.h>             // FluidNC_extensions
@@ -20,9 +26,9 @@
 // TFT pina defined in TFT_eSPI/prhSettings.h
 // but noted here for completeness.
 
-#define CNC_MACHINE_NUMBER   2
 
-#if CNC_MACHINE_NUMBER == 2
+
+#if CNC_MACHINE_NUMBER > 1
     // LED PIN moved from 12 to 15 for CNC machine #2
     #define G_PIN_LEDS_OUT            GPIO_NUM_15
 #else
@@ -36,10 +42,10 @@
 // #define G_PIN_TFT_DC             GPIO_NUM_21
 // #define G_PIN_TOUCH_CS           GPIO_NUM_5
 
-// now defined in YAML
-// #define G_PIN_74HC165_CLK         GPIO_NUM_16   // RX2
-// #define G_PIN_74HC165_LATCH       GPIO_NUM_17   // TX2
-// #define G_PIN_74HC165_DATA        GPIO_NUM_36
+// now defined in YAML               Mach1&2       Mach3
+// #define G_PIN_74HC165_CLK         GPIO_NUM_16    32
+// #define G_PIN_74HC165_LATCH       GPIO_NUM_17    2
+// #define G_PIN_74HC165_DATA        GPIO_NUM_36    36
 
 // pin ins to the 74HC165
 // #define PIN7_XZERO       3
@@ -55,7 +61,7 @@
 // 1 - VCC
 // 2 - TOUCH_CS (GPIO_NUM_5)
 // 3 - SPI_CLK  (GPIO_NUM_18)
-// 4 - SPI_MISO (GPIO_NUM_19)
+// 4 - SPI_MISO (GPIO_NUM_19) fs
 // 5 - TFT DC   (GPIO_NUM_21)
 // 6 - TFT CS   (GPIO_NUM_22)
 // 7 - SPI_MOSI (GPIO_NUM_23)
