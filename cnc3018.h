@@ -2,15 +2,13 @@
 
 #pragma once
 
-#define CNC_MACHINE_NUMBER   3
+#define CNC_MACHINE_NUMBER   2
     // We also want/need to change the MESH pulloff to (at least)
     // 5 mm on these newer machines
 
-//#if CNC_MACHINE_NUMBER < 3
-    #define WITH_UI         // requires FluidNC_UI
-//    #define WITH_MESH       // FluidNC_UI/gDefs.h::UI_WITH_MESH must be set the same!
-    #define WITH_PIXELS     // requires adafruitNeoPixels
-//#endif
+#define WITH_UI         // requires FluidNC_UI
+#define WITH_MESH       // FluidNC_UI/gDefs.h::UI_WITH_MESH must be set the same!
+#define WITH_PIXELS     // requires adafruitNeoPixels
 
 #include <Machine/MachineConfig.h>  // FluidNC - required
 #include <FluidDebug.h>             // FluidNC_extensions
