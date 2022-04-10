@@ -1,8 +1,8 @@
 # This cnc3018.yaml is copied to config.yaml after changes,
 # so that we keep it separate from, and yet use, config.yaml.
 
-name: "CNC3018"
-board: "esp32_cnc3018 Board"
+name: "CNC301_V2"
+board: "cnc3018_v2"
 
 
 stepping:
@@ -39,7 +39,7 @@ axes:
         steps_per_mm: 400
         max_rate_mm_per_min: 2500
         acceleration_mm_per_sec2: 100
-        max_travel_mm: 200
+        max_travel_mm: 500
         motor0:
             hard_limits: true
             limit_neg_pin: I2SI.1:low
@@ -72,7 +72,8 @@ axes:
             seek_mm_per_min: 300
             feed_mm_per_min: 80
  
-PWM:
+# PWM:
+Laser:
     output_pin: gpio.2
     pwm_hz: 2000
     speed_map: 0=0% 1=5% 100=100%
