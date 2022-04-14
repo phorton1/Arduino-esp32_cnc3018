@@ -43,8 +43,6 @@
 
 	void pixelTask(void* pvParameters)
 	{
-		vTaskDelay(200/portTICK_PERIOD_MS);
-
 		#if DEBUG_PIXELS
 			g_debug("pixelTask running on core %d at priority %d",xPortGetCoreID(),uxTaskPriorityGet(NULL));
 		#endif
