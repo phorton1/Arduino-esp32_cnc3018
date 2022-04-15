@@ -95,17 +95,14 @@
 
 					show_leds = true;
 					pixels.setPixelColor(PIXEL_X_STATE,
-						(last_zero_val & 1) && (last_lim_val & 1) ? MY_LED_YELLOW :
 						(last_zero_val & 1) ? MY_LED_MAGENTA :
 						(last_lim_val & 1)  ? MY_LED_RED :
 						MY_LED_BLACK);
 					pixels.setPixelColor(PIXEL_Y_STATE,
-						(last_zero_val & 2) && (last_lim_val & 2) ? MY_LED_YELLOW :
 						(last_zero_val & 2) ? MY_LED_MAGENTA :
 						(last_lim_val & 2)  ? MY_LED_RED :
 						MY_LED_BLACK);
 					pixels.setPixelColor(PIXEL_Z_STATE,
-						(last_zero_val & 4) && (last_lim_val & 1) ? MY_LED_YELLOW :
 						(last_zero_val & 4) ? MY_LED_MAGENTA :
 						(last_lim_val & 4)  ? MY_LED_RED :
 						MY_LED_BLACK);
