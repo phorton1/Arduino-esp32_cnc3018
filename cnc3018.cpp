@@ -23,7 +23,7 @@ cnc3018 the_machine;
         // called after the Serial port Client has been created
     {
         g_debug("cnc3018.ino display_init() started");
-        FluidNC_UI_init();
+        FluidNC_UI_init("ILI9431_32",3);
         g_debug("cnc3018.ino display_init() finished");
     }
 #endif
