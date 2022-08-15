@@ -2,7 +2,7 @@
 
 #pragma once
 
-#define CNC_MACHINE_NUMBER   1
+#define CNC_MACHINE_NUMBER   2
     // We also want/need to change the MESH pulloff to (at least)
     // 5 mm on these newer machines
 
