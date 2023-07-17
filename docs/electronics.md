@@ -6,6 +6,8 @@
 **Electronics** --
 **[Software](software.md)** --
 **[Installation](installation.md)**
+**[Version2](version2.md)**
+
 
 
 This page contains the circuit schematics and photos of the printed

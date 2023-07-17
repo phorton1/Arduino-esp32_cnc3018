@@ -6,6 +6,8 @@
 **[Electronics](electronics.md)** --
 **[Software](software.md)** --
 **Installation**
+**[Version2](version2.md)**
+
 
 Some of these instructions are duplicated on and/or reference other pages.
 Please follow the links to download and install the various pieces.
@@ -129,5 +131,5 @@ are a number of different approaches available.
 <br>
 <hr>
 <div style="text-align: right">
-<a href='readme.md'>HOME</a><i> - back to the beginning!</i>
+<a href='version2.md'>Version2</a> - a <b>second</b> , <i>bigger and more powerful</i> 3018 machine ...
 </div>

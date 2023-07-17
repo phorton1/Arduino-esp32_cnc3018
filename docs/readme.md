@@ -6,6 +6,8 @@
 **[Electronics](electronics.md)** --
 **[Software](software.md)** --
 **[Installation](installation.md)**
+**[Version2](version2.md)**
+
 
 esp32_cnc3018 is my implementation of an inexpensive 3-axis CNC machine that
 makes use of the **ESP32** processor.  Essentially I bought the cheapest

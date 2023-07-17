@@ -6,6 +6,8 @@
 **[Electronics](electronics.md)** --
 **[Software](software.md)** --
 **[Installation](installation.md)**
+**[Version2](version2.md)**
+
 
 This page describes the hardware, mostly in terms of the 3D printed
 parts I added to the inexpensive Chinese 3018 cnc

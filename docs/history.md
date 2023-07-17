@@ -6,6 +6,8 @@
 **[Electronics](electronics.md)** --
 **[Software](software.md)** --
 **[Installation](installation.md)**
+**[Version2](version2.md)**
+
 
 
 At my initial foray into CNC machines, I ordered the least expensive
