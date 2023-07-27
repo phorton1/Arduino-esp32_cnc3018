@@ -5,7 +5,7 @@
 **[Hardware](hardware.md)** --
 **[Electronics](electronics.md)** --
 **Software** --
-**[Installation](installation.md)**
+**[Installation](installation.md)** --
 **[Version2](version2.md)**
 
 

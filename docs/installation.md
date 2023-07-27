@@ -6,7 +6,7 @@
 **[Electronics](electronics.md)** --
 **[Software](software.md)** --
 **Installation**
-**[Version2](version2.md)**
+**[Version2](version2.md)** --
 
 
 Some of these instructions are duplicated on and/or reference other pages.
