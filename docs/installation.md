@@ -30,7 +30,7 @@ Some of these libraries have additional dependencies on other libraries.
 Please follow the instructions on the linked pages to install each library and it's dependencies.
 
 - install my version of the [**FluidNC**](https://github.com/phorton1/Arduino-libraries-FluidNC) library and it's dependencies
-- install my [**FluidNC_extensions**](https://github.com/phorton1/Arduino-libraries-FluidNC_extensions) library
+- install my [**FluidNC_Extensions**](https://github.com/phorton1/Arduino-libraries-FluidNC_Extensions) library
 - If you are building the machine with the (optional) TFT Display
  (by default **WITH_UI** is defined in cnc3018.h),
  then install my [**FluidNC_UI**](https://github.com/phorton1/Arduino-libraries-FluidNC_UI) library

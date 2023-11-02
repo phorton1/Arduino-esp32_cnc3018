@@ -108,9 +108,8 @@ loosened and the bottom part can slide up and down to adjust the Z axis limit.
 
 The z-axis zero position is fixed.
 
-
-[![zAxisSwitch2.jpg](images/zAxisSwitch2.jpg)](images/zAzisSwitch2_large.jpg)
-[![zAzisSwitch.jpg](images/zAzisSwitch.jpg)](images/zAzisSwitch_large.jpg)
+[![zAxisSwitch2.jpg](images/zAxisSwitch2.jpg)](images/zAxisSwitch2_large.jpg)
+[![zAzisSwitch.jpg](images/zAxisSwitch.jpg)](images/zAxisSwitch_large.jpg)
 
 
 ## General Wire Routing

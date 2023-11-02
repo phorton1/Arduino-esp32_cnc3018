@@ -11,7 +11,7 @@
 
 esp32_cnc3018 is my implementation of an inexpensive 3-axis CNC machine that
 makes use of the **ESP32** processor.  Essentially I bought the cheapest
-3-axis CNC machine I could find on [Ebay]( https://www.ebay.com/itm/392298131168), and then designed and implemented
+3-axis CNC machine I could find on [Ebay](https://www.ebay.com/itm/392298131168), and then designed and implemented
 my own controller board, limit switches, and extensions to that machine.
 
 The ESP32 can easily be programmed from within the
@@ -70,17 +70,15 @@ The documentation starts with this page, and includes the following additional
 pages:
 
 - **[History](history.md)** - my personal historical **perspectives** and
-photos of the development process for the esp32_cnc3018 machine
+  photos of the development process for the esp32_cnc3018 machine
 - **[Hardware](hardware.md)** - shows the physical
-modifications to CNC 3018
-- **[3D Printing](3dPrinting.md)** - details the **3D Printing** of
-the plastic parts
+  modifications to CNC 3018
 - **[Electronics](electronics.md)** - the **schematics** and home made circuit
-boards for the machine.
+  boards for the machine.
 - **[Software](software.md)** - describes the **software** architecture of
-esp32_cnc3018 and FluidNC
+  esp32_cnc3018 and FluidNC
 - **[Installation](Installation.md)** - instructions on **building** and installing
-the esp32_cnc3018 firmware onto the ESP32 using the Arduino IDE environment.
+  the esp32_cnc3018 firmware onto the ESP32 using the Arduino IDE environment.
 
 <br>
 
@@ -96,7 +94,7 @@ number of other libraries that provide the bulk of the functionality.
 
 - [**FluidNC**](https://github.com/phorton1/Arduino-libraries-FluidNC) - the next generation **ESP32 GRBL** machine
 - [**FluidNC_UI**](https://github.com/phorton1/Arduino-libraries-FluidNC_UI) - a *touch screen user interface* for FluidNC
-- [**FluidNC_extensions**](https://github.com/phorton1/Arduino-libraries-FluidNC_extensions) - some extensions to FluidNC
+- [**FluidNC_Extensions**](https://github.com/phorton1/Arduino-libraries-FluidNC_Extensions) - some extensions to FluidNC
 
 The core of the machine, the GRBL (g-code) interpreter, is based on the
 [**FluidNC**](https://github.com/phorton1/Arduino-libraries-FluidNC)
@@ -112,7 +110,7 @@ be used in ESP32 CNC projects.
 Please see this library for a **description of the *User Interface***.
 
 I have also added a
-[**FluidNC_extensions**](https://github.com/phorton1/Arduino-libraries-FluidNC_extensions)
+[**FluidNC_Extensions**](https://github.com/phorton1/Arduino-libraries-FluidNC_Extensions)
 library that contains a number
 of features that are used in this, and other machines based on this system.
 This library contains methods and objects to abstract and extend the FluidNC
