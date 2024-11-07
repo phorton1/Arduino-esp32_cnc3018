@@ -2,9 +2,10 @@
 
 #pragma once
 
-#define CNC_MACHINE_NUMBER   2
-    // We also want/need to change the MESH pulloff to (at least)
-    // 5 mm on these newer machines
+#define CNC3018_VERSION   1
+    // defines the version of the cnc3018 machine
+    // 1=the original one, 2=the extended one
+    // only used to set the LED pin. See my_pixels.cpp
 
 #define WITH_UI         // requires FluidNC_UI
 #define WITH_MESH       // FluidNC_UI/gDefs.h::UI_WITH_MESH must be set the same!
@@ -20,19 +21,11 @@
 //-----------------------------------
 // ESP32 Pins Used by this Program
 //-----------------------------------
-// Except motors defined in YAML
-// TFT pina defined in TFT_eSPI/prhSettings.h
-// but noted here for completeness.
-
-
-
-#if CNC_MACHINE_NUMBER > 1
-    // LED PIN moved from 12 to 15 for CNC machine #2
-    #define G_PIN_LEDS_OUT            GPIO_NUM_15
-#else
-    #define G_PIN_LEDS_OUT            GPIO_NUM_12
-#endif
-
+// Except the motor pins whch are defined in the in YAML
+// and the LED_PIN which is defined in my_pixels.cpp
+//
+// Although the TFT pina are defined in TFT_eSPI/prhSettings.h,
+// the arae noted here for completeness.  T
 
 #define G_PIN_SDCARD_CS           GPIO_NUM_4
 
@@ -95,7 +88,7 @@
 //        22 - RST                  21 - TP_SO      (MISO)
 //        24 - LCD_CS (TFT_CS)      23 - LCD/TP_SCK (CLK)
 //        26 - TP_CS                25 - GND
-//
+
 
 
 //-----------------------------------

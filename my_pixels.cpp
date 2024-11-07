@@ -4,6 +4,19 @@
 
 #ifdef WITH_PIXELS
 
+	// CNC3018_VERSION is manually set in cnc3018.h
+	
+	#if CNC3018_VERSION == 2
+		// LED PIN moved from 12 to 15 for larger extended CNC machine #2
+		#define G_PIN_LEDS_OUT            GPIO_NUM_15
+		#pragma message "Using LED PIN 15 for extended (larger) cnc3018 machine"
+	#else	// LED PIN for original smaller CNC machine #1
+		#define G_PIN_LEDS_OUT            GPIO_NUM_12
+		#pragma message "Using LED PIN 12 for original (smaller) cnc3018 machine"
+	#endif
+
+
+
 	#include "my_pixels.h"
 	#include <gStatus.h>				// FluidNC_extensions
 	#include <gActions.h>				// FluidNC_extensions
