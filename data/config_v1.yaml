@@ -25,7 +25,7 @@ axes:
             hard_limits: true
             limit_neg_pin: I2SI.3:low
             limit_pos_pin: I2SI.2:low
-            pulloff_mm: 5
+            pulloff_mm: 2
             standard_stepper:
                 step_pin: gpio.13
                 direction_pin: gpio.14
@@ -44,7 +44,7 @@ axes:
             hard_limits: true
             limit_neg_pin: I2SI.1:low
             limit_pos_pin: I2SI.0:low
-            pulloff_mm: 5
+            pulloff_mm: 2
             standard_stepper:
                 step_pin: gpio.27
                 direction_pin: gpio.26:low
